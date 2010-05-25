@@ -140,7 +140,8 @@ $LIGHT_RED\u$NO_COLOUR@$LIGHT_GREEN\h$NO_COLOUR:$LIGHT_BLUE\w$NO_COLOUR\
 }
 colors
 
-EDITOR=vi
+export EDITOR="vi"
+export VISUAL="$EDITOR"
 
 function mkcd () {
   mkdir -p "$@" && eval cd "\"\$$#\""
