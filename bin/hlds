@@ -1,0 +1,6 @@
+#!/bin/sh
+HLDS_DIR=/usr/share/hlds
+cd $HLDS_DIR
+#screen -A -m -d -S hlds ./hlds_run -game cstrike +maxplayers 32 +map cs_bloodstrike -insecure +servercfgfile 27015_server.cfg -port 27015
+screen -A -m -d -S cstrike ./hlds_run -game cstrike +maxplayers 32 +map cs_bloodstrike -insecure +servercfgfile 27015_server.cfg -port 27654
+

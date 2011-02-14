@@ -1,0 +1,5 @@
+#!/bin/sh
+#mail_addr="home_1911@yahoo.com.tw"
+mail_addr="yongjhih@gmail.com"
+echo "test" | mutt -s "test" "$mail_addr"
+#echo "test" | mail -s "test" "$mail_addr"

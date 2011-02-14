@@ -1,0 +1,22 @@
+#!/bin/sh
+# backup $@-db
+db_path=/var/lib/mysql
+bak_dir=bak
+bak_path=~/"$bak_dir"
+
+while [ "$1" ]; do
+  db_name=`basename "$1"`
+  cd /tmp
+  db_dir="`date +%F`-$db_name"
+  mkdir "$db_dir"
+  cd "$db_dir"
+  mysqldump -u root -p "$db_name" > $db_name.sql
+  cp -a "$db_path"/"$db_name" .
+  cd ..
+  tar zcf "$db_dir".tar.gz "$db_dir"
+  rm -fr "$db_dir"
+  mv "$db_dir".tar.gz "$bak_path"/
+  
+  shift
+done
+

@@ -1,0 +1,8 @@
+#!/bin/sh
+for file in "$@"
+do
+iconv -f big5 -t utf-8 "$file" -o "$file.tmp"
+mv -- "$file" "$file.bak"
+mv -- "$file.tmp" "$file"
+done
+

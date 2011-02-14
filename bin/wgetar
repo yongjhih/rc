@@ -1,0 +1,2 @@
+#!/bin/sh
+wget $1 && tar xf $(basename $1)

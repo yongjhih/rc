@@ -1,0 +1,25 @@
+#!/bin/sh
+export PATH=/sbin:"$PATH"
+
+if [ "`basename "$0"`" = "banip" ]; then
+  while [ "$1" ]; do
+    iptables -A INPUT -p tcp -s "$1" -j DROP
+    iptables -A INPUT -p udp -s "$1" -j DROP
+    shift
+  done
+fi
+
+#iptables -D INPUT -p tcp -s 163.21.66.24 -j DROP
+if [ "`basename "$0"`" = "rmip" ]; then
+  while [ "$1" ]; do
+    iptables -D INPUT -p tcp -s "$1" -j DROP
+    iptables -D INPUT -p udp -s "$1" -j DROP
+    shift
+  done
+fi
+
+#while read line; do
+#  iptables -A INPUT -p tcp -s "$line" -j DROP
+#  iptables -A INPUT -p udp -s "$line" -j DROP
+#done
+

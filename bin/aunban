@@ -1,0 +1,37 @@
+#!/bin/sh
+# 自動 unban: abspam
+# Author: yongjhih(yjchen)
+# Depends on abspam
+# 封鎖時間，分鐘
+# TODO
+# 精確度，進位 bug
+
+# ban.log 產生 ban.list
+# cat /tmp/ban.log | grep -v ban > /tmp/ban.list
+bantime=30
+# 解除封鎖
+while read line; do
+  # 2008/10/04 19:18:01: 39 118.166.177.3
+  ip=`echo "$line" | awk '{print $4}'`
+  year=`echo "$line" | awk -F'/' '{print $1}'`
+  month=`echo "$line" | awk -F'/' '{print $2}'`
+  day=`echo "$line" | awk '{print $1}' | awk -F'/' '{print $3}'`
+  hour=`echo "$line" | awk '{print $2}' | awk -F: '{print $1}'`
+  minute=`echo "$line" | awk '{print $2}' | awk -F: '{print $2}'`
+  second=`echo "$line" | awk '{print $2}' | awk -F: '{print $3}'`
+
+  m=$year$month$day$hour$minute
+  # 過期則解除封鎖，不再加入封鎖名單。
+  if [ $((`date +%Y%m%d%H%M` - $m)) -gt $bantime ]; then
+    rmip "$ip"
+    echo "`date +"$format"`:  x $ip unban" >> "$log_path"
+  else
+    echo "$line" >> "$ban_list".tmp
+  fi
+  #dyear=$(($year - `date +%Y`))
+  #dmonth=$(($month - `date +%m`))
+  #dday=$(($date - `date +%d`))
+done < "$ban_list"
+rm "$ban_list"
+mv "$ban_list"{.tmp,}
+

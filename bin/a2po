@@ -1,0 +1,10 @@
+#!/usr/bin/python
+# EASY-INSTALL-ENTRY-SCRIPT: 'android2po==1.1.0','console_scripts','a2po'
+__requires__ = 'android2po==1.1.0'
+import sys
+from pkg_resources import load_entry_point
+
+if __name__ == '__main__':
+    sys.exit(
+        load_entry_point('android2po==1.1.0', 'console_scripts', 'a2po')()
+    )

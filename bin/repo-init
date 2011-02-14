@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+REPO="sandiego_dev@git.gbc.intra:android/platform/manifest.git"
+if [ "$1" ]; then
+	REPO="$1"
+    shift
+fi
+
+BRANCH="sku1/M76XXTSNCJNLYA60401002_SSSS_dvt2"
+if [ "$1" ]; then
+	BRANCH="$1"
+    shift
+fi
+
+repo init -u "$REPO" -b "$BRANCH" $@
+repo forall -c "git reset --hard && git clean -df"
+repo sync
+

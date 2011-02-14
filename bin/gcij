@@ -1,0 +1,5 @@
+#!/bin/sh
+for file in $@; do
+gcj -C $file && gij $(echo $file | sed 's/\.java//')
+done
+

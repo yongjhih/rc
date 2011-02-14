@@ -1,0 +1,7 @@
+#!/bin/sh
+
+while [ "$1" ]; do
+  screen -AmdS p`echo "$1" | cut -d. -f4` ping "$1"
+  shift
+done
+

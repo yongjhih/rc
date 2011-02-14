@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+ANDRCHOOSE_WORK_PATH="`pwd`"
+
+. "$HOME/.andrc"
+
+if [ "$ANDROID_SRC" ]; then
+	cd "$ANDROID_SRC"
+	if [ "$2" ]; then
+		choosecombo "$@"
+	else
+		choosecombo "1" "1" "7" "3"
+	fi
+fi
+
+cd "$ANDRCHOOSE_WORK_PATH"
+

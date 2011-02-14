@@ -1,0 +1,5 @@
+#!/bin/sh
+for i in `ifconfig | awk '/^[a-zA-Z]/{print $1}' | grep -v lo`; do
+  ifconfig $i down
+done
+brctl delbr br0

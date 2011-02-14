@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+REPO_BIN="$HOME/bin/repo"
+REPO_WORK_PATH="$HOME/workspace/repo"
+REPO_URL="http://android.git.kernel.org/repo"
+
+if [ -f "$HOME/bin/repo" ]; then
+	exit 1
+fi
+#if [ -d "$HOME/workspace/repo" ]; then
+	#exit 1
+#fi
+
+curl http://android.git.kernel.org/repo > "$HOME/bin/repo"
+chmod a+x "$HOME/bin/repo"
+#mkdir -p "$REPO_WORK_PATH"
+#cd "$REPO_WORK_PATH"
+#repo init -u git://android.git.kernel.org/platform/manifest.git 
+

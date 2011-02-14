@@ -1,0 +1,24 @@
+#!/bin/sh
+
+TEXMF=/usr/share/texmf
+
+afm=$TEXMF/fonts/afm/latex-cjk-thai
+tfm=$TEXMF/fonts/tfm/latex-cjk-thai
+pfb=$TEXMF/fonts/type1/latex-cjk-thai
+enc=$TEXMF/fonts/enc/dvips/latex-cjk-thai
+fd=$TEXMF/tex/latex/CJK/UTF8
+map=$TEXMF/fonts/map/dvips/latex-cjk-thai
+
+for folder in $@; do
+if [ -d $folder ]; then
+cp -i $folder/*.afm $afm
+cp -i $folder/*.tfm $tfm
+cp -i $folder/*.pfb $pfb
+cp -i $folder/*.enc $enc
+cp -i $folder/*.fd $fd
+cp -i $folder/*.map $map
+else
+echo $folder not found
+fi
+done
+

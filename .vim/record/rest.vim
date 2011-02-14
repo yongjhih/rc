@@ -1,0 +1,1 @@
+{"installer_type":"text","generated_by":"Vimana-2010.09303","files":[{"checksum":"5d04db690acf1e5d853878bcc438dfdd","file":"/home/andrew/.vim/syntax/rest.vim"}],"version":0.3,"package":"rest.vim"}

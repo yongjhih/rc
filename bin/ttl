@@ -1,0 +1,2 @@
+#!/bin/sh
+wget "$1" -q -O - | grep '<title>'|  sed -e 's/<title>\(.*\)<\/title>/\1/' -e 's/^\s\+//g'

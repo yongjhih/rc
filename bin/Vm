@@ -1,0 +1,13 @@
+#!/bin/sh
+# $0 *.bsp maps/
+# mv a.bsp a.txt a.nav a.* maps/
+
+[ ! $2 ] && exit 1
+# Destination
+DEST="$1"
+shift
+while [ "$1" ]; do
+  mv "$(echo "$1" | sed 's/\..*//')".* "$DEST"
+  shift
+done
+

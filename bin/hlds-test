@@ -1,0 +1,6 @@
+#!/bin/sh
+HLDS_DIR=/home/yjchen/hlds-test
+cd $HLDS_DIR
+#screen -A -m -d -S test ./hlds_run -game cstrike +maxplayers 32 +map cs_bloodstrike -insecure +servercfgfile 27016_server.cfg +port 27016 +ip 192.168.1.2 -nomaster
+screen -A -m -d -S test ./hlds_run -game cstrike +maxplayers 24 +map cs_bloodstrike -insecure +port 27015
+

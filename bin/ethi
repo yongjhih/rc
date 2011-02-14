@@ -1,0 +1,6 @@
+#!/bin/sh
+for i in `ifconfig | awk '/^[a-zA-Z]/{print $1}' | grep -v lo`; do
+  for j in `ethtool -i $i | awk '/^driver/{print $2}'`; do
+    grep $j ~/tmp
+  done
+done

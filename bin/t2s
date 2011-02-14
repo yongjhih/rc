@@ -1,0 +1,32 @@
+#!/bin/sh
+# Simplified Chinese to Traditional Chinese
+# Traditional Chinese to Simplified Chinese
+
+enc="utf8"
+
+case `basename $0` in
+  "s2t")
+    auto=autob5
+    iauto=gb2312
+    auto_enc=big5
+    iauto_enc=big5
+    auto_conv_enc=gb2312
+    auto_conv_from_enc=utf8-cn
+    auto_conv_to_enc=utf8-tw
+  ;;
+  "t2s")
+    auto=autogb
+    iauto=big5
+    auto_enc=gbk
+    auto_conv_enc=gb2312
+    auto_conv_from_enc=utf8-tw
+    auto_conv_to_enc=utf8-cn
+esac
+
+#while read line; do
+  # echo 到 \ 跳脫問題 改用 sed
+  #sed 's/.*/&/g' | $auto --input $enc | iconv -f $auto_enc -t utf8
+  #sed 's/.*/&/g' | iconv -f "$enc" -t "$iauto" | iconv -f "$iauto" -t "$iauto_enc" | iconv -f "$iauto_enc" -t "$enc"
+#done
+
+cconv -f "$auto_conv_from_enc" -t "$auto_conv_to_enc"

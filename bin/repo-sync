@@ -1,0 +1,11 @@
+#!/bin/sh
+# this file whould be linked to /etc/cron.dialy
+
+for i in "/home/andrew/workspace/sandiego/mirror" ; do
+    if [ ! -d "$i" ]; then
+        continue
+    fi
+    cd "$i"
+    repo sync > "/tmp/repo-sync.$$.log" 2>&1
+done
+

@@ -1,0 +1,6 @@
+#!/bin/sh
+while read line; do
+  iptables -A INPUT -p tcp -s any/0 --dport "$line" -j DROP
+  iptables -A INPUT -p udp -s any/0 --dport "$line" -j DROP
+done
+

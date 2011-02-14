@@ -1,0 +1,7 @@
+#!/bin/sh
+
+while [ "$1" ]; do
+  #mencoder "$1" -srate 22050 -o ${1%.*}.flv -oac mp3lame -lameopts vbr=2:q=6 -ovc lavc -lavcopts vcodec=flv:vbitrate=150:mbd=2:mv0:trell:v4mv:cbp:last_pred=3 -vf scale=320:-3 -of lavf
+  mencoder "$1" -srate 22050 -o "$1.flv" -oac mp3lame -ovc lavc -lavcopts vcodec=flv -vf scale=320:-3 -of lavf -audio-delay 20
+  shift
+done

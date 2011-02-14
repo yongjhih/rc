@@ -1,0 +1,2 @@
+#!/bin/sh
+sed -e '1,/^SYNOPSIS/d' -e '/^DESCRIPTION/,$d'

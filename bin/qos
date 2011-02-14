@@ -1,0 +1,385 @@
+#!/bin/bash
+#http://218.9.77.66:89/gate/big5/soft.00615.net/news_11.php?id=5470
+#腳本文件名: tc2
+#########################################################################################
+#用TC(Traffic Control)解決ADSL寬帶速度技術 Ver. 1.0   by KindGeorge 2004.12.27        #
+#########################################################################################
+#此腳本經過實驗透過，更多的資訊請參閱http://lartc.org
+#tc+iptables+HTB+SFQ
+#
+#一.什麼是ADSL? ADSL（Asymmetric Digital Subscriber Loop，非對稱數位用戶環路）
+#用最簡單的話的講,就是採用上行和下行不對等帶寬的基於ATM的技術.
+#舉例,我們最快的其中一條ADSL帶寬是下行3200Kbit,上行只有320Kbit.帶寬通常用bit表示.
+#
+#1、下行3200K 意味著什麼？
+#因為 1Byte=8Bit ,一個字節由8個位(bit)組成,一般用大寫B表示Byte,小寫b表示Bit.
+#所以 3200K=3200Kbps=3200K bits/s=400K bytes/s.
+#2、 上行320K 意味著什麼？
+# 320K=320Kbps=320K bits/s=40K bytes/s.
+#就是說,個人所能獨享的最大下載和上傳速度,整條線路在沒任何損耗,最理想的時候,
+#下載只有400K bytes/s,上傳只有最大40K bytes/s的上傳網速.
+#這些都是理想值,但現實總是殘酷的,永遠沒有理想中那麼好.至少也有損耗,何況內部網有幾十台
+#電腦一起瘋狂上網.
+#
+#3.ADSL上傳速度對下載的影響
+#(1)TCP/IP協議規定，每一個封包，都需要有acknowledge訊息的回傳，也就是說，傳輸的資料，
+#需要有一個收到資料的訊息回復，才能決定後面的傳輸速度，並決定是否重新傳輸遺失
+#的資料。上行的帶寬一部分就是用來傳輸這些acknowledge(確認)資料模é鄙閒懈涸毓?
+#大的時候，就會影響acknowledge資料的傳送速度，並進而影響到下載速度。這對非對稱
+#數位環路也就是ADSL這種上行帶寬遠小於下載帶寬的連接來說影響尤為明顯。
+#(2)試驗證明，當上傳滿載時，下載速度變為原來速度的40％，甚至更低.因為上載文件(包括ftp
+#上傳,發郵件smtp),如果較大,一個人的通訊量已經令整條adsl變得趨向飽和,那麼所有的數據
+#包只有按照先進先出的原則進行排隊和等待.這就可以解釋為什麼網內其中有人用ftp上載文件,
+#或發送大郵件的時候,整個網速變得很慢的原因。
+#
+#二.解決ADSL速度之道
+#1. 為解決這些速度問題,我們按照數據流和adsl的特點,對經過線路的數據進行了有規則的分流.
+#把本來在adsl modem上的瓶頸轉移到我們linux路由器上,可以把帶寬控制的比adsl modem上的小一點,
+#這樣我們就可以方便的用tc技術對經過的數據進行分流和控制.
+#我們的想像就象馬路上的車道一樣,有高速道,還有小車道,大車道.需要高速的syn,ack,icmp等走
+#高速道,需要大量傳輸的ftp-data,smtp等走大車道,不能讓它堵塞整條馬路.各行其道.
+#2. linux下的TC(Traffic Control)就有這樣的作用.只要控制得當,一定會有明顯的效果.
+#tc和iptables結合是最好的簡單運用的結合方法.
+#我們設置過濾器以便用iptables對數據包進行分類,因為iptables更靈活，而且你還可以為每個規則設
+#置計數器. iptables用mangle鏈來mark數據包,告訴了內核，數據包會有一個特定的FWMARK標記值(hanlde x fw)，
+#表明它應該送給哪個類( classid x : x),而prio是優先值,表明哪些重要數據應該優先透過哪個通道.
+#首先選擇隊列,cbq和htb是不錯的選擇,經過實驗,htb更為好用,所以以下腳本採用htb來處理
+#3. 一般系統默認的是fifo的先進先出隊列,就是說數據包按照先來先處理的原則,如果有一個大的數
+#據包在前面,#那麼後面的包只能等前面的發完後才能接著發了,這樣就算後面即使是一個小小的ack包,
+#也要等待了,這樣上傳就影響了下載,就算你有很大的下載帶寬也無能為力.
+#HTB(Hierarchical Token Bucket, 分層的令牌桶)
+#更詳細的htb參考 http://luxik.cdi.cz/~devik/qos/htb/
+#HTB就象CBQ一樣工作，但是並不靠計算閒置時間來整形。它是一個分類的令牌桶過濾器。它只有很少的參數
+#他的分層(Hierarchical)能夠很好地滿足這樣一種情況：你有一個固定速率的鏈路，希望分割給多種不同的
+#用途使用,為每種用途做出帶寬承諾並實現定量的帶寬借用。
+#4. 結構簡圖:
+#~~~~~~ |
+#~~~~~ __1:__
+#~~~~ |~~~~~ |
+#~  _ _ _1:1~~~ 1:2_ _ _ _ _ _ _ _
+#  | ~ ~ |  ~ ~ ~ |  ~ ~ | ~ ~ | ~ ~ |
+#1:11~1:12~~1:21~1:22~1:23~1:24
+#優先順序是1:11 1:12   1:21 1:22  1:23 1:24
+#
+#--------------------------------------------------------------------------------------------
+#5.根據上面的例子,開始腳本   
+#通常adsl用pppoe連接,的得到的是ppp0,所以公網網卡上綁了ppp0
+#關於參數的說明
+#(1)rate: 是一個類保證得到的帶寬值.如果有不只一個類,請保證所有子類總和是小於或等於父類.
+#(2)ceil: ceil是一個類最大能得到的帶寬值.
+#(3)prio: 是優先權的設置,數值越大,優先權越小.如果是分配剩餘帶寬,就是數值小的會最優先取得剩餘
+#的空閒的帶寬權.
+#具體每個類要分配多少rate,要根據實際使用測試得出結果.
+#一般大數據的話,控制在50%-80%左右吧,而ceil最大建議不超過85%,以免某一個會話佔用過多的帶寬.
+#rate可按各類所需分配,
+#1:11 是很小而且最重要的數據包通道,當然要分多點.甚至必要時先全部佔用,不過一般不會的.所以給全速.
+#1:12 是很重要的數據道,給多點,最少給一半,但需要時可以再多一點.
+#rate 規劃 1:2 = 1:21 + 1:22 + 1:23 + 1:24  一般總數在50%-80%左右
+#1:21 http,pop是最常用的啦,為了太多人用,而導致堵塞,我們不能給得太多,也不能太少.
+#1:22 我打算給smtp用,優先低於1:21 以防發大的附件大量佔用帶寬,
+#1:23 我打算給ftp-data,和1:22一樣,很可能大量上傳文件,所以rate不能給得太多,而當其他有剩時可以給大些,ceil設置大些
+#1:24 是無所謂通道,就是一般不是我們平時工作上需要的通道了,給小點,防止這些人在妨礙有正常工作需要的人
+#上行 uplink 320K,設置稍低於理論值
+DEV="ppp0"
+UPLINK=1024
+#下行downlink 3200 k 大概一半左右,以便能夠得到更多的併發連接
+DOWNLINK=10240
+
+echo "==================== Packetfilter and Traffic Control 流量控制 By 網路技術部 Ver. 1.0===================="
+
+start_routing() {
+   echo -n "隊列設置開始start......"
+   #1.增加一個根隊列，沒有進行分類的數據包都走這個1:24是缺省類:
+   tc qdisc add dev $DEV root handle 1: htb default 24
+   #1.1增加一個根隊下面主幹類1: 速率為$UPLINK k
+   tc class add dev $DEV parent 1: classid 1:1 htb rate ${UPLINK}kbit ceil ${UPLINK}kbit prio 0
+
+   #1.1.1 在主幹類1下建立第一葉子類,這是一個最高優先權的類.需要高優先和高速的包走這條通道,比如SYN,ACK,ICMP等
+   tc class add dev $DEV parent 1:1 classid 1:11 htb rate $[$UPLINK]kbit ceil ${UPLINK}kbit prio 1
+   #1.1.2 在主類1下建立第二葉子類 ,這是一個次高優先權的類。比如我們重要的crm數據.
+   tc class add dev $DEV parent 1:1 classid 1:12 htb rate $[$UPLINK-150]kbit ceil ${UPLINK-50}kbit prio 2
+
+   #1.2 在根類下建立次幹類 classid 1:2 。此次幹類的下面全部優先權低於主幹類,以防重要數據堵塞.
+   tc class add dev $DEV parent 1: classid 1:2 htb rate $[$UPLINK-150]kbit prio 3
+
+   #1.2.1 在次幹類下建立第一葉子類,可以跑例如http,pop等.
+   tc class add dev $DEV parent 1:2 classid 1:21 htb rate 100kbit ceil $[$UPLINK-150]kbit prio 4
+
+   #1.2.2 在次幹類下建立第二葉子類。不要太高的速度,以防發大的附件大量佔用帶寬,例如smtp等
+   tc class add dev $DEV parent 1:2 classid 1:22 htb rate 30kbit ceil $[$UPLINK-160]kbit prio 5
+
+   #1.2.3 在次幹類下建立第三葉子類。不要太多的帶寬,以防大量的數據堵塞網路,例如ftp-data等,
+   tc class add dev $DEV parent 1:2 classid 1:23 htb rate 15kbit ceil $[$UPLINK-170]kbit prio 6
+
+   #1.2.4 在次幹類下建立第四葉子類。無所謂的數據通道,無需要太多的帶寬,以防無所謂的人在阻礙正務.
+   tc class add dev $DEV parent 1:2 classid 1:24 htb rate 5kbit ceil $[$UPLINK-250]kbit prio 7
+
+        #在每個類下面再附加上另一個隊列規定,隨機公平隊列(SFQ)，不被某個連接不停佔用帶寬,以保證帶寬的平均公平使用：
+   #SFQ(Stochastic Fairness Queueing，隨機公平隊列),SFQ的關鍵詞是“會話”(或稱作“流”) ，
+   #主要針對一個TCP會話或者UDP流。流量被分成相當多數量的FIFO隊列中，每個隊列對應一個會話。
+   #數據按照簡單輪轉的方式發送, 每個會話都按順序得到發送機會。這種方式非常公平，保證了每一
+   #個會話都不會沒其他會話所淹沒。SFQ之所以被稱為“隨機”，是因為它並不是真的為每一個會話創建
+   #一個隊列，而是使用一個散列演算法，把所有的會話映射到有限的幾個隊列中去。
+   #參數perturb是多少秒後重新配置一次散列演算法。默認為10
+   tc qdisc add dev $DEV parent 1:11 handle 111: sfq perturb 5
+   tc qdisc add dev $DEV parent 1:12 handle 112: sfq perturb 5
+   tc qdisc add dev $DEV parent 1:21 handle 121: sfq perturb 10
+   tc qdisc add dev $DEV parent 1:22 handle 122: sfq perturb 10
+   tc qdisc add dev $DEV parent 1:23 handle 133: sfq perturb 10
+   tc qdisc add dev $DEV parent 1:24 handle 124: sfq perturb 10
+   echo "隊列設置成功.done."
+   echo -n "設置包過濾 Setting up Filters......"
+   #這裡設置過濾器,handle 是iptables作mark的值,讓被iptables 在mangle鏈做了mark的不同的值選擇不同的通
+   #道classid,而prio 是過濾器的優先級別.
+   tc filter add dev $DEV parent 1:0 protocol ip prio 1 handle 1 fw classid 1:11
+   tc filter add dev $DEV parent 1:0 protocol ip prio 2 handle 2 fw classid 1:12
+   tc filter add dev $DEV parent 1:0 protocol ip prio 3 handle 3 fw classid 1:21
+   tc filter add dev $DEV parent 1:0 protocol ip prio 4 handle 4 fw classid 1:22
+   tc filter add dev $DEV parent 1:0 protocol ip prio 5 handle 5 fw classid 1:23
+   tc filter add dev $DEV parent 1:0 protocol ip prio 6 handle 6 fw classid 1:24
+   echo "設置過濾器成功.done."
+
+          
+
+########## downlink ##########################################################################
+#6. 下行的限制:
+#設置入隊的規則,是因為把一些經常會造成下載大文件的端口進行控制,不讓它們來得太快,導致堵塞.來得太快
+#的就直接drop,就不會浪費和佔用機器時間和力量去處理了.
+#(1). 把下行速率控制在大概1000-1500k左右,因為這個速度已經足夠用了,以便能夠得到更多的併發下載連接
+
+tc qdisc add dev $DEV handle ffff: ingress
+
+tc filter add dev $DEV parent ffff: protocol ip prio 50 handle 8 fw police rate ${DOWNLINK}kbit burst 10k drop flowid :8
+}
+#(2).如果內部網數據流不是很瘋狂的話,就不用做下載的限制了,用#符號遮罩上面兩行即可.
+#(3).如果要對任何進來數據的數據進行限速的話,可以用下面這句:
+#tc filter add dev $DEV parent ffff: protocol ip prio 10 u32 match ip src 0.0.0.0/0 police rate ${DOWNLINK}kbit burst 10k drop flowid :1
+
+###############################################################################################
+#7. 開始給數據包打標記，往PREROUTING鏈中添加mangle規則：
+start_mangle() {
+      
+   echo -n "開始給數據包打標記......start mangle mark......"
+
+#(1)把出去的不同類數據包(為dport)給mark上標記1--6.讓它走不同的通道
+#(2)把進來的數據包(為sport)給mark上標記8,讓它受到下行的限制,以免速度太過快而影響全局.
+#(3)每條規則下根著return的意思是可以透過RETURN方法避免遍歷所有的規則,加快了處理速度
+##設置TOS的處理：
+#iptables -t mangle -A PREROUTING -m tos --tos Minimize-Delay -j MARK --set-mark 1
+#iptables -t mangle -A PREROUTING -m tos --tos Minimize-Delay -j RETURN
+#iptables -t mangle -A PREROUTING -m tos --tos Minimize-Cost -j MARK --set-mark 4
+#iptables -t mangle -A PREROUTING -m tos --tos Minimize-Cost -j RETURN
+#iptables -t mangle -A PREROUTING -m tos --tos Maximize-Throughput -j MARK --set-mark 5
+#iptables -t mangle -A PREROUTING -m tos --tos Maximize-Throughput -j RETURN
+
+##提高tcp初始連接(也就是帶有SYN的數據包)的優先權是非常明智的：
+iptables -t mangle -A PREROUTING -p tcp -m tcp --tcp-flags SYN,RST,ACK SYN -j MARK --set-mark 1
+iptables -t mangle -A PREROUTING -p tcp -m tcp --tcp-flags SYN,RST,ACK SYN -j RETURN
+
+######icmp,想ping有良好的反應,放在第一類吧.
+iptables -t mangle -A PREROUTING -p icmp -j MARK --set-mark 1
+iptables -t mangle -A PREROUTING -p icmp -j RETURN
+
+# small packets (probably just ACKs)長度小於64的小包通常是需要快些的,一般是用來確認tcp的連接的,
+#讓它跑快些的通道吧.也可以把下面兩行遮罩,因為再下面有更多更明細的端口分類.
+iptables -t mangle -A PREROUTING -p tcp -m length --length :64 -j MARK --set-mark 2
+iptables -t mangle -A PREROUTING -p tcp -m length --length :64 -j RETURN
+
+#ftp放第2類,因為一般是小包, ftp-data放在第5類,因為一般是大量數據的傳送.
+iptables -t mangle -A PREROUTING -p tcp -m tcp --dport ftp -j MARK --set-mark 2
+iptables -t mangle -A PREROUTING -p tcp -m tcp --dport ftp -j RETURN
+iptables -t mangle -A PREROUTING -p tcp -m tcp --dport ftp-data -j MARK --set-mark 5
+iptables -t mangle -A PREROUTING -p tcp -m tcp --dport ftp-data -j RETURN
+iptables -t mangle -A PREROUTING -p tcp -m tcp --sport ftp -j MARK --set-mark 8
+iptables -t mangle -A PREROUTING -p tcp -m tcp --sport ftp -j RETURN
+iptables -t mangle -A PREROUTING -p tcp -m tcp --sport ftp-data -j MARK --set-mark 8
+iptables -t mangle -A PREROUTING -p tcp -m tcp --sport ftp-data -j RETURN
+##提高ssh數據包的優先權：放在第1類,要知道ssh是互動式的和重要的,不容待慢哦
+iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 22 -j MARK --set-mark 1
+iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 22 -j RETURN
+#
+##smtp郵件：放在第4類,因為有時有人發送很大的郵件,為避免它堵塞,讓它跑4道吧
+iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 25 -j MARK --set-mark 4
+iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 25 -j RETURN
+#iptables -t mangle -A PREROUTING -p tcp -m tcp --sport 25 -j MARK --set-mark 8
+#iptables -t mangle -A PREROUTING -p tcp -m tcp --sport 25 -j RETURN
+## name-domain server：放在第1類,這樣連接帶有域名的連接才能快速找到對應的地址,提高速度的一法
+iptables -t mangle -A PREROUTING -p udp -m udp --dport 53 -j MARK --set-mark 1
+iptables -t mangle -A PREROUTING -p udp -m udp --dport 53 -j RETURN
+#
+## http：放在第3類,是最常用的,最多人用的,
+iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 80 -j MARK --set-mark 3
+iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 80 -j RETURN
+iptables -t mangle -A PREROUTING -p tcp -m tcp --sport 80 -j MARK --set-mark 8
+iptables -t mangle -A PREROUTING -p tcp -m tcp --sport 80 -j RETURN
+##pop郵件：放在第3類
+iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 110 -j MARK --set-mark 3
+iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 110 -j RETURN
+iptables -t mangle -A PREROUTING -p tcp -m tcp --sport 110 -j MARK --set-mark 8
+iptables -t mangle -A PREROUTING -p tcp -m tcp --sport 110 -j RETURN
+## https：放在第3類
+iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 443 -j MARK --set-mark 3
+iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 443 -j RETURN
+iptables -t mangle -A PREROUTING -p tcp -m tcp --sport 443 -j MARK --set-mark 8
+iptables -t mangle -A PREROUTING -p tcp -m tcp --sport 443 -j RETURN
+## Microsoft-SQL-Server：放在第2類,我這裡認為較重要,一定要保證速度的和優先的.
+iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 1433 -j MARK --set-mark 2
+iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 1433 -j RETURN
+iptables -t mangle -A PREROUTING -p tcp -m tcp --sport 1433 -j MARK --set-mark 8
+iptables -t mangle -A PREROUTING -p tcp -m tcp --sport 1433 -j RETURN
+
+## voip用, 提高,語音通道要保持高速,才不會斷續.
+iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 1720 -j MARK --set-mark 1
+iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 1720 -j RETURN
+iptables -t mangle -A PREROUTING -p udp -m udp --dport 1720 -j MARK --set-mark 1
+iptables -t mangle -A PREROUTING -p udp -m udp --dport 1720 -j RETURN
+
+## vpn ,用作voip的,也要走高速路,才不會斷續.
+iptables -t mangle -A PREROUTING -p udp -m udp --dport 7707 -j MARK --set-mark 1
+iptables -t mangle -A PREROUTING -p udp -m udp --dport 7707 -j RETURN
+
+## 放在第1類,因為我覺得它在我心中很重要,優先.
+iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 7070 -j MARK --set-mark 1
+iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 7070 -j RETURN
+
+## WWW caching service：放在第3類
+iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 8080 -j MARK --set-mark 3
+iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 8080 -j RETURN
+iptables -t mangle -A PREROUTING -p tcp -m tcp --sport 8080 -j MARK --set-mark 8
+iptables -t mangle -A PREROUTING -p tcp -m tcp --sport 8080 -j RETURN
+
+##提高本地數據包的優先權：放在第1
+iptables -t mangle -A OUTPUT -p tcp -m tcp --dport 22 -j MARK --set-mark 1
+iptables -t mangle -A OUTPUT -p tcp -m tcp --dport 22 -j RETURN
+
+iptables -t mangle -A OUTPUT -p icmp -j MARK --set-mark 1
+iptables -t mangle -A OUTPUT -p icmp -j RETURN
+
+#本地small packets (probably just ACKs)
+iptables -t mangle -A OUTPUT -p tcp -m length --length :64 -j MARK --set-mark 2
+iptables -t mangle -A OUTPUT -p tcp -m length --length :64 -j RETURN
+
+#(4). 向PREROUTING中添加完mangle規則後，用這條規則結束PREROUTING表：
+##也就是說前面沒有打過標記的數據包將交給1:24處理。
+##實際上是不必要的，因為1:24是缺省類，但仍然打上標記是為了保持整個設置的協調一致，而且這樣
+#還能看到規則的包計數。
+
+iptables -t mangle -A PREROUTING -i $DEV -j MARK --set-mark 6
+echo "標記完畢! mangle mark done!"
+}
+#-----------------------------------------------------------------------------------------------------
+
+#8.取消mangle標記用的自定義函數
+stop_mangle() {
+   
+   echo -n "停止數據標記 stop mangle table......"
+   ( iptables -t mangle -F && echo "ok." ) || echo "error."
+}
+
+#9.取消隊列用的   
+stop_routing() {
+   echo -n "(刪除所有隊列......)"
+   ( tc qdisc del dev $DEV root && tc qdisc del dev $DEV ingress && echo "ok.刪除成功!" ) || echo "error."
+}
+
+#10.顯示狀態
+status() {
+   echo "1.show qdisc $DEV  (顯示上行隊列):----------------------------------------------"
+   tc -s qdisc show dev $DEV
+   echo "2.show class $DEV  (顯示上行分類):----------------------------------------------"
+   tc class show dev $DEV
+   echo "3. tc -s class show dev $DEV (顯示上行隊列和分類流量詳細資訊):------------------"
+   tc -s class show dev $DEV
+   echo "說明:設置總隊列上行帶寬 $UPLINK k."
+   echo "1. classid 1:11 ssh、dns、和帶有SYN標記的數據包。這是最高優先權的類包並最先類 "
+   echo "2. classid 1:12 重要數據,這是較高優先權的類。"
+   echo "3. classid 1:21 web,pop 服務 "
+   echo "4. classid 1:22 smtp服務 "
+   echo "5. classid 1:23 ftp-data服務 "
+   echo "6. classid 1:24 其他服務 "
+}
+
+#11.顯示幫助
+usage() {
+   echo "使用方法(usage): `basename $0` [start | stop | restart | status | mangle ]"
+   echo "參數作用:"
+   echo "start   開始流量控制"
+   echo "stop    停止流量控制"
+   echo "restart 重啟流量控制"
+   echo "status  顯示隊列流量"
+   echo "mangle  顯示mark標記"
+}
+
+#----------------------------------------------------------------------------------------------
+#12. 下面是腳本運行參數的選擇的控制
+#
+kernel=`eval uname -r`
+case "$kernel" in
+   2.2*)
+      echo " (!) Error: won't do anything with 2.2.x 不支持內核2.2.x"
+      exit 1
+      ;;
+     
+   2.4*|2.6*)
+      case "$1" in
+         start)
+       ( start_routing && start_mangle && echo "開始流量控制! TC started!" ) || echo "error."
+             
+       exit 0
+       ;;
+
+    stop)
+       ( stop_routing && stop_mangle && echo "停止流量控制! TC stopped!" ) || echo "error."
+      
+       exit 0
+       ;;
+    restart)
+       stop_routing
+       stop_mangle
+       start_routing
+       start_mangle
+      
+       echo "流量控制規則重新裝載!"
+       ;;
+    status)
+       status
+       ;;
+      
+    mangle)
+       echo "iptables -t mangle -L (顯示目前mangle表表標記詳細):"
+       iptables -t mangle -nL
+       ;;
+
+      
+    *) usage
+       exit 1
+       ;;
+      esac
+      ;;
+
+   *)
+      echo " (!) Error: Unknown kernel version. 桒check it !"
+      exit 1
+      ;;
+esac
+#三.結束語
+#1. 如果要支持htb,請到相關網站下載有關補丁.
+#此腳本是參考http://lartc.org 和 http://luxik.cdi.cz/~devik/qos/htb/ 和http://www.docum.org/docum.org
+#和聽取chinaunix.net的C++版主JohnBull的"Linux的高級路由和流量控制北京沙龍講座錄音
+#及關於<<Linux的高級路由和流量控制HOWTO中文版>>,經過不斷調試得出的總結結果,在此感謝所有作出貢獻的人.
+#2. iptables,在http://www.iptables.org/ .iptables v1.2.7a 和tc是Red hat linux 9.0下自帶的版本.
+#3. 此腳本已經在Red Hat Linux 9.0內核2.4.20上,內網約70台頻繁上網機器的環境下運行數月,事實證明良好.
+#4. 如果ADSL帶寬不同或有變,調節相關rate參數及ceil參數即可.
+#5. 還有,如果結合IMQ,IMQ(Intermediate queueing device,仲介隊列設備)把上行和下行都進行分類控制
+#就更理想了,但要支持IMQ,就要重新編譯內核.關於補丁和更多的文檔請參閱imq網站http://www.linuximq.net/
+#6. 歡迎交流yahoo messegsender: kindgeorge#yahoo.com此腳本將有待不斷完善.
+#7. 除了ADSL外,還可以進行其他寬帶的控制.
+#8. 如果看誰老是在網內搞鬼,經常佔滿帶寬,就把它列為黑名單,並派到"無所謂的數據通道",以防無所謂的人
+#在阻礙正務: iptables -t mangle -I PREROUTING 1 -s 192.168.xxx.xxx -j MARK --set-mark 6
+#            iptables -t mangle -I PREROUTING 2 -s 192.168.xxx.xxx -j RETURN
+#9.使用方法: 整篇文檔拷貝後,chmod +x tc2 ,
+#執行腳本: ./tc2 start (或其他參數start | stop | restart | status | mangle )即可
+#如果想每次在ppp啟動時就啟動,則在/etc/ppp/ip-up 文件裏面加上一句: /路徑/tc2 restart
+echo "script done!"
+exit 1
+#end----------------------------------------------------------------------------------------

@@ -1,0 +1,148 @@
+1: Wed, 15 Dec 2010 16:15:29 +0800
+
+com.android.camera.stress.SwitchPreview:
+Failure in testSwitchMode:
+junit.framework.AssertionFailedError: Camera Switch Mode
+	at com.android.camera.stress.SwitchPreview.prepareOutputFile(SwitchPreview.java:71)
+	at com.android.camera.stress.SwitchPreview.setUp(SwitchPreview.java:55)
+	at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:169)
+	at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:154)
+	at android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:520)
+	at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:1447)
+
+Test results for InstrumentationTestRunner=.F
+Time: 4.3
+
+FAILURES!!!
+Tests run: 1,  Failures: 1,  Errors: 0
+
+
+2: Wed, 15 Dec 2010 16:15:39 +0800
+
+com.android.camera.stress.SwitchPreview:
+Failure in testSwitchMode:
+junit.framework.AssertionFailedError: Camera Switch Mode
+	at com.android.camera.stress.SwitchPreview.prepareOutputFile(SwitchPreview.java:71)
+	at com.android.camera.stress.SwitchPreview.setUp(SwitchPreview.java:55)
+	at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:169)
+	at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:154)
+	at android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:520)
+	at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:1447)
+
+Test results for InstrumentationTestRunner=.F
+Time: 4.087
+
+FAILURES!!!
+Tests run: 1,  Failures: 1,  Errors: 0
+
+
+3: Wed, 15 Dec 2010 16:15:49 +0800
+
+com.android.camera.stress.SwitchPreview:
+Failure in testSwitchMode:
+junit.framework.AssertionFailedError: Camera Switch Mode
+	at com.android.camera.stress.SwitchPreview.prepareOutputFile(SwitchPreview.java:71)
+	at com.android.camera.stress.SwitchPreview.setUp(SwitchPreview.java:55)
+	at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:169)
+	at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:154)
+	at android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:520)
+	at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:1447)
+
+Test results for InstrumentationTestRunner=.F
+Time: 3.988
+
+FAILURES!!!
+Tests run: 1,  Failures: 1,  Errors: 0
+
+
+4: Wed, 15 Dec 2010 16:16:00 +0800
+
+com.android.camera.stress.SwitchPreview:
+Failure in testSwitchMode:
+junit.framework.AssertionFailedError: Camera Switch Mode
+	at com.android.camera.stress.SwitchPreview.prepareOutputFile(SwitchPreview.java:71)
+	at com.android.camera.stress.SwitchPreview.setUp(SwitchPreview.java:55)
+	at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:169)
+	at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:154)
+	at android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:520)
+	at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:1447)
+
+Test results for InstrumentationTestRunner=.F
+Time: 4.136
+
+FAILURES!!!
+Tests run: 1,  Failures: 1,  Errors: 0
+
+
+5: Wed, 15 Dec 2010 16:16:10 +0800
+
+com.android.camera.stress.SwitchPreview:
+Failure in testSwitchMode:
+junit.framework.AssertionFailedError: Camera Switch Mode
+	at com.android.camera.stress.SwitchPreview.prepareOutputFile(SwitchPreview.java:71)
+	at com.android.camera.stress.SwitchPreview.setUp(SwitchPreview.java:55)
+	at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:169)
+	at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:154)
+	at android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:520)
+	at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:1447)
+
+Test results for InstrumentationTestRunner=.F
+Time: 4.147
+
+FAILURES!!!
+Tests run: 1,  Failures: 1,  Errors: 0
+
+
+6: Wed, 15 Dec 2010 16:16:21 +0800
+
+com.android.camera.stress.SwitchPreview:INSTRUMENTATION_RESULT: shortMsg=java.lang.RuntimeException
+INSTRUMENTATION_RESULT: longMsg=java.lang.RuntimeException: Fail to connect to camera service
+INSTRUMENTATION_CODE: 0
+7: Wed, 15 Dec 2010 16:16:28 +0800
+
+com.android.camera.stress.SwitchPreview:INSTRUMENTATION_RESULT: shortMsg=java.lang.RuntimeException
+INSTRUMENTATION_RESULT: longMsg=java.lang.RuntimeException: Fail to connect to camera service
+INSTRUMENTATION_CODE: 0
+8: Wed, 15 Dec 2010 16:16:33 +0800
+
+com.android.camera.stress.SwitchPreview:INSTRUMENTATION_RESULT: shortMsg=java.lang.RuntimeException
+INSTRUMENTATION_RESULT: longMsg=java.lang.RuntimeException: Fail to connect to camera service
+INSTRUMENTATION_CODE: 0
+9: Wed, 15 Dec 2010 16:16:40 +0800
+
+com.android.camera.stress.SwitchPreview:INSTRUMENTATION_RESULT: shortMsg=java.lang.RuntimeException
+INSTRUMENTATION_RESULT: longMsg=java.lang.RuntimeException: Fail to connect to camera service
+INSTRUMENTATION_CODE: 0
+10: Wed, 15 Dec 2010 16:16:46 +0800
+
+com.android.camera.stress.SwitchPreview:INSTRUMENTATION_RESULT: shortMsg=java.lang.RuntimeException
+INSTRUMENTATION_RESULT: longMsg=java.lang.RuntimeException: Fail to connect to camera service
+INSTRUMENTATION_CODE: 0
+11: Wed, 15 Dec 2010 16:16:52 +0800
+
+com.android.camera.stress.SwitchPreview:INSTRUMENTATION_RESULT: shortMsg=java.lang.RuntimeException
+INSTRUMENTATION_RESULT: longMsg=java.lang.RuntimeException: Fail to connect to camera service
+INSTRUMENTATION_CODE: 0
+12: Wed, 15 Dec 2010 16:16:58 +0800
+
+com.android.camera.stress.SwitchPreview:INSTRUMENTATION_RESULT: shortMsg=java.lang.RuntimeException
+INSTRUMENTATION_RESULT: longMsg=java.lang.RuntimeException: Fail to connect to camera service
+INSTRUMENTATION_CODE: 0
+13: Wed, 15 Dec 2010 16:17:04 +0800
+
+com.android.camera.stress.SwitchPreview:INSTRUMENTATION_RESULT: shortMsg=java.lang.RuntimeException
+INSTRUMENTATION_RESULT: longMsg=java.lang.RuntimeException: Fail to connect to camera service
+INSTRUMENTATION_CODE: 0
+14: Wed, 15 Dec 2010 16:17:09 +0800
+
+com.android.camera.stress.SwitchPreview:INSTRUMENTATION_RESULT: shortMsg=java.lang.RuntimeException
+INSTRUMENTATION_RESULT: longMsg=java.lang.RuntimeException: Fail to connect to camera service
+INSTRUMENTATION_CODE: 0
+15: Wed, 15 Dec 2010 16:17:16 +0800
+
+com.android.camera.stress.SwitchPreview:INSTRUMENTATION_RESULT: shortMsg=java.lang.RuntimeException
+INSTRUMENTATION_RESULT: longMsg=java.lang.RuntimeException: Fail to connect to camera service
+INSTRUMENTATION_CODE: 0
+16: Wed, 15 Dec 2010 16:17:22 +0800
+
+com.android.camera.stress.SwitchPreview:

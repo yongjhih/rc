@@ -1,0 +1,12 @@
+#!/bin/sh
+if [ `echo -n "$0" | grep '2l'` ]; then
+  to="tr '[A-Z]' '[a-z]'"
+else
+  to="tr '[a-z]' '[A-Z]'"
+fi
+
+while [ "$1" ]; do
+  echo mv "$1" `echo -n "$1" | $to`
+  shift
+done
+

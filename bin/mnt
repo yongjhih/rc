@@ -1,0 +1,33 @@
+#!/bin/sh
+# Author: 陳勇志(yjchen, yongjhih), yongjhih at gmail dot com
+
+
+[ "$1" ] || echo "Usage: $0 [OPTIONS]... [device]...
+example:
+	$0 -o iocharset=utf8 /dev/sda*
+"
+
+# mount [OPTION]... {/dev/,/mnt/}sda1
+MNT_PATH=/mnt/
+MNT_DIR=""
+MNT_OPTIONS=""
+#eval last=\$${#}
+#echo $last
+#echo $MNT_PATH$(basename $last)
+
+while [ "$1" ]; do
+  case "$1" in
+    [-]*)
+      #MNT_OPTIONS="$MNT_OPTIONS $1 $2"
+      shift
+    ;;
+    [^-]*)
+      MNT_DIR=$(basename "$1")
+      test -d $MNT_PATH$MNT_DIR || ( mkdir -p $MNT_PATH$MNT_DIR )
+      #mount "$MNT_OPTIONS" "$1" "$MNT_PATH$MNT_DIR"
+      mount "$1" "$MNT_PATH$MNT_DIR"
+    ;;
+  esac
+  shift
+done
+

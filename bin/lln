@@ -1,0 +1,13 @@
+#!/bin/sh
+# ln -s $1..$last-1 $last/
+# Author: yongjhih(yjchen)
+# TODO
+# 你常常希望把工作目錄底下的 source 要 sym-link 到其他地方，
+# 卻又很懶得自己補上完整路徑嗎？
+
+eval last=\${$#}
+while [ "$2" ]; do
+  ln -s "$1" "$last"
+  shift
+done
+

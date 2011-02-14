@@ -1,0 +1,4 @@
+#!/bin/sh
+for f in "$@"; do
+  mv -- "$f" "$(echo $f | iconv -f big5 -t utf8)"
+done

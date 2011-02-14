@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# usermod -a -G  adm disk dialout fax cdrom floppy tape audio dip video plugdev fuse lpadmin netdev admin sambashare messagebus andrew
+
+while [ "$1" ]; do
+	usermod -a -G  "$1" "andrew"
+	shift
+done
+

@@ -1,0 +1,7 @@
+#!/bin/sh
+
+while [ $1 ]; do
+  cp -a "$1"{,.bak}
+  shift
+done
+

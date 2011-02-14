@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+#for i in userdata.img boot.img; do fastboot flash "${i%.*}" "$i"; done
+
+if [ ! "$1" ]; then
+	cat <<EOF
+$0 <image.img ...>
+EOF
+
+	exit 1
+fi
+
+while [ "$1" ]; do
+	FILEPATH="${1##*/}"
+	FILENAME="${FILEPATH%.img}"
+	#for i in userdata.img boot.img; do fastboot flash "${i%.*}" "$i"; done
+	if [ "${1%.img}" = "$1" ]; then
+		echo "$1 is not *.img, skip."
+	else
+		fastboot flash "$FILENAME" "$1"
+	fi
+
+	shift
+done
+
+fastboot reboot
+

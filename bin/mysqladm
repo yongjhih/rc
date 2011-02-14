@@ -1,0 +1,70 @@
+#!/bin/sh
+admin=root
+host=localhost
+# $db
+create()
+{
+  if [ ! "$1" ]; then
+    echo ""$0 $command" db"
+    exit 1
+  fi
+  mysqladmin -u "$admin" -p create "$1"
+}
+# $db
+drop()
+{
+  if [ ! "$1" ]; then
+    echo ""$0 $command" db"
+    exit 1
+  fi
+  mysqladmin -u "$admin" -p drop "$1"
+}
+# $user $db [$password]
+useradd()
+{
+  if [ ! "$2" ]; then
+    echo ""$0 $command" user db [password]"
+    exit 1
+  fi
+  if [ "$3" ]; then
+    password="$3"
+  else
+    password=`rdm` 
+    echo "$password"
+  fi
+  mysql --i-am-a-dummy -u "$admin" -p -e "GRANT all on \`"$2"\`.* to '"$1"'@'"$host"' identified by '"$password"'; flush privileges;"
+}
+# $user [$db]
+userdel()
+{
+  if [ ! "$1" ]; then
+    echo ""$0 $command" user [db]"
+    exit 1
+  fi
+  if [ ! "$2" ]; then
+    #mysql --i-am-a-dummy -u "$admin" -p -e "DELETE FROM mysql.user WHERE User='"$1"'; flush privileges;"
+    mysql --i-am-a-dummy -u "$admin" -p -e "DROP USER '"$1"'@'"$host"';"
+  else
+    mysql --i-am-a-dummy -u "$admin" -p -e "REVOKE all ON \`"$2"\`.* FROM '"$1"'@'"$host"';"
+  fi
+}
+
+show()
+{
+  mysql --i-am-a-dummy -u $admin -p -e "show databases;"
+}
+
+# $user $password
+passwd()
+{
+  if [ ! "$2" ]; then
+    echo ""$0 $command" user password"
+    exit 1
+  fi
+  mysql --i-am-a-dummy -u $admin -p -e "set password for '"$1"'@'"$host"' = password('"$2"');"
+}
+
+command="$1"
+shift
+"$command" "$@"
+

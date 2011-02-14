@@ -1,0 +1,16 @@
+#!/bin/sh
+# 清除 iptables rules
+# Author: yongjhih(yjchen)
+# 如果有 ip 才清除
+
+# for ip_pattern
+. /home/yjchen/bin/inc/regex
+export PATH=/sbin:"$PATH"
+list_path=/tmp/"`date "+%Y%m%d_%H%M"`"_banip.list
+
+iptables -L -n | grep "$ip_pattern"
+if [ $? -eq "0" ]; then
+  iptables -L -n | grep "$ip_pattern" >> "$list_path"
+  iptables -F
+fi
+

@@ -1,0 +1,32 @@
+#!/bin/sh
+# 自動防砍站/封鎖大量連線
+# Author: yongjhih(yjchen)
+# TODO
+
+export PATH=/home/yjchen/bin:/sbin:"$PATH"
+conn_limit=50
+export log_path=/tmp/ban.log
+export ban_list=/tmp/ban.list
+export format="%Y/%m/%d %H:%M:%S"
+
+# 把連線統計讀進來
+counnect | while read line; do
+  n_conn=`echo "$line" | awk '{print $1}'`
+  ip=`echo "$line" | awk '{print $2}'`
+  # 封鎖超過限制的連線數量的 ip，banip
+  if [ "$n_conn" -gt "$conn_limit" ]; then
+    # 尚未封鎖中的 ip
+    iptables -L -n | grep "$ip"
+    # 目前先用有找到就算
+    if [ "$?" -ne "0" ]; then
+      echo "`date +"$format"`: $n_conn $ip" >> "$log_path"
+      banip "$ip"
+      echo "`date +"$format"`: $n_conn $ip ban" >> "$log_path"
+      echo "`date +"$format"`: $n_conn $ip" >> "$ban_list"
+    fi
+  fi
+done
+
+# 自動解除封鎖
+aunban
+

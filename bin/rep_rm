@@ -1,0 +1,25 @@
+#!/bin/sh
+
+prompt ()
+{
+  while [ $1 ]; do
+    echo -n "$1 "
+    shift
+  done
+  echo
+  echo -n "Are you really? "
+}
+
+
+if [ $2 ]; then
+prompt "$@"
+read line
+case $line in
+  y*|Y*)
+    echo "$@"
+  ;;
+esac
+fi
+
+rm "$@"
+

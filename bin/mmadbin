@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+if [ ! "$1" ]; then
+	exit 1
+fi
+
+. "$HOME/workspace/android_src_froyo/build/envsetup.sh"
+
+#mmm "../../../../packages/apps/$1" && adb install -r "system/app/$1.apk"
+APP_NAME="${1##*/}"
+#APP_NAME_NO_SUFFIX="${APP_NAME%.*}"
+
+#mmadbin system/app/Contacts.apk
+APK="$1"
+shift # shift $1
+
+mmm "../../../../packages/apps/${APP_NAME%.*}" "$@" && adb install -r "$APK"
+

@@ -1,0 +1,15 @@
+#!/bin/sh
+
+ln -s "桌面" "desktop"
+ln -s "下載" "download"
+ln -s "模板" "template"
+ln -s "公共" "public"
+
+ln -s "音樂" "music"
+
+ln -s "圖片" "picture"
+
+ln -s "影片" "video"
+
+ln -s "文件" "document"
+

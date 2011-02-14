@@ -1,0 +1,33 @@
+#!/bin/sh
+# {{{
+# Title: multi-curl
+# Author: Yong-jhih
+# Date: 三  4月 16 03:18:25 CST 2008
+# 不能 cat file.part* > file，因為排序不一致，如：
+# part1
+# part10
+# part11
+# 可使用 ls 的排序
+# ls -v
+# }}}
+
+if [ ! $2 ]
+then
+  echo "Usage: $0 <n_part> <file>"
+  exit 1
+fi
+
+SZ_FILE=$(curl -I "$2" 2> /dev/null | grep "Content-Length: " | sed 's/Content-Length: \([0-9]\+\)\s*$/\1/')
+DE=$(($SZ_FILE / $1))
+#echo "$SZ_FILE / $1 == $DE"
+PART=0
+for ((i=0; i < $1-1; i++))
+do
+  curl -r "$PART-$(($PART + $DE - 1))" -o "$(basename $2).part$((i+1))" "$2"
+  PART=$(($PART + $DE))
+#  echo -n $PART-
+#  PART=$(($PART + $DE))
+#  echo $(($PART-1))
+done
+curl -r "$PART-$(($SZ_FILE - 1))" -o "$(basename $2).part$((i+1))" "$2"
+

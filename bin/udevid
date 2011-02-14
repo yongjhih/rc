@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ ! "$2" ]; then
+	exit 1
+fi
+
+udevadm info --attribute-walk --name="/dev/bus/usb/$1/$2" | grep id
+

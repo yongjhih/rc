@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+# clone $SRC $DEST*
+
+[ ! $2 ] && exit 1
+# Destination
+SRC="$1"
+shift
+while [ "$1" ]; do
+  cp "$SRC" "$1"
+  shift
+done
+

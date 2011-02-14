@@ -1,0 +1,17 @@
+#!/bin/sh
+
+if [ $1 ]; then
+n=$[$(echo $1 | sed 's/\D//g') - 1]
+else
+n=8
+fi
+#if [ $n -le 1 ]; then
+#  n=2
+#head -c $n < /dev/urandom | uuencode -m - | tail -n 2 |head -n 1 | sed 's/\W//g' | cut -c 1
+#else
+#head -c $n < /dev/urandom | uuencode -m - | tail -n 2 |head -n 1 | sed 's/\W//g'
+##head -c 2925 /dev/urandom | uuencode -m - | head -n 66 | tail -n 1
+#fi
+
+echo $(tr -dc A-Za-z0-9  < /dev/urandom | head -c $n)
+

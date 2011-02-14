@@ -1,0 +1,66 @@
+#!/bin/sh
+
+day2="`date +%_d | sed 's/\s*//'`"
+month2="`date +%_m | sed 's/\s*//'`"
+year2="`date +%_Y | sed 's/\s*//'`"
+
+gbc_id="996031"
+if [ "$1" ]; then
+	gbc_id="$1"
+fi
+
+header="\
+如果上下班很準是 09:30 18:45 ，十之八九是我忘記帶卡去打卡，囧rz 。
+日期					上班	下班
+----------------------------------------------------
+"
+
+output_f="/tmp/$year2-$month2-$day2-$gbc_id-gbc-present.txt"
+
+if [ -f "$output_f" ]; then
+	header="cache
+$header"
+	echo "$header"
+	cat "$output_f"
+  exit 0
+fi
+
+echo "$header"
+
+#REQUEST="http://geip.gigabyte.com.tw/gpublic/empservice/admininfo/empstate/DEFAULT.ASP?B1=OK&CodeID=ALL&Dept=&MVNO=$gbc_id&cpf37=&day1=1&day2=$day2&month1=6&month2=$month2&tpe01=&year1=2010&year2=$year2"
+REQUEST="http://geip.gigabyte.com.tw/gpublic/empservice/admininfo/empstate/default.asp?B1=OK&CodeID=ALL&Dept=&MVNO=$gbc_id&cpf37=&day1=1&day2=$day2&month1=6&month2=$month2&tpe01=&year1=2010&year2=$year2"
+
+URL=`echo $REQUEST | sed 's/?.*//'`
+POST=`echo $REQUEST | sed 's/[^?]*?//'`
+
+#echo "$POST"
+#echo "$URL"
+source "/home/yjchen/bin/gbcpasswd"
+
+wget --user "$HTUSERNAME" --password "$HTPASSWD" --post-data "$POST" "$URL" -O - |
+tee "/tmp/$year2-$month2-$day2-$gbc_id-gbc-present.html" |
+iconv -f big5 -t utf8 |
+tee "/tmp/$year2-$month2-$day2-$gbc_id-gbc-present.utf8.html" |
+tr '\n\r' ' ' |
+sed 's/-->/&\n/g' | # avoid greedy
+sed 's/<!--.*-->//g' |
+sed 's/<\s*[tT][dD][^>]*>/\n&/g' |
+sed -n '/<\s*[tT][dD][^>]*>/p' |
+sed 's/<[^>]*>//g' |
+sed 's/&nbsp;/ /g' |
+sed '/^\s*$/d' |
+sed 's/^\s*//' |
+sed 's/\s*$//' |
+sed 's/\s\+/ /g' |
+sed 's/&amp;/\&/g' |
+sed 's/&lt;/</g' |
+sed 's/&gt;/>/g' |
+sed '1,/應用軟體部/d' |
+tr '\n\r' ' ' |
+sed 's/狀況/\n/g' |
+sed '/^\s*$/d' |
+sed 's/^\s*//' |
+sed 's/\s*$//' |
+sed 's/\s\+/\t/g' |
+tee "$output_f"
+

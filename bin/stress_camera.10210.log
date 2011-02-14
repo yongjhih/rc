@@ -1,0 +1,176 @@
+1: Wed, 15 Dec 2010 12:01:09 +0800
+android.util.AndroidException: INSTRUMENTATION_FAILED: com.android.camera.tests/android.test.InstrumentationTestRunner
+INSTRUMENTATION_STATUS: id=ActivityManagerService
+INSTRUMENTATION_STATUS: Error=Unable to find instrumentation info for: ComponentInfo{com.android.camera.tests/android.test.InstrumentationTestRunner}
+INSTRUMENTATION_STATUS_CODE: -1
+2: Wed, 15 Dec 2010 12:01:13 +0800
+INSTRUMENTATION_STATUS: id=ActivityManagerService
+INSTRUMENTATION_STATUS: Error=Unable to find instrumentation info for: ComponentInfo{com.android.camera.tests/android.test.InstrumentationTestRunner}
+INSTRUMENTATION_STATUS_CODE: -1
+android.util.AndroidException: INSTRUMENTATION_FAILED: com.android.camera.tests/android.test.InstrumentationTestRunner
+3: Wed, 15 Dec 2010 12:01:17 +0800
+INSTRUMENTATION_STATUS: id=ActivityManagerService
+INSTRUMENTATION_STATUS: Error=Unable to find instrumentation info for: ComponentInfo{com.android.camera.tests/android.test.InstrumentationTestRunner}
+INSTRUMENTATION_STATUS_CODE: -1
+android.util.AndroidException: INSTRUMENTATION_FAILED: com.android.camera.tests/android.test.InstrumentationTestRunner
+4: Wed, 15 Dec 2010 12:01:23 +0800
+INSTRUMENTATION_STATUS: id=ActivityManagerService
+INSTRUMENTATION_STATUS: Error=Unable to find instrumentation info for: ComponentInfo{com.android.camera.tests/android.test.InstrumentationTestRunner}
+android.util.AndroidException: INSTRUMENTATION_FAILED: com.android.camera.tests/android.test.InstrumentationTestRunner
+INSTRUMENTATION_STATUS_CODE: -1
+5: Wed, 15 Dec 2010 12:01:27 +0800
+INSTRUMENTATION_STATUS: id=ActivityManagerService
+INSTRUMENTATION_STATUS: Error=Unable to find instrumentation info for: ComponentInfo{com.android.camera.tests/android.test.InstrumentationTestRunner}
+INSTRUMENTATION_STATUS_CODE: -1
+android.util.AndroidException: INSTRUMENTATION_FAILED: com.android.camera.tests/android.test.InstrumentationTestRunner
+6: Wed, 15 Dec 2010 12:01:31 +0800
+INSTRUMENTATION_STATUS: id=ActivityManagerServiceandroid.util.AndroidException: INSTRUMENTATION_FAILED: com.android.camera.tests/android.test.InstrumentationTestRunner
+
+INSTRUMENTATION_STATUS: Error=Unable to find instrumentation info for: ComponentInfo{com.android.camera.tests/android.test.InstrumentationTestRunner}
+INSTRUMENTATION_STATUS_CODE: -1
+7: Wed, 15 Dec 2010 12:01:35 +0800
+INSTRUMENTATION_STATUS: id=ActivityManagerService
+INSTRUMENTATION_STATUS: Error=Unable to find instrumentation info for: ComponentInfo{com.android.camera.tests/android.test.InstrumentationTestRunner}
+android.util.AndroidException: INSTRUMENTATION_FAILED: com.android.camera.tests/android.test.InstrumentationTestRunner
+INSTRUMENTATION_STATUS_CODE: -1
+8: Wed, 15 Dec 2010 12:01:40 +0800
+INSTRUMENTATION_STATUS: id=ActivityManagerServiceandroid.util.AndroidException: INSTRUMENTATION_FAILED: com.android.camera.tests/android.test.InstrumentationTestRunner
+INSTRUMENTATION_STATUS: Error=Unable to find instrumentation info for: ComponentInfo{com.android.camera.tests/android.test.InstrumentationTestRunner}
+INSTRUMENTATION_STATUS_CODE: -1
+
+9: Wed, 15 Dec 2010 12:01:44 +0800
+INSTRUMENTATION_STATUS: id=ActivityManagerService
+INSTRUMENTATION_STATUS: Error=Unable to find instrumentation info for: ComponentInfo{com.android.camera.tests/android.test.InstrumentationTestRunner}
+INSTRUMENTATION_STATUS_CODE: -1
+android.util.AndroidException: INSTRUMENTATION_FAILED: com.android.camera.tests/android.test.InstrumentationTestRunner
+10: Wed, 15 Dec 2010 12:01:48 +0800
+android.util.AndroidException: INSTRUMENTATION_FAILED: com.android.camera.tests/android.test.InstrumentationTestRunner
+INSTRUMENTATION_STATUS: id=ActivityManagerService
+INSTRUMENTATION_STATUS: Error=Unable to find instrumentation info for: ComponentInfo{com.android.camera.tests/android.test.InstrumentationTestRunner}
+INSTRUMENTATION_STATUS_CODE: -1
+11: Wed, 15 Dec 2010 12:01:52 +0800
+INSTRUMENTATION_STATUS: id=ActivityManagerService
+INSTRUMENTATION_STATUS: Error=Unable to find instrumentation info for: ComponentInfo{com.android.camera.tests/android.test.InstrumentationTestRunner}
+INSTRUMENTATION_STATUS_CODE: -1
+android.util.AndroidException: INSTRUMENTATION_FAILED: com.android.camera.tests/android.test.InstrumentationTestRunner
+12: Wed, 15 Dec 2010 12:01:56 +0800
+INSTRUMENTATION_STATUS: id=ActivityManagerServiceandroid.util.AndroidException: INSTRUMENTATION_FAILED: com.android.camera.tests/android.test.InstrumentationTestRunner
+
+INSTRUMENTATION_STATUS: Error=Unable to find instrumentation info for: ComponentInfo{com.android.camera.tests/android.test.InstrumentationTestRunner}
+INSTRUMENTATION_STATUS_CODE: -1
+13: Wed, 15 Dec 2010 12:02:01 +0800
+INSTRUMENTATION_STATUS: id=ActivityManagerServiceandroid.util.AndroidException: INSTRUMENTATION_FAILED: com.android.camera.tests/android.test.InstrumentationTestRunner
+
+INSTRUMENTATION_STATUS: Error=Unable to find instrumentation info for: ComponentInfo{com.android.camera.tests/android.test.InstrumentationTestRunner}
+INSTRUMENTATION_STATUS_CODE: -1
+14: Wed, 15 Dec 2010 12:02:05 +0800
+INSTRUMENTATION_STATUS: id=ActivityManagerService
+INSTRUMENTATION_STATUS: Error=Unable to find instrumentation info for: ComponentInfo{com.android.camera.tests/android.test.InstrumentationTestRunner}
+INSTRUMENTATION_STATUS_CODE: -1
+android.util.AndroidException: INSTRUMENTATION_FAILED: com.android.camera.tests/android.test.InstrumentationTestRunner
+15: Wed, 15 Dec 2010 12:02:09 +0800
+INSTRUMENTATION_STATUS: id=ActivityManagerServiceandroid.util.AndroidException: INSTRUMENTATION_FAILED: com.android.camera.tests/android.test.InstrumentationTestRunner
+
+INSTRUMENTATION_STATUS: Error=Unable to find instrumentation info for: ComponentInfo{com.android.camera.tests/android.test.InstrumentationTestRunner}
+INSTRUMENTATION_STATUS_CODE: -1
+16: Wed, 15 Dec 2010 12:02:14 +0800
+INSTRUMENTATION_STATUS: id=ActivityManagerServiceandroid.util.AndroidException: INSTRUMENTATION_FAILED: com.android.camera.tests/android.test.InstrumentationTestRunner
+
+INSTRUMENTATION_STATUS: Error=Unable to find instrumentation info for: ComponentInfo{com.android.camera.tests/android.test.InstrumentationTestRunner}
+INSTRUMENTATION_STATUS_CODE: -1
+17: Wed, 15 Dec 2010 12:02:18 +0800
+INSTRUMENTATION_STATUS: id=ActivityManagerService
+INSTRUMENTATION_STATUS: Error=Unable to find instrumentation info for: ComponentInfo{com.android.camera.tests/android.test.InstrumentationTestRunner}android.util.AndroidException: INSTRUMENTATION_FAILED: com.android.camera.tests/android.test.InstrumentationTestRunner
+
+INSTRUMENTATION_STATUS_CODE: -1
+18: Wed, 15 Dec 2010 12:02:22 +0800
+INSTRUMENTATION_STATUS: id=ActivityManagerService
+INSTRUMENTATION_STATUS: Error=Unable to find instrumentation info for: ComponentInfo{com.android.camera.tests/android.test.InstrumentationTestRunner}
+INSTRUMENTATION_STATUS_CODE: -1
+android.util.AndroidException: INSTRUMENTATION_FAILED: com.android.camera.tests/android.test.InstrumentationTestRunner
+19: Wed, 15 Dec 2010 12:02:26 +0800
+INSTRUMENTATION_STATUS: id=ActivityManagerServiceandroid.util.AndroidException: INSTRUMENTATION_FAILED: com.android.camera.tests/android.test.InstrumentationTestRunner
+
+INSTRUMENTATION_STATUS: Error=Unable to find instrumentation info for: ComponentInfo{com.android.camera.tests/android.test.InstrumentationTestRunner}
+INSTRUMENTATION_STATUS_CODE: -1
+20: Wed, 15 Dec 2010 12:02:31 +0800
+INSTRUMENTATION_STATUS: id=ActivityManagerServiceandroid.util.AndroidException: INSTRUMENTATION_FAILED: com.android.camera.tests/android.test.InstrumentationTestRunner
+
+INSTRUMENTATION_STATUS: Error=Unable to find instrumentation info for: ComponentInfo{com.android.camera.tests/android.test.InstrumentationTestRunner}
+INSTRUMENTATION_STATUS_CODE: -1
+21: Wed, 15 Dec 2010 12:02:35 +0800
+INSTRUMENTATION_STATUS: id=ActivityManagerService
+INSTRUMENTATION_STATUS: Error=Unable to find instrumentation info for: ComponentInfo{com.android.camera.tests/android.test.InstrumentationTestRunner}
+INSTRUMENTATION_STATUS_CODE: -1
+android.util.AndroidException: INSTRUMENTATION_FAILED: com.android.camera.tests/android.test.InstrumentationTestRunner
+22: Wed, 15 Dec 2010 12:02:39 +0800
+INSTRUMENTATION_STATUS: id=ActivityManagerService
+INSTRUMENTATION_STATUS: Error=Unable to find instrumentation info for: ComponentInfo{com.android.camera.tests/android.test.InstrumentationTestRunner}
+INSTRUMENTATION_STATUS_CODE: -1
+android.util.AndroidException: INSTRUMENTATION_FAILED: com.android.camera.tests/android.test.InstrumentationTestRunner
+23: Wed, 15 Dec 2010 12:02:44 +0800
+INSTRUMENTATION_STATUS: id=ActivityManagerServiceandroid.util.AndroidException: INSTRUMENTATION_FAILED: com.android.camera.tests/android.test.InstrumentationTestRunner
+
+INSTRUMENTATION_STATUS: Error=Unable to find instrumentation info for: ComponentInfo{com.android.camera.tests/android.test.InstrumentationTestRunner}
+INSTRUMENTATION_STATUS_CODE: -1
+24: Wed, 15 Dec 2010 12:02:48 +0800
+INSTRUMENTATION_STATUS: id=ActivityManagerService
+INSTRUMENTATION_STATUS: Error=Unable to find instrumentation info for: ComponentInfo{com.android.camera.tests/android.test.InstrumentationTestRunner}
+INSTRUMENTATION_STATUS_CODE: -1
+android.util.AndroidException: INSTRUMENTATION_FAILED: com.android.camera.tests/android.test.InstrumentationTestRunner
+25: Wed, 15 Dec 2010 12:02:52 +0800
+INSTRUMENTATION_STATUS: id=ActivityManagerServiceandroid.util.AndroidException: INSTRUMENTATION_FAILED: com.android.camera.tests/android.test.InstrumentationTestRunner
+INSTRUMENTATION_STATUS: Error=Unable to find instrumentation info for: ComponentInfo{com.android.camera.tests/android.test.InstrumentationTestRunner}
+INSTRUMENTATION_STATUS_CODE: -1
+
+26: Wed, 15 Dec 2010 12:02:56 +0800
+INSTRUMENTATION_STATUS: id=ActivityManagerServiceandroid.util.AndroidException: INSTRUMENTATION_FAILED: com.android.camera.tests/android.test.InstrumentationTestRunner
+
+INSTRUMENTATION_STATUS: Error=Unable to find instrumentation info for: ComponentInfo{com.android.camera.tests/android.test.InstrumentationTestRunner}
+INSTRUMENTATION_STATUS_CODE: -1
+27: Wed, 15 Dec 2010 12:03:01 +0800
+INSTRUMENTATION_STATUS: id=ActivityManagerServiceandroid.util.AndroidException: INSTRUMENTATION_FAILED: com.android.camera.tests/android.test.InstrumentationTestRunner
+
+INSTRUMENTATION_STATUS: Error=Unable to find instrumentation info for: ComponentInfo{com.android.camera.tests/android.test.InstrumentationTestRunner}
+INSTRUMENTATION_STATUS_CODE: -1
+28: Wed, 15 Dec 2010 12:03:05 +0800
+INSTRUMENTATION_STATUS: id=ActivityManagerService
+INSTRUMENTATION_STATUS: Error=Unable to find instrumentation info for: ComponentInfo{com.android.camera.tests/android.test.InstrumentationTestRunner}
+INSTRUMENTATION_STATUS_CODE: -1
+android.util.AndroidException: INSTRUMENTATION_FAILED: com.android.camera.tests/android.test.InstrumentationTestRunner
+29: Wed, 15 Dec 2010 12:03:09 +0800
+INSTRUMENTATION_STATUS: id=ActivityManagerServiceandroid.util.AndroidException: INSTRUMENTATION_FAILED: com.android.camera.tests/android.test.InstrumentationTestRunner
+
+INSTRUMENTATION_STATUS: Error=Unable to find instrumentation info for: ComponentInfo{com.android.camera.tests/android.test.InstrumentationTestRunner}
+INSTRUMENTATION_STATUS_CODE: -1
+30: Wed, 15 Dec 2010 12:03:13 +0800
+INSTRUMENTATION_STATUS: id=ActivityManagerServiceandroid.util.AndroidException: INSTRUMENTATION_FAILED: com.android.camera.tests/android.test.InstrumentationTestRunner
+
+INSTRUMENTATION_STATUS: Error=Unable to find instrumentation info for: ComponentInfo{com.android.camera.tests/android.test.InstrumentationTestRunner}
+INSTRUMENTATION_STATUS_CODE: -1
+31: Wed, 15 Dec 2010 12:03:18 +0800
+INSTRUMENTATION_STATUS: id=ActivityManagerService
+INSTRUMENTATION_STATUS: Error=Unable to find instrumentation info for: ComponentInfo{com.android.camera.tests/android.test.InstrumentationTestRunner}
+android.util.AndroidException: INSTRUMENTATION_FAILED: com.android.camera.tests/android.test.InstrumentationTestRunner
+INSTRUMENTATION_STATUS_CODE: -1
+32: Wed, 15 Dec 2010 12:03:22 +0800
+INSTRUMENTATION_STATUS: id=ActivityManagerServiceandroid.util.AndroidException: INSTRUMENTATION_FAILED: com.android.camera.tests/android.test.InstrumentationTestRunner
+
+INSTRUMENTATION_STATUS: Error=Unable to find instrumentation info for: ComponentInfo{com.android.camera.tests/android.test.InstrumentationTestRunner}
+INSTRUMENTATION_STATUS_CODE: -1
+33: Wed, 15 Dec 2010 12:03:26 +0800
+INSTRUMENTATION_STATUS: id=ActivityManagerServiceandroid.util.AndroidException: INSTRUMENTATION_FAILED: com.android.camera.tests/android.test.InstrumentationTestRunner
+
+INSTRUMENTATION_STATUS: Error=Unable to find instrumentation info for: ComponentInfo{com.android.camera.tests/android.test.InstrumentationTestRunner}
+INSTRUMENTATION_STATUS_CODE: -1
+34: Wed, 15 Dec 2010 12:03:30 +0800
+INSTRUMENTATION_STATUS: id=ActivityManagerServiceandroid.util.AndroidException: INSTRUMENTATION_FAILED: com.android.camera.tests/android.test.InstrumentationTestRunner
+INSTRUMENTATION_STATUS: Error=Unable to find instrumentation info for: ComponentInfo{com.android.camera.tests/android.test.InstrumentationTestRunner}
+INSTRUMENTATION_STATUS_CODE: -1
+
+35: Wed, 15 Dec 2010 12:03:35 +0800
+INSTRUMENTATION_STATUS: id=ActivityManagerService
+INSTRUMENTATION_STATUS: Error=Unable to find instrumentation info for: ComponentInfo{com.android.camera.tests/android.test.InstrumentationTestRunner}
+INSTRUMENTATION_STATUS_CODE: -1
+android.util.AndroidException: INSTRUMENTATION_FAILED: com.android.camera.tests/android.test.InstrumentationTestRunner
+36: Wed, 15 Dec 2010 12:03:39 +0800
