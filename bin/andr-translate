@@ -20,8 +20,8 @@ cat "$SOURCE" | tr '\r\n' ' ' |
 # remove commentation
 sed 's/-->/&\n/g' |
 sed 's/<!--.*-->//g' |
-sed 's/<string/\n&/g' |
-sed 's/<\/string>/&\n/g' |
+sed 's/\(<string[^>]*>\)\s*/\n\1/g' |
+sed 's/\s*\(<\/string>\)/\1\n/g' |
 while read line; do
 	#echo "$line" | grep '<!--[^>]*-->' > /dev/null
 	#if [ "$?" == "0" ]; then # match
@@ -75,8 +75,8 @@ cat "$IMPORT" | tr '\r\n' ' ' |
 sed -e 's/^\s*//g' -e 's/\s*$//g' |
 sed 's/-->/&\n/g' |
 sed 's/<!--.*-->//g' |
-sed 's/<string/\n&/g' |
-sed 's/<\/string>/&\n/g' |
+sed 's/\(<string[^>]*>\)\s*/\n\1/g' |
+sed 's/\s*\(<\/string>\)/\1\n/g' |
 while read line; do
 	echo "$line" | grep '^\s*<string[^>]*name="\([^"]*\)"[^>]*>.*</string>\s*' > /dev/null
 	if [ "$?" != "0" ]; then # not match
