@@ -8,7 +8,7 @@ filetype on
 filetype plugin on
 filetype indent on
 
-set shiftwidth=4
+set shiftwidth=8
 "set tabstop=2
 set foldmethod=marker
 " highlighted search results
@@ -23,7 +23,7 @@ set fileencodings=utf-8,big5,gbk,cp936,iso-2022-jp,sjis,euc-jp,euc-kr,utf-bom,is
 set fileencoding=utf-8
 "set spell spelllang=en_us 
 set number
-set expandtab
+"set expandtab
 " {{{ colorscheme
 set background=dark
 "colorscheme c9s
@@ -74,7 +74,7 @@ let g:snip_end_tag = "»"
 
 " indent line {{{
 set list
-set listchars=tab:\|\ 
+set listchars=tab:\|\ ,eol:$,trail:_
 " indent line }}}
 
 " ydict {{{
@@ -140,4 +140,6 @@ highlight User6 ctermfg=white
 
 imap jj <ESC>
 imap ,, -><C-X><C-O>
+
+autocmd BufReadPost * :DetectIndent
 
