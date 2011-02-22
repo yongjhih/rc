@@ -141,5 +141,7 @@ highlight User6 ctermfg=white
 imap jj <ESC>
 imap ,, -><C-X><C-O>
 
+" missing below, add back
 autocmd BufReadPost * :DetectIndent
+highlight Normal guifg=white guibg=black
 
