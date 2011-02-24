@@ -27,6 +27,7 @@ function build() {
 }
 
 function backup() {
+  return 0
 }
 
 repo-sync "$WORKSPACE/mirror"
