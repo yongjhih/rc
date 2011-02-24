@@ -1,4 +1,8 @@
 #!/usr/bin/env sh
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
 # clone $SRC $DEST*
 
 [ ! $2 ] && exit 1

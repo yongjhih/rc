@@ -1,4 +1,8 @@
 #!/usr/bin/env perl
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
 #
 # You want to install cpanminus? Run the following command and it will
 # install itself for you. You might want to run it as a root with sudo

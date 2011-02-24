@@ -1,4 +1,6 @@
 #!/bin/sh
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
 # for linux
 #ctags -R --exclude=.sn --exclude=.git
 CSCOPE_LIST="/tmp/cscope.files.$$"

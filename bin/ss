@@ -1,2 +1,4 @@
 #!/bin/sh
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
 screen -S `basename $1` ssh $*

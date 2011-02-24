@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
 
 if [ ! "$1" ]; then
 	exit 1
 fi
 
-git status -s | grep '[MA] .*/_code_base/' | sed "s#[MA]\s\+\(.*\)\(/_code_base/\)\(.*\)#cp -a \"\1\2\3\" \"\1/$1/\3\"#" | sh
+git status -s | grep '[MA] .*/'"$1"'/' | sed "s#[MA]\s\+\(.*/\)\($1\)\(/.*\)#cp -a \"\1_code_base\3\" \"\1/$1/\3\"#" | sh
 

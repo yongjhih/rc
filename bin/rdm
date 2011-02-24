@@ -1,4 +1,6 @@
 #!/bin/sh
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
 
 if [ $1 ]; then
 n=$[$(echo $1 | sed 's/\D//g') - 1]

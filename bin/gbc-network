@@ -1,4 +1,8 @@
 #!/bin/sh
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
 
 echo "nameserver 10.8.9.1" >> /etc/resolv.conf
 ifconfig eth0 10.8.27.228 netmask 255.255.255.0

@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
 ## Name: hiChannel command line tuner
 ## Copyright (R) 2007-2008 Shih-Yuan Lee (FourDollars) <fourdollars@gmail.com>
 ## License: GPLv3

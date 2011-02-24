@@ -1,4 +1,5 @@
-" Author: CHEN Yong-jhih (陳勇志, yjchen, yongjhih)
+" Author: Andrew Chen <yongjhih@gmail.com>
+" CC, Creative Commons
 " {{{ For Win32
 "source $VIMRUNTIME/vimrc_example.vim
 "source $VIMRUNTIME/mswin.vim

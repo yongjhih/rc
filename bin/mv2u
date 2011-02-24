@@ -1,4 +1,6 @@
 #!/bin/sh
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
 if [ `echo -n "$0" | grep '2l'` ]; then
   to="tr '[A-Z]' '[a-z]'"
 else

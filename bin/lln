@@ -1,4 +1,6 @@
 #!/bin/sh
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
 # ln -s $1..$last-1 $last/
 # Author: yongjhih(yjchen)
 # TODO

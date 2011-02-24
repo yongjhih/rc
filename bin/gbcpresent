@@ -1,4 +1,8 @@
 #!/bin/sh
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
 
 day2="`date +%_d | sed 's/\s*//'`"
 month2="`date +%_m | sed 's/\s*//'`"

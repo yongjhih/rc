@@ -1,4 +1,8 @@
 #!/bin/bash
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
 #
 #Wrapper for xml2po for android and launchpad: Import .xml's from .po's, or export/update .po's from string.xml's. Provide a string with value "translator-credits" for Launchpad.
 #   

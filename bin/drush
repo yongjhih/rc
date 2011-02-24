@@ -1,4 +1,8 @@
 #!/usr/bin/env sh
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
 # $Id: drush,v 1.15 2010/02/05 14:10:09 greg1anderson Exp $
 #
 # This script is a simple wrapper that will run Drush with the most appropriate

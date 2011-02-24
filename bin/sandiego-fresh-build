@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
+#
+
+WORKSPACE="/home/andrew/workspace/sandiego"
+PROJECTS="`echo {SSSS,DSDS}/{pure,base}/android`"
+GBC_FEATURE_PROVIDER_PATH="/home/andrew/workspace/GbcFeatureProvider"
+BACKUP_LIST=
+
+#repo init -u "sandiego_dev@git.gbc.intra:android/platform/manifest.git" -b "sku1/M76XXTSNCJNLYA60401002_DSDS_dvt2_w1103" --reference="/home/andrew/workspace/sandiego/mirror"
+
+function build() {
+	[ "$2" ] || return 1
+	cd "$1" || return 1
+
+	repo forall -c "git reset --hard && git clean -df"
+	repo sync
+
+	. ~/.andrchoose
+
+	#feature_switch.py --auto_merge=/dev/shm/merge -p ~/workspace/GbcFeatureProvider/project_config/GSmart_DSDS.cfg
+	feature_switch.py -n --auto_merge="/dev/shm/merge.$$" -p "$2"
+
+	make clean
+	make
+}
+
+function backup() {
+}
+
+repo-sync "$WORKSPACE/mirror"
+
+repo-sync "$WORKSPACE/DSDS/base/android"
+repo-sync "/home/andrew/workspace/sandiego/DSDS/pure/android"
+
+build "$WORKSPACE/DSDS/pure/android" "$GBC_FEATURE_PROVIDER_PATH/project_config/GSmart_DSDS.cfg"
+backup
+build "$WORKSPACE/DSDS/base/android" "$GBC_FEATURE_PROVIDER_PATH/project_config/GSmart_DSDS.cfg"
+

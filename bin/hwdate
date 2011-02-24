@@ -1,4 +1,8 @@
 #!/bin/sh
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
 
 # /usr/share/doc/ntpdate/README.Debian
 # Note that ntpdate is *not* really intended to be used by hosts with

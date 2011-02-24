@@ -1,2 +1,6 @@
 #!/bin/sh
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
 sed -e '1,/^SYNOPSIS/d' -e '/^DESCRIPTION/,$d'

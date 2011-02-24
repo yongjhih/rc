@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
 REPO_BIN="$HOME/bin/repo"
 REPO_WORK_PATH="$HOME/workspace/repo"
 REPO_URL="http://android.git.kernel.org/repo"

@@ -1,4 +1,6 @@
 #!/bin/sh
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
 export PATH=/sbin:"$PATH"
 
 if [ "`basename "$0"`" = "banip" ]; then

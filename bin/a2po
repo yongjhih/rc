@@ -1,4 +1,8 @@
 #!/usr/bin/python
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
 # EASY-INSTALL-ENTRY-SCRIPT: 'android2po==1.1.0','console_scripts','a2po'
 __requires__ = 'android2po==1.1.0'
 import sys

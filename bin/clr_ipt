@@ -1,4 +1,8 @@
 #!/bin/sh
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
 # 清除 iptables rules
 # Author: yongjhih(yjchen)
 # 如果有 ip 才清除

@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
 
 if [ ! "$1" ]; then
 	COUNT="200"

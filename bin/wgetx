@@ -1,4 +1,6 @@
 #!/bin/sh
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
 while [ $1 ]; do
 #wget -q $1 && tar xf `basename $1`
   wget -q -O - $1 | tar zx

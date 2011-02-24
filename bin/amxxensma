@@ -1,4 +1,8 @@
 #!/bin/sh
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
 
 hlds=/home/yjchen/hlds-test
 amxx=/home/yjchen/public_html/hl/amxmodx

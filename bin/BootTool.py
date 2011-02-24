@@ -1,4 +1,8 @@
 #!/usr/bin/env python
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
 # -*- coding: utf-8 -*-
 
 import os

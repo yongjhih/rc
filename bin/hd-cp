@@ -1,4 +1,8 @@
 #!/bin/sh
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
 
 wget -q -O - http://www.coolpc.com.tw/evaluate.php --post-data=tax=0 | iconv -f big5 -t utf8 | sed -n '/SATA2規格/,/最新一代 SATA3規格/p' | sed 's/<[^>]*>//g' | sed '/^\s*$/d' | 
 while read line; do

@@ -1,4 +1,6 @@
 #!/usr/bin/perl
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
 #-----------------------------------------------------------------------------
 # Allows you to get one unique output log file, sorted on date,
 # built from particular sources.

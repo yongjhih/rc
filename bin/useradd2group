@@ -1,4 +1,6 @@
 #!/bin/sh
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
 
 # usermod -a -G  adm disk dialout fax cdrom floppy tape audio dip video plugdev fuse lpadmin netdev admin sambashare messagebus andrew
 

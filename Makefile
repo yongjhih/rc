@@ -1,3 +1,6 @@
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
+#
 init:
 	mv ~/.vim /tmp/
 	ln -fs `pwd`/.vim ~/.vim

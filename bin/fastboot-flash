@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
 #for i in userdata.img boot.img; do fastboot flash "${i%.*}" "$i"; done
 
 if [ ! "$1" ]; then

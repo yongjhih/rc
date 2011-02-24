@@ -1,4 +1,8 @@
 #!/bin/sh
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
 for i in `ifconfig | awk '/^[a-zA-Z]/{print $1}' | grep -v lo`; do
   for j in `ethtool -i $i | awk '/^driver/{print $2}'`; do
     grep $j ~/tmp

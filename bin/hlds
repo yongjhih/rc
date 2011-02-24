@@ -1,4 +1,8 @@
 #!/bin/sh
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
 HLDS_DIR=/usr/share/hlds
 cd $HLDS_DIR
 #screen -A -m -d -S hlds ./hlds_run -game cstrike +maxplayers 32 +map cs_bloodstrike -insecure +servercfgfile 27015_server.cfg -port 27015

@@ -1,4 +1,6 @@
 #!/usr/bin/python
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
 # EASY-INSTALL-ENTRY-SCRIPT: 'Babel==1.0dev','console_scripts','pybabel'
 __requires__ = 'Babel==1.0dev'
 import sys

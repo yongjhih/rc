@@ -1,2 +1,4 @@
 #!/bin/sh
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
 wget $1 && tar xf $(basename $1)
