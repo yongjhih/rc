@@ -22,6 +22,7 @@ function build() {
 	if [ "$2" ]; then
 		feature_switch.py -n --auto_merge="/dev/shm/merge.$$" -p "$2"
 	fi
+	mkctagscope
 
 	make clean
 	make
