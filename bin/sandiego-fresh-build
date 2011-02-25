@@ -11,23 +11,25 @@ BACKUP_LIST=
 #repo init -u "sandiego_dev@git.gbc.intra:android/platform/manifest.git" -b "sku1/M76XXTSNCJNLYA60401002_DSDS_dvt2_w1103" --reference="/home/andrew/workspace/sandiego/mirror"
 
 function build() {
-	[ "$2" ] || return 1
 	cd "$1" || return 1
 
 	repo forall -c "git reset --hard && git clean -df"
 	repo sync
 
-	. ~/.andrchoose
+	. /home/andrew/.andrchoose
 
 	#feature_switch.py --auto_merge=/dev/shm/merge -p ~/workspace/GbcFeatureProvider/project_config/GSmart_DSDS.cfg
-	feature_switch.py -n --auto_merge="/dev/shm/merge.$$" -p "$2"
+	if [ "$2" ]; then
+		feature_switch.py -n --auto_merge="/dev/shm/merge.$$" -p "$2"
+	fi
 
 	make clean
 	make
 }
 
 function backup() {
-  return 0
+	# TODO backup system.img, boot.img, userdata, recovery.img, system/
+	return 0
 }
 
 repo-sync "$WORKSPACE/mirror"
@@ -35,7 +37,8 @@ repo-sync "$WORKSPACE/mirror"
 repo-sync "$WORKSPACE/DSDS/base/android"
 repo-sync "/home/andrew/workspace/sandiego/DSDS/pure/android"
 
-build "$WORKSPACE/DSDS/pure/android" "$GBC_FEATURE_PROVIDER_PATH/project_config/GSmart_DSDS.cfg"
+build "$WORKSPACE/DSDS/pure/android"
 backup
 build "$WORKSPACE/DSDS/base/android" "$GBC_FEATURE_PROVIDER_PATH/project_config/GSmart_DSDS.cfg"
+backup
 
