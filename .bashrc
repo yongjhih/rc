@@ -181,7 +181,9 @@ export PERL5LIB="$HOME/perl5/lib/perl5"
 #export https_proxy=https://localhost:3128/
 #export ftp_proxy=ftp://localhost:3128/
 
-PATH="$PATH:$HOME/workspace/GbcFeatureProvider/tools"
+if [ ! `echo "$PATH" | grep "$HOME/workspace/GbcFeatureProvider/tools"` ]; then
+	PATH="$PATH:$HOME/workspace/GbcFeatureProvider/tools"
+fi
 
 #export ANDROID_SRC="$HOME/workspace/android_src_froyo"
 ANDROID_SDK_TOOL="$HOME/sdk/android-sdk-linux_x86/tools"
@@ -203,6 +205,8 @@ export PYTHONPATH="$HOME/lib"
 
 #set bell-style visible
 
+function screen-ps()
+{
 #case $TERM in
 		#xterm*|rxvt*)
 				#PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}[`basename ${PWD}`]\007"'
@@ -211,19 +215,20 @@ export PYTHONPATH="$HOME/lib"
                 #PROMPT_COMMAND='echo -ne "\033k\033\134\033k${HOSTNAME}[`basename ${PWD}`]\033\134"'
 				#;;
 		#*)
-                PROMPT_COMMAND='echo -ne "\033k`basename ${PWD}`\033\\"'
-                #PROMPT_COMMAND='echo -e '\033k'mytitle'\033\\'
+		export PROMPT_COMMAND='echo -ne "\033k`basename ${PWD}`\033\\"'
+		#PROMPT_COMMAND='echo -e '\033k'mytitle'\033\\'
 				#;;
 #esac
-
+}
+screen-ps
 
 git-forall()
 {
-    find -type d -name .git | while read line; do
-        pushd "${line%*/.git}"
-        $@
-        popd
-    done
+	find -type d -name .git | while read line; do
+		pushd "${line%*/.git}"
+		$@
+		popd
+	done
 }
 
 #export JAVAHOME=/usr/lib/jvm/java-1.6-sun
