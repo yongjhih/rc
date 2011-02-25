@@ -122,6 +122,8 @@ inoremap {} {}<ESC>i
 
 if ! has('gui')
     highlight Comment ctermfg=gray ctermbg=darkblue
+else
+    highlight Normal guifg=white guibg=black
 endif
 
 
@@ -137,12 +139,11 @@ highlight User4 term=underline cterm=underline ctermfg=white
 highlight User5 ctermfg=cyan
 highlight User6 ctermfg=white 
 
-"au Filetype html,xml,xsl source ~/.vim/scripts/closetag.vim 
+"au Filetype html,xml,xsl source ~/.vim/scripts/closetag.vim
 
 imap jj <ESC>
 imap ,, -><C-X><C-O>
 
 " missing below, add back
 autocmd BufReadPost * :DetectIndent
-highlight Normal guifg=white guibg=black
 
