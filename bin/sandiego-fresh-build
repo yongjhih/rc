@@ -4,25 +4,31 @@
 #
 
 WORKSPACE="/home/andrew/workspace/sandiego"
-PROJECTS="`echo {SSSS,DSDS}/{pure,base}/android`"
+PROJECTS="`echo daily/{dsds,ssss}/{pure,base}/android`"
 GBC_FEATURE_PROVIDER_PATH="/home/andrew/workspace/GbcFeatureProvider"
-BACKUP_LIST=
+BACKUP_LIST=""
 
 #repo init -u "sandiego_dev@git.gbc.intra:android/platform/manifest.git" -b "sku1/M76XXTSNCJNLYA60401002_DSDS_dvt2_w1103" --reference="/home/andrew/workspace/sandiego/mirror"
 
 function build() {
+	echo "cd $1"
 	cd "$1" || return 1
+	shift
 
-	repo forall -c "git reset --hard && git clean -df"
-	repo sync
+	mkctagscope
+	if [ -d "$1" ]; then
+		echo "add features"
+		#feature_switch.py --auto_merge=/dev/shm/merge -p ~/workspace/GbcFeatureProvider/project_config/GSmart_DSDS.cfg
+		feature_switch.py -n --auto_merge="/dev/shm/merge.$$" -p "$2"
+		shift
+	else
+		echo "no features added"
+	fi
 
 	. /home/andrew/.andrchoose
 
-	#feature_switch.py --auto_merge=/dev/shm/merge -p ~/workspace/GbcFeatureProvider/project_config/GSmart_DSDS.cfg
-	if [ "$2" ]; then
-		feature_switch.py -n --auto_merge="/dev/shm/merge.$$" -p "$2"
-	fi
-	mkctagscope
+	repo forall -c "git reset --hard && git clean -df"
+	repo sync
 
 	make clean
 	make
@@ -33,13 +39,20 @@ function backup() {
 	return 0
 }
 
-repo-sync "$WORKSPACE/mirror"
+echo "repo-sync $WORKSPACE/mirror"
+repo-sync "$WORKSPACE/mirror" || echo "mirror: repo-sync fail"
 
-repo-sync "$WORKSPACE/DSDS/base/android"
-repo-sync "/home/andrew/workspace/sandiego/DSDS/pure/android"
+#echo "repo-sync $WORKSPACE/daily/dsds/base/android"
+#repo-sync "$WORKSPACE/daily/dsds/base/android" || echo "base: repo-sync fail"
 
-build "$WORKSPACE/DSDS/pure/android"
+echo "build $WORKSPACE/daily/dsds/pure/android"
+build "$WORKSPACE/daily/dsds/pure/android"
 backup
-build "$WORKSPACE/DSDS/base/android" "$GBC_FEATURE_PROVIDER_PATH/project_config/GSmart_DSDS.cfg"
+
+#echo "repo-sync $WORKSPACE/daily/dsds/base/android"
+#repo-sync "$WORKSPACE/daily/dsds/base/android" || echo "pure: repo-sync fail"
+
+echo "build $WORKSPACE/daily/dsds/base/android $GBC_FEATURE_PROVIDER_PATH/project_config/GSmart_DSDS.cfg"
+build "$WORKSPACE/daily/dsds/base/android" "$GBC_FEATURE_PROVIDER_PATH/project_config/GSmart_DSDS.cfg"
 backup
 
