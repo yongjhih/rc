@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 ANDRCHOOSE_WORK_PATH="`pwd`"
 
 . "$HOME/.andrc"
