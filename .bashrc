@@ -186,18 +186,11 @@ if [ ! `echo "$PATH" | grep "$HOME/workspace/GbcFeatureProvider/tools"` ]; then
 fi
 
 #export ANDROID_SRC="$HOME/workspace/android_src_froyo"
-ANDROID_SDK_TOOL="$HOME/sdk/android-sdk-linux_x86/tools"
+ANDROID_SDK_TOOL="$HOME/sdk/android-sdk-linux_x86/tools:$HOME/sdk/android-sdk-linux_x86/platform-tools"
 #export ANDROID_SRC="/home/andrew/workspace/android_src_froyo"
 #export ANDROID_SDK_TOOL="/home/andrew/sdk/android-sdk-linux_x86/tools"
 
-# find root dir of android source
-if [ ! "$ANDROID_SDK_TOOL" ]; then
-	ANDROID_SDK_TOOL="$HOME/sdk/android-sdk-linux_x86/tools"
-fi
-
-if [ -d "$ANDROID_SDK_TOOL" ]; then
-	PATH="$PATH:$ANDROID_SDK_TOOL"
-fi
+PATH="$PATH:$ANDROID_SDK_TOOL"
 
 alias emuand='emulator -system system.img -data userdata.img -ramdisk ramdisk.img'
 

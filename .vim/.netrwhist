@@ -1,10 +1,4 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =8
-let g:netrw_dirhist_1='/home/andrew/bin'
-let g:netrw_dirhist_2='/home/andrew/rc.d/.vim'
-let g:netrw_dirhist_3='/home/andrew/workspace/sandiego/SS/android/packages/apps/SoundRecorder/res/values'
-let g:netrw_dirhist_4='/home/andrew/workspace/GbcFeatureProvider/.git/refs/remotes/origin'
-let g:netrw_dirhist_5='/home/andrew/workspace/sandiego/SS/android/packages/apps/SoundRecorder/res/layout-port'
-let g:netrw_dirhist_6='/home/andrew/workspace/sandiego/SS/android/packages/apps/SoundRecorder/res/layout-land'
-let g:netrw_dirhist_7='/home/andrew/workspace/sandiego/SS/android/vendor/qcom/qrd-proprietary/packages/apps/Phone/res'
-let g:netrw_dirhist_8='/tmp'
+let g:netrw_dirhist_cnt =2
+let g:netrw_dirhist_1='/home/andrew/rc.d/bin/inc'
+let g:netrw_dirhist_2='/home/andrew/workspace/svn/android_pkg/full_pack/trunk/files/etc/flex/GSmart'

@@ -8,10 +8,11 @@ else
 	COUNT="$1"
 fi
 
-	#adb shell am instrument -e class com.android.camera.stress.ImageCapture -w com.android.camera.tests/android.test.InstrumentationTestRunner
+#adb shell am instrument -e class com.android.camera.stress.ImageCapture -w com.android.camera.tests/android.test.InstrumentationTestRunner
+#adb shell am instrument -e class com.android.camera.stress.ImageCapture -w com.android.camera.tests/android.test.InstrumentationTestRunner
 for i in `eval echo {1.."$COUNT"}`; do
 	echo -e "$i: `date -R`"
-	adb shell am instrument -e class com.android.camera.stress.SwitchPreview -w com.android.camera.tests/android.test.InstrumentationTestRunner
+	adb shell am instrument -e class com.android.camera.stress.ImageCapture -w com.android.camera.tests/android.test.InstrumentationTestRunner
 	sleep 3
-done | tee -a "$0.$$.log"
+done | tee -a "/tmp/$$.log"
 

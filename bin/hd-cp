@@ -4,16 +4,20 @@
 # Author: Andrew Chen <yongjhih@gmail.com>
 # CC, Creative Commons
 
-wget -q -O - http://www.coolpc.com.tw/evaluate.php --post-data=tax=0 | iconv -f big5 -t utf8 | sed -n '/SATA2規格/,/最新一代 SATA3規格/p' | sed 's/<[^>]*>//g' | sed '/^\s*$/d' | 
+wget -q -O - "http://www.coolpc.com.tw/evaluate.php" --post-data=tax=0 |
+iconv -f big5 -t utf8 |
+sed -n '/SATA2規格/,/最新一代 SATA3規格/p' |
+sed 's/<[^>]*>//g' | sed '/^\s*$/d' |
 while read line; do
-    p=`echo $line | sed 's/.*$\([0-9\.]\+\)\s.*/\1/'`            
-    t=`echo $line | sed 's/.*[^0-9\.]\([0-9\.]\+\)T.*/\1/'`             
-        case $t in                                                          
-                [0-9.]*) c=`echo $t | awk '{print $1*1024}'`                
-                ;;                                                          
-                *) c=`echo $line | sed 's/.*[^0-9\.]\([0-9\.]\+\)G.*/\1/'`  
-        esac                                                                
-                                                                            
-        r=`echo $p $c | awk '{print $1/$2}'`                                
-        echo "$r,\$$p,${c}G:    $line"                                      
-done | sort -n                         
+    p=`echo $line | sed 's/.*$\([0-9\.]\+\)\s.*/\1/'`
+    t=`echo $line | sed 's/.*[^0-9\.]\([0-9\.]\+\)T.*/\1/'`
+        case $t in
+                [0-9.]*) c=`echo $t | awk '{print $1*1024}'`
+                ;;
+                *) c=`echo $line | sed 's/.*[^0-9\.]\([0-9\.]\+\)G.*/\1/'`
+        esac
+
+        r=`echo $p $c | awk '{print $1/$2}'`
+        echo "$r,\$$p,${c}G:    $line"
+done | sort -n
+

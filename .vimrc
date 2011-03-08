@@ -10,7 +10,9 @@ filetype plugin on
 filetype indent on
 
 set shiftwidth=8
-"set tabstop=2
+set tabstop=8
+"set softtab=8
+"set expandtab
 set foldmethod=marker
 " highlighted search results
 set hlsearch
@@ -24,7 +26,6 @@ set fileencodings=utf-8,big5,gbk,cp936,iso-2022-jp,sjis,euc-jp,euc-kr,utf-bom,is
 set fileencoding=utf-8
 "set spell spelllang=en_us 
 set number
-"set expandtab
 " {{{ colorscheme
 set background=dark
 "colorscheme c9s
@@ -146,4 +147,27 @@ imap ,, -><C-X><C-O>
 
 " missing below, add back
 autocmd BufReadPost * :DetectIndent
+set cursorcolumn
+set cursorline
 
+" xmledit {{{
+let g:xml_syntax_folding=1
+au FileType xml setlocal foldmethod=syntax
+" xmledit }}}
+
+" undo-persistence {{{
+"set undofile
+"set undodir=/tmp/undos
+" undo-persistence }}}
+
+"The Control+R mechanism is very useful:-) (in insert mode)
+"" the unnamed register, containing the text of the last delete or yank
+"% the current file name
+"# the alternate file name
+"* the clipboard contents (X11: primary selection)
+"+ the clipboard contents
+"/ the last search pattern
+": the last command-line
+". the last inserted text
+"- the last small (less than a line) delete
+"=5*5 insert 25 into text (mini-calculator)

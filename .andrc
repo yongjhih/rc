@@ -1,4 +1,3 @@
-#!/bin/sh
 # this file must be source not execute, because didnt export variable
 
 ##

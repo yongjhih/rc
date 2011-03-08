@@ -2,7 +2,7 @@
 # Author: Andrew Chen <yongjhih@gmail.com>
 # CC, Creative Commons
 #
-
+. /home/andrew/.bashrc
 WORKSPACE="/home/andrew/workspace/sandiego"
 PROJECTS="`echo daily/{dsds,ssss}/{pure,base}/android`"
 GBC_FEATURE_PROVIDER_PATH="/home/andrew/workspace/GbcFeatureProvider"
@@ -15,20 +15,23 @@ function build() {
 	cd "$1" || return 1
 	shift
 
-	mkctagscope
-	if [ -d "$1" ]; then
-		echo "add features"
-		#feature_switch.py --auto_merge=/dev/shm/merge -p ~/workspace/GbcFeatureProvider/project_config/GSmart_DSDS.cfg
-		feature_switch.py -n --auto_merge="/dev/shm/merge.$$" -p "$2"
-		shift
-	else
-		echo "no features added"
-	fi
+	local GBC_FEATURE_PROVIDER="$1"
+	shift
+
+	repo forall -c "git reset --hard && git clean -df"
+	#repo forall -p -c "git checkout sku1/M76XXTSNCJNLYA60401002_7050_DSDS_dvt2_w1104"
+	repo sync
 
 	. /home/andrew/.andrchoose
 
-	repo forall -c "git reset --hard && git clean -df"
-	repo sync
+	if [ -f "$GBC_FEATURE_PROVIDER" ]; then
+		echo "add features"
+		#feature_switch.py --auto_merge=/dev/shm/merge -p ~/workspace/GbcFeatureProvider/project_config/GSmart_DSDS.cfg
+		"$GBC_FEATURE_PROVIDER_PATH/tools/feature_switch.py" -n --auto_merge="/dev/shm/merge.$$" -p "$GBC_FEATURE_PROVIDER"
+	else
+		echo "no features added"
+	fi
+	mkctagscope
 
 	make clean
 	make
@@ -54,5 +57,9 @@ backup
 
 echo "build $WORKSPACE/daily/dsds/base/android $GBC_FEATURE_PROVIDER_PATH/project_config/GSmart_DSDS.cfg"
 build "$WORKSPACE/daily/dsds/base/android" "$GBC_FEATURE_PROVIDER_PATH/project_config/GSmart_DSDS.cfg"
+backup
+
+echo "build $WORKSPACE/daily/dsds/base_7050/android $GBC_FEATURE_PROVIDER_PATH/project_config/GSmart_DSDS.cfg"
+build "$WORKSPACE/daily/dsds/base_7050/android" "$GBC_FEATURE_PROVIDER_PATH/project_config/GSmart_DSDS.cfg"
 backup
 
