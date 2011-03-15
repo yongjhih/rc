@@ -9,6 +9,7 @@ GBC_FEATURE_PROVIDER_PATH="/home/andrew/workspace/GbcFeatureProvider"
 BACKUP_LIST=""
 
 #repo init -u "sandiego_dev@git.gbc.intra:android/platform/manifest.git" -b "sku1/M76XXTSNCJNLYA60401002_DSDS_dvt2_w1103" --reference="/home/andrew/workspace/sandiego/mirror"
+#repo init -u "sandiego_dev@git.gbc.intra:android/platform/manifest.git" -b "sku1/M76XXTSNCJNLYA60401002_SSSS_dvt2" --reference="/home/andrew/workspace/sandiego/mirror"
 
 function build() {
 	echo "cd $1"
@@ -25,9 +26,13 @@ function build() {
 	. /home/andrew/.andrchoose
 
 	if [ -f "$GBC_FEATURE_PROVIDER" ]; then
+		pushd "$GBC_FEATURE_PROVIDER_PATH"
+		git pull
+		popd
 		echo "add features"
 		#feature_switch.py --auto_merge=/dev/shm/merge -p ~/workspace/GbcFeatureProvider/project_config/GSmart_DSDS.cfg
 		"$GBC_FEATURE_PROVIDER_PATH/tools/feature_switch.py" -n --auto_merge="/dev/shm/merge.$$" -p "$GBC_FEATURE_PROVIDER"
+		rm -fr "/dev/shm/merge.$$"
 	else
 		echo "no features added"
 	fi
@@ -48,18 +53,30 @@ repo-sync "$WORKSPACE/mirror" || echo "mirror: repo-sync fail"
 #echo "repo-sync $WORKSPACE/daily/dsds/base/android"
 #repo-sync "$WORKSPACE/daily/dsds/base/android" || echo "base: repo-sync fail"
 
-echo "build $WORKSPACE/daily/dsds/pure/android"
-build "$WORKSPACE/daily/dsds/pure/android"
+echo "build $WORKSPACE/daily/dsds/pure_7050_qrd/android"
+build "$WORKSPACE/daily/dsds/pure_7050_qrd/android"
 backup
 
 #echo "repo-sync $WORKSPACE/daily/dsds/base/android"
 #repo-sync "$WORKSPACE/daily/dsds/base/android" || echo "pure: repo-sync fail"
 
-echo "build $WORKSPACE/daily/dsds/base/android $GBC_FEATURE_PROVIDER_PATH/project_config/GSmart_DSDS.cfg"
-build "$WORKSPACE/daily/dsds/base/android" "$GBC_FEATURE_PROVIDER_PATH/project_config/GSmart_DSDS.cfg"
+#echo "build $WORKSPACE/daily/dsds/base/android $GBC_FEATURE_PROVIDER_PATH/project_config/GSmart_DSDS.cfg"
+#build "$WORKSPACE/daily/dsds/base/android" "$GBC_FEATURE_PROVIDER_PATH/project_config/GSmart_DSDS.cfg"
+#backup
+
+#echo "build $WORKSPACE/daily/dsds/base_7050/android $GBC_FEATURE_PROVIDER_PATH/project_config/GSmart_DSDS.cfg"
+#build "$WORKSPACE/daily/dsds/base_7050/android" "$GBC_FEATURE_PROVIDER_PATH/project_config/GSmart_DSDS.cfg"
+#backup
+
+echo "build $WORKSPACE/daily/dsds/base_7050_qrd/android $GBC_FEATURE_PROVIDER_PATH/project_config/GSmart_DSDS.cfg"
+build "$WORKSPACE/daily/dsds/base_7050_qrd/android" "$GBC_FEATURE_PROVIDER_PATH/project_config/GSmart_DSDS.cfg"
 backup
 
-echo "build $WORKSPACE/daily/dsds/base_7050/android $GBC_FEATURE_PROVIDER_PATH/project_config/GSmart_DSDS.cfg"
-build "$WORKSPACE/daily/dsds/base_7050/android" "$GBC_FEATURE_PROVIDER_PATH/project_config/GSmart_DSDS.cfg"
+echo "build $WORKSPACE/daily/ssss/pure/android"
+build "$WORKSPACE/daily/ssss/pure/android"
+backup
+
+echo "build $WORKSPACE/daily/ssss/base/android $GBC_FEATURE_PROVIDER_PATH/project_config/GSmart_SSSS.cfg"
+build "$WORKSPACE/daily/ssss/base/android" "$GBC_FEATURE_PROVIDER_PATH/project_config/GSmart_SSSS.cfg"
 backup
 

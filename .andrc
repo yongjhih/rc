@@ -36,6 +36,7 @@ if [ "$ANDROID_SRC" ]; then
 fi
 
 cd "$ANDRC_WORK_PATH"
+screen-ps # reset PROMPT
 
 function adb-push () {
 	[ ! "$1" ] && return 1

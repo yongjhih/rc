@@ -1,0 +1,26 @@
+[color]
+	ui = auto
+[user]
+	name = Andrew Chen
+	email = andrew.chen@gigabyte.com
+	signingkey = 01C54D62
+[merge]
+	tool = vimdiff
+[alias]
+	diffall = !gitdiffall
+	clear = !git reset --hard && git clean -df
+	l = log --graph
+	recurt = !git-recurt
+[giggle]
+	main-window-maximized = true
+	main-window-geometry = 0x0+0+0
+	file-view-vpane-position = 907
+	history-view-vpane-position = 485
+	main-window-view = HistoryView
+[hooks "gpg"]
+	;passphrase =
+[format]
+	;passphrase =
+	signingkey = 01C54D62
+	signoff = true
+

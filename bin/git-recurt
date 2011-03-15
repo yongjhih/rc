@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
+
+while [ "$1" ]; do
+	git revert "$1"
+	shift
+done
+
