@@ -37,9 +37,9 @@ function build() {
 		echo "no features added"
 	fi
 	mkctagscope
+	repo forall -c 'mkctagscope'
 
-	make clean
-	make
+	make || make clean || make
 }
 
 function backup() {
