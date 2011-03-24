@@ -23,7 +23,16 @@ function build_android()
 	[ "$1" ] || return 1
 
 	pushd "$1"
+	build_android_internel > "/tmp/$1.log"
+	popd
 
+	shift
+	[ "$1" ] || return 0
+	build_android "$@"
+}
+
+function build_android_internel()
+{
 	if [ ! -f "Makefile" ]; then
 		[ -f "branch" ] || return 1
 		local branch="`cat branch`"
@@ -38,11 +47,6 @@ function build_android()
 	$switch_gfp
 
 	make || make clean || make
-
-	popd
-	shift
-	[ "$1" ] || return 0
-	build_android "$@"
 }
 
 function build_ssss_pure_android()
