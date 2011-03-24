@@ -1,0 +1,102 @@
+#!/usr/bin/env bash
+# author: Andrew Chen <yongjhih@gmail.com>
+
+sandiego_daily="/home/andrew/sandiego/daily"
+
+android_list=(`find -mindepth 3 -maxdepth 3 -type d -name android`)
+android_ssss_pure_list=(`echo "${android_list[@]}" | grep ssss | grep pure`)
+android_dsds_pure_list=(`echo "${android_list[@]}" | grep dsds | grep pure`)
+android_ssss_base_list=(`echo "${android_list[@]}" | grep ssss | grep base`)
+android_dsds_base_list=(`echo "${android_list[@]}" | grep dsds | grep base`)
+
+amss_list=(`find -mindepth 3 -maxdepth 3 -type d -name amss`)
+# TODO amss
+
+gbc_feature_provider="/home/andrew/GbcFeatureProvider"
+android_mirror="/home/andrew/sandiego/mirror/android"
+amss_mirror="/home/andrew/sandiego/mirror/amss"
+
+korg_mirror="/home/andrew/korg/mirror/android"
+
+function build_android()
+{
+	[ "$1" ] || return 1
+
+	pushd "$1"
+
+	if [ ! -f "Makefile" ]; then
+		[ -f "branch" ] || return 1
+		local branch="`cat branch`"
+		repo init -u "sandiego_dev@git.gbc.intra:android/platform/manifest.git" -b "$branch" --reference "$android_mirror"
+	fi
+
+	repo forall -p -c 'git reset --hard; git clean -df'
+	repo sync -d
+
+	$pull_gfp
+
+	$switch_gfp
+
+	make || make clean || make
+
+	popd
+	shift
+	[ "$1" ] || return 0
+	build_android "$@"
+}
+
+function build_ssss_pure_android()
+{
+	pull_gfp=
+	switch_gfp=
+
+	build_android "$@"
+}
+
+function build_dsds_pure_android()
+{
+	pull_gfp=
+	switch_gfp=
+
+	build_android "$@"
+}
+
+function build_dsds_base_android()
+{
+	pull_gfp="eval pushd \$gbc_feature_provider;
+	./update_tools.py;
+	git pull;
+	popd;"
+
+	switch_gfp="eval \"\$gbc_feature_provider/tools/feature_switch.py\" -p \"\$gbc_feature_provider/project_config/GSmart_DSDS.cfg\" --auto_merge=\"/dev/shm/merge\""
+
+	build_android "$@"
+}
+
+function build_ssss_base_android()
+{
+	pull_gfp="eval pushd \$gbc_feature_provider;
+	./update_tools.py;
+	git pull;
+	popd;"
+
+	switch_gfp="eval \"\$gbc_feature_provider/tools/feature_switch.py\" -p \"\$gbc_feature_provider/project_config/GSmart_SSSS.cfg\" --auto_merge=\"/dev/shm/merge\""
+
+	build_android "$@"
+}
+
+pushd "$korg_mirror"
+repo sync
+popd
+
+pushd "$android_mirror"
+repo sync
+popd
+
+pushd "$sandiego_daily"
+build_ssss_pure_android "${android_pure_list[@]}"
+build_dsds_pure_android "${android_pure_list[@]}"
+build_ssss_base_android "${android_ssss_base_list[@]}"
+build_dsds_base_android "${android_dsds_base_list[@]}"
+popd
+
