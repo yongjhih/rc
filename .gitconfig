@@ -24,3 +24,5 @@
 	signingkey = 01C54D62
 	signoff = true
 
+[core]
+	editor = vi
