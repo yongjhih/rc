@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
-# author: Andrew Chen <yongjhih@gmail.com>
+# Author: Andrew Chen <yongjhih@gmail.com>
+# Date: Thu, 24 Mar 2011 09:27:44 +0800
 
 sandiego_daily="/home/andrew/sandiego/daily"
 
+pushd "$sandiego_daily"
 android_list=(`find -mindepth 3 -maxdepth 3 -type d -name android`)
 android_ssss_pure_list=(`echo "${android_list[@]}" | grep ssss | grep pure`)
 android_dsds_pure_list=(`echo "${android_list[@]}" | grep dsds | grep pure`)
@@ -23,7 +25,7 @@ function build_android()
 	[ "$1" ] || return 1
 
 	pushd "$1"
-	build_android_internel > "/tmp/$1.log"
+	build_android_internal | tee "/tmp/"`echo $1 | sed '''s#/#-#g'''`".log"
 	popd
 
 	shift
@@ -31,29 +33,32 @@ function build_android()
 	build_android "$@"
 }
 
-function build_android_internel()
+function build_android_internal()
 {
 	if [ ! -f "Makefile" ]; then
-		[ -f "branch" ] || return 1
+		#[ -f "branch" ] || return 1
 		local branch="`cat branch`"
+		#rm -fr .repo
 		repo init -u "sandiego_dev@git.gbc.intra:android/platform/manifest.git" -b "$branch" --reference "$android_mirror"
 	fi
+
+	. ~/.andrchoose
 
 	repo forall -p -c 'git reset --hard; git clean -df'
 	repo sync -d
 
-	$pull_gfp
+	#$pull_gfp
 
-	$switch_gfp
+	#$switch_gfp
 
-	make || make clean || make
+	mkctagscope
+	make -j8 || ( make -j8 clean && make -j8 )
 }
 
 function build_ssss_pure_android()
 {
 	pull_gfp=
 	switch_gfp=
-
 	build_android "$@"
 }
 
@@ -61,7 +66,6 @@ function build_dsds_pure_android()
 {
 	pull_gfp=
 	switch_gfp=
-
 	build_android "$@"
 }
 
@@ -71,8 +75,7 @@ function build_dsds_base_android()
 	./update_tools.py;
 	git pull;
 	popd;"
-
-	switch_gfp="eval \"\$gbc_feature_provider/tools/feature_switch.py\" -p \"\$gbc_feature_provider/project_config/GSmart_DSDS.cfg\" --auto_merge=\"/dev/shm/merge\""
+	switch_gfp="eval \"\$gbc_feature_provider/tools/feature_switch.py\" -n -p \"\$gbc_feature_provider/project_config/GSmart_DSDS.cfg\" --auto_merge=\"/dev/shm/merge\""
 
 	build_android "$@"
 }
@@ -83,24 +86,24 @@ function build_ssss_base_android()
 	./update_tools.py;
 	git pull;
 	popd;"
-
-	switch_gfp="eval \"\$gbc_feature_provider/tools/feature_switch.py\" -p \"\$gbc_feature_provider/project_config/GSmart_SSSS.cfg\" --auto_merge=\"/dev/shm/merge\""
+	switch_gfp="eval \"\$gbc_feature_provider/tools/feature_switch.py\" -n -p \"\$gbc_feature_provider/project_config/GSmart_SSSS.cfg\" --auto_merge=\"/dev/shm/merge\""
 
 	build_android "$@"
 }
-
-pushd "$korg_mirror"
-repo sync
-popd
 
 pushd "$android_mirror"
 repo sync
 popd
 
-pushd "$sandiego_daily"
-build_ssss_pure_android "${android_pure_list[@]}"
-build_dsds_pure_android "${android_pure_list[@]}"
-build_ssss_base_android "${android_ssss_base_list[@]}"
-build_dsds_base_android "${android_dsds_base_list[@]}"
+build_ssss_pure_android "${android_ssss_pure_list[@]}" > /tmp/ssss.log
+build_dsds_pure_android "${android_dsds_pure_list[@]}" > /tmp/dsds.log
+
+#build_ssss_base_android "${android_ssss_base_list[@]}"
+#build_dsds_base_android "${android_dsds_base_list[@]}"
+
+pushd "$korg_mirror"
+repo sync
+popd
+
 popd
 

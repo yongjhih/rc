@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+su -c '
+if [ -d "/home/andrew/andr-build/msm7625_qrd/eng" ]; then
+	pushd "/home/andrew/andr-build/msm7625_qrd/eng"
+	andr-build 1 1 7 3
+	popd
+fi
+
+if [ -d "/home/andrew/andr-build/msm7625_qrd/user" ]; then
+	pushd "/home/andrew/andr-build/msm7625_qrd/user"
+	andr-build 1 1 7 1
+	popd
+fi
+
+if [ -d  "/home/andrew/andr-build/msm7627_qrd/eng" ]; then
+	pushd "/home/andrew/andr-build/msm7627_qrd/eng"
+	andr-build 1 1 9 3
+	popd
+fi
+
+if [ -d  "/home/andrew/andr-build/msm7627_qrd/user" ]; then
+	pushd "/home/andrew/andr-build/msm7627_qrd/user"
+	andr-build 1 1 9 1
+	popd
+fi
+' - andrew
+
