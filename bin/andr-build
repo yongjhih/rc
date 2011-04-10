@@ -1,7 +1,15 @@
 #!/usr/bin/env bash
 
+progname="andr-build"
+tmp="/tmp/$progname/`date --rfc-3339=date`.$$"
+
+mkdir -p "$tmp"
+
+rm -fr -- "/tmp/$progname/"*
+
 combo=(1 1 7 3)
 [ "$4" ] && combo=($@)
+echo "${combo[@]}"
 
 amss_list=(`find -L -maxdepth 5 -type d -name amss | sed 's/amss.*/amss/' | sort | uniq`)
 android_list=(`find -L -maxdepth 5 -type d -name android | sed 's/android.*/android/' | sort | uniq`)
@@ -13,8 +21,21 @@ function build_android_internal()
 	repo forall -p -c 'git reset --hard; git clean -df'
 	repo sync -d
 
+	#mkctagscope
+	#make -j8 || ( make -j8 clean && make -j8 )
+	make -j8 clean
 	mkctagscope
-	make -j8 || ( make -j8 clean && make -j8 )
+	make -j8
+	if [ "$?" ]; then
+		local revision="`cat .repo/manifest.xml | grep '''default remote=.*revision=".*"''' | sed '''s/.*revision="\([^"]\+\)".*/\1/'''`"
+		pushd "out"
+		local branch="$revision/$TARGET_PRODUCT/$TARGET_BUILD_VARIANT"
+		git checkout "$branch" || git symbolic-ref HEAD "refs/heads/$branch"
+		git add .
+		git ls-files -d | xargs git rm
+		git commit -q -m "`date --rfc-3339=date` $branch"
+		popd
+	fi
 }
 
 function build_android()
@@ -22,7 +43,9 @@ function build_android()
 	[ "$1" ] || return 1
 
 	pushd "$1"
-	build_android_internal | tee "/tmp/android_"`echo $1 | sed '''s#/#-#g'''`".log"
+	local file="$tmp/"`echo $PWD | sed -e '''s#^/##g''' -e '''s#\./##g''' -e '''s#/#-#g'''`""
+	#build_android_internal 2> "$file.err" | tee "$file.log"
+	build_android_internal 2>&1 | tee "$file.log"
 	popd
 
 	shift
@@ -32,8 +55,11 @@ function build_android()
 
 function build_amss_internal()
 {
-	git pull || ( git reset --hard && git clean -df )
-	bash build_amss.sh || ( ( git reset --hard && git clean -df ) || git pull )
+	#git pull || ( git reset --hard && git clean -df )
+	#bash build_amss.sh || ( ( git reset --hard && git clean -df ) || git pull )
+	git reset --hard && git clean -df
+	mkctagscope
+	bash build_amss.sh
 }
 
 function build_amss()
@@ -41,7 +67,10 @@ function build_amss()
 	[ "$1" ] || return 1
 
 	pushd "$1"
-	build_amss_internal | tee "/tmp/amss_"`echo $1 | sed '''s#/#-#g'''`".log"
+	# msm7625_qrd-eng-obm-andrew-dsds-amss
+	local file="$tmp/"`echo $PWD | sed -e '''s#^/##g''' -e '''s#\./##g''' -e '''s#/#-#g'''`""
+	#build_amss_internal 2> "$file.err" | tee "$file.log"
+	build_amss_internal 2>&1 | tee "$file.log"
 	popd
 
 	shift

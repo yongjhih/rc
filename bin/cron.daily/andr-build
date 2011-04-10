@@ -1,28 +1,23 @@
 #!/usr/bin/env bash
 
 su -c '
-if [ -d "/home/andrew/andr-build/msm7625_qrd/eng" ]; then
-	pushd "/home/andrew/andr-build/msm7625_qrd/eng"
-	andr-build 1 1 7 3
-	popd
-fi
+build_path="/home/andrew/andr-build"
+[ -d "$build_path" ] || exit 1
+pushd "$build_path"
 
-if [ -d "/home/andrew/andr-build/msm7625_qrd/user" ]; then
-	pushd "/home/andrew/andr-build/msm7625_qrd/user"
-	andr-build 1 1 7 1
+for i in 1/1/{7,9}/{1,3}; do
+	[ -d "$i" ] || continue
+	pushd "$i"
+	for j in *; do
+		[ -d "$j" ] || continue
+		pushd "$j"
+		p=(`echo "$i" | sed "s/\// /g"`)
+		andr-build "${p[@]}"
+		popd
+	done
 	popd
-fi
+done
 
-if [ -d  "/home/andrew/andr-build/msm7627_qrd/eng" ]; then
-	pushd "/home/andrew/andr-build/msm7627_qrd/eng"
-	andr-build 1 1 9 3
-	popd
-fi
-
-if [ -d  "/home/andrew/andr-build/msm7627_qrd/user" ]; then
-	pushd "/home/andrew/andr-build/msm7627_qrd/user"
-	andr-build 1 1 9 1
-	popd
-fi
+popd
 ' - andrew
 

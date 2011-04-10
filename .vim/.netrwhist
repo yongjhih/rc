@@ -1,9 +1,6 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =7
-let g:netrw_dirhist_1='/home/andrew/rc.d/bin/inc'
-let g:netrw_dirhist_2='/home/andrew/workspace/svn/android_pkg/full_pack/trunk/files/etc/flex/GSmart'
-let g:netrw_dirhist_3='/home/andrew/workspace/sandiego/daily/dsds/base_7050/android/.repo/manifests'
-let g:netrw_dirhist_4='/usr/share/doc/fusesmb/examples'
-let g:netrw_dirhist_5='/home/andrew/workspace/svn/android_pkg/full_pack/trunk/files/etc/flex/GSmart'
-let g:netrw_dirhist_6='/home/andrew/workspace/sandiego/daily/dsds/base/android/out/target/product/msm7625_qrd/obj/APPS/FrameworkCoreTests_install_loc_auto_intermediates'
-let g:netrw_dirhist_7='/home/andrew/repository/apk.git'
+let g:netrw_dirhist_cnt =4
+let g:netrw_dirhist_1='/etc/samba'
+let g:netrw_dirhist_2='/tmp'
+let g:netrw_dirhist_3='/home/andrew/rc.d/bin/andr-build.d'
+let g:netrw_dirhist_4='/home/andrew/rc.d/bin/cron.daily'
