@@ -11,6 +11,7 @@
 	#. "$HOME/.andrc"
 
 #fi
+local tmp_ps="$PROMPT_COMMAND"
 
 ANDRC_WORK_PATH="`pwd`"
 while [ "$HOME" != "`pwd`" ]; do
@@ -19,7 +20,7 @@ while [ "$HOME" != "`pwd`" ]; do
 		ANDROID_SRC="`pwd`"
 		break;
 	fi
-	cd ..
+	cd .. || break
 done
 
 if [ "$ANDROID_SRC" ]; then
@@ -34,9 +35,8 @@ if [ "$ANDROID_SRC" ]; then
 		. "build/envsetup.sh"
 	fi
 fi
-
 cd "$ANDRC_WORK_PATH"
-screen-ps # reset PROMPT
+PROMPT_COMMAND="$ps_command"
 
 function adb-push () {
 	[ ! "$1" ] && return 1

@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+su -c '
+pushd /home/andrew/mirror
+
+for i in *; do
+	pushd "$i"
+
+	if [ -d "android" ]; then
+		pushd "android"
+		repo sync
+		popd
+	fi
+
+	if [ -d "amss" ]; then
+		pushd "amss"
+		git fetch
+		popd
+	fi
+
+	popd
+done
+
+popd
+' - andrew
+

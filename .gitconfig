@@ -27,3 +27,5 @@
 
 [diff]
 	tool = vimdiff
+[core]
+	editor = vi

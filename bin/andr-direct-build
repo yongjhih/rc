@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+
+combo=(1 1 7 3)
+[ "$4" ] && combo=($@)
+
+amss_list=(`find -L -maxdepth 5 -type d -name amss | sed 's/amss.*/amss/' | sort | uniq`)
+android_list=(`find -L -maxdepth 5 -type d -name android | sed 's/android.*/android/' | sort | uniq`)
+
+function build_android_internal()
+{
+	. ~/.andrchoose "${combo[@]}"
+
+	#repo forall -p -c 'git reset --hard; git clean -df'
+	#repo sync -d
+
+	#mkctagscope
+	make -j8 || ( make -j8 clean && make -j8 )
+}
+
+function build_android()
+{
+	[ "$1" ] || return 1
+
+	pushd "$1"
+	build_android_internal | tee "/tmp/android_"`echo $1 | sed '''s#/#-#g'''`".log"
+	popd
+
+	shift
+	[ "$1" ] || return 0
+	build_android "$@"
+}
+
+function build_amss_internal()
+{
+	#git pull || ( git reset --hard && git clean -df )
+	#bash build_amss.sh || ( ( git reset --hard && git clean -df ) || git pull )
+	bash build_amss.sh 
+}
+
+function build_amss()
+{
+	[ "$1" ] || return 1
+
+	pushd "$1"
+	build_amss_internal | tee "/tmp/amss_"`echo $1 | sed '''s#/#-#g'''`".log"
+	popd
+
+	shift
+	[ "$1" ] || return 0
+	build_amss "$@"
+}
+
+build_amss "${amss_list[@]}"
+build_android "${android_list[@]}"
+
