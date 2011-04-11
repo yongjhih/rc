@@ -11,6 +11,7 @@
 	clear = !git reset --hard && git clean -df
 	l = log --graph
 	recurt = !git-recurt
+	cherries = !git-cherries
 [giggle]
 	main-window-maximized = true
 	main-window-geometry = 0x0+0+0
@@ -24,3 +25,5 @@
 	signingkey = 01C54D62
 	signoff = true
 
+[diff]
+	tool = vimdiff

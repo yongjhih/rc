@@ -13,18 +13,21 @@ EOF
 	exit 1
 fi
 
+RET=
 while [ "$1" ]; do
 	FILEPATH="${1##*/}"
 	FILENAME="${FILEPATH%.img}"
 	#for i in userdata.img boot.img; do fastboot flash "${i%.*}" "$i"; done
 	if [ "${1%.img}" = "$1" ]; then
 		echo "$1 is not *.img, skip."
+		RET="1"
 	else
 		fastboot flash "$FILENAME" "$1"
+		RET="$?"
 	fi
 
 	shift
 done
 
-fastboot reboot
+[ $RET = "0" ] && fastboot reboot
 

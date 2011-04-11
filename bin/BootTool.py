@@ -1,8 +1,4 @@
 #!/usr/bin/env python
-# Author: Andrew Chen <yongjhih@gmail.com>
-# CC, Creative Commons
-# Author: Andrew Chen <yongjhih@gmail.com>
-# CC, Creative Commons
 # -*- coding: utf-8 -*-
 
 import os
@@ -43,6 +39,7 @@ struct boot_img_hdr
 
 def main():
     boot_name = 'boot.img'
+    #boot_name = 'recovery.img'
     bootimg = open(boot_name, 'rb').read()
 
     # header
@@ -127,19 +124,19 @@ def main():
 
     if os.path.exists('root'):
         shutil.rmtree('root')
-
     os.mkdir('root')
     os.system('cd root; cat ../ramdisk.img | cpio -id')
+    os.system('cp %s/bin/default.prop ./root' % sys.path[0])
 
-    os.system('cp %s/inc/default.prop ./root' % sys.path[0])
-
-    os.system('mkbootfs root | minigzip > ramdisk.img.gz')
-    os.system('mkbootimg --kernel kernel --ramdisk ramdisk.img.gz --cmdline "mem=216M console=ttyMSM2,115200n8 androidboot.hardware=qcom" -o boot.eng.img --base 0x00200000')
+    os.system('%s/bin/mkbootfs root | %s/bin/minigzip > ramdisk.img.gz' % (sys.path[0], sys.path[0]))
+    os.system('%s/bin/mkbootimg --kernel kernel --ramdisk ramdisk.img.gz --cmdline "mem=216M console=ttyMSM2,115200n8 androidboot.hardware=qcom" -o boot.eng.img --base 0x00200000' % sys.path[0])
 
     os.system('rm xxx ramdisk.img.gz ramdisk.img kernel')
+
+    # gen boot.sig
+    os.system('%s/bin/digest boot.eng.img boot.eng.sig' % sys.path[0])
 
     print 'OK!'    
 
 if __name__ == '__main__':
     main()
-
