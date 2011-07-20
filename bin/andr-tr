@@ -17,7 +17,8 @@ while read line; do
 	fi
 	STRING_NAME="`echo "$line" | sed 's#^\s*<string[^>]*name="\([^"]*\)"[^>]*>.*</string>\s*#\1#'`"
 	STRING_VALUE="`echo "$line" | sed 's#^\s*<string[^>]*name="\([^"]*\)"[^>]*>\(.*\)</string>\s*#\2#'`"
-	sed -i 's#\s*<!--\s*\(string[^>]*name="\)'"$STRING_NAME"'\("[^>]*>\).*\(</string\)\s*-->\s*'"#    <\1$STRING_NAME\2$STRING_VALUE</string>#" "$1"
+	#sed -i 's#\s*<!--\s*\(string[^>]*name="\)'"$STRING_NAME"'\("[^>]*>\).*\(</string\)\s*-->\s*'"#    <\1$STRING_NAME\2$STRING_VALUE</string>#" "$1"
+	sed -i 's#\(^\s*<string[^>]*name="'"$STRING_NAME"'"[^>]*>\).*\(</string\s*\)'"#\1$STRING_VALUE\2#" "$1"
 done
 
 exit 0

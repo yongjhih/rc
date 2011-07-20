@@ -161,6 +161,8 @@ function psgrep () {
 #}
 alias dpkgrep='dpkg --get-selections | grep'
 
+export PERL_CPANM_OPT="--local-lib=$HOME/perl"
+export PERLLIB="$HOME/perl/lib/perl"
 export PERL_CPANM_OPT="--local-lib=$HOME/perl5"
 export PERL5LIB="$HOME/perl5/lib/perl5"
 
@@ -219,7 +221,7 @@ git-forall()
 {
 	find -type d -name .git | while read line; do
 		pushd "${line%*/.git}"
-		$@
+		echo "$@" | bash
 		popd
 	done
 }

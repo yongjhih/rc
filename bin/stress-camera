@@ -3,7 +3,7 @@
 # CC, Creative Commons
 
 if [ ! "$1" ]; then
-	COUNT="200"
+	COUNT="1000"
 else
 	COUNT="$1"
 fi
@@ -16,10 +16,17 @@ fi
 	#sleep 3
 #done | tee -a "/tmp/$$.log"
 
-while : ; do
+#while : ; do
+	#echo -e "$i: `date -R`"
+	#adb shell input keyevent 80
+	#adb shell input keyevent 27
+	##sleep 3
+#done | tee -a "/tmp/$$.log"
+
+#adb shell am start -W -n com.android.camera/.Camera && 
+for (( i=0; i < $COUNT; i++ )) ; do
 	echo -e "$i: `date -R`"
-	adb shell input keyevent 80
-	adb shell input keyevent 27
-	sleep 5
-done | tee -a "/tmp/$$.log"
+	adb shell input keyevent 80 || break
+	adb shell input keyevent 27 || break
+done | tee -a "/tmp/`basename $0`_$$.log"
 

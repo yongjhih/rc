@@ -8,6 +8,7 @@ syntax on
 filetype on
 filetype plugin on
 filetype indent on
+filetype plugin indent on
 
 set shiftwidth=8
 set tabstop=8
@@ -34,7 +35,7 @@ set background=dark
 " {{{ indentation
 set autoindent
 set smartindent
-set cindent
+"set cindent
 " {{{ tab
 " http://c9s.blogspot.com/2007/10/vim-tips.html
 " 在確認過 normal mode 下的 <tab> 在 vim7 並無其他特別作用下採用
@@ -193,12 +194,12 @@ if has("cscope")
     "set cscopequickfix=s-,g-,c-,d-,t-,e-,f-,i-
 endif
 
-if has("autocmd")
-   autocmd BufReadPost *
-      \ if line("'\"") > 0 && line ("'\"") <= line("$") |
-      \   exe "normal g'\"" |
-      \ endif
-endif
+"if has("autocmd")
+   "autocmd BufReadPost *
+      "\ if line("'\"") > 0 && line ("'\"") <= line("$") |
+      "\   exe "normal g'\"" |
+      "\ endif
+"endif
 
 " OmniCppComplete {{{
 " configure tags - add additional tags here or comment out not-used ones

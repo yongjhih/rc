@@ -26,13 +26,13 @@ function build() {
 	. /home/andrew/.andrchoose
 
 	if [ -f "$GBC_FEATURE_PROVIDER" ]; then
-		pushd "$GBC_FEATURE_PROVIDER_PATH"
-		git pull
-		popd
-		echo "add features"
+		#pushd "$GBC_FEATURE_PROVIDER_PATH"
+		#git pull
+		#popd
+		#echo "add features"
 		#feature_switch.py --auto_merge=/dev/shm/merge -p ~/workspace/GbcFeatureProvider/project_config/GSmart_DSDS.cfg
-		"$GBC_FEATURE_PROVIDER_PATH/tools/feature_switch.py" -n --auto_merge="/dev/shm/merge.$$" -p "$GBC_FEATURE_PROVIDER"
-		rm -fr "/dev/shm/merge.$$"
+		#"$GBC_FEATURE_PROVIDER_PATH/tools/feature_switch.py" -n --auto_merge="/dev/shm/merge.$$" -p "$GBC_FEATURE_PROVIDER"
+		#rm -fr "/dev/shm/merge.$$"
 	else
 		echo "no features added"
 	fi
@@ -67,11 +67,11 @@ function backup() {
 #backup
 
 echo "build $WORKSPACE/daily/dsds/obm/android"
-#build "$WORKSPACE/daily/dsds/obm/android" | tee /tmp/dsds-obm.log
+build "$WORKSPACE/daily/dsds/obm/android" | tee /tmp/dsds-obm.log
 backup
 
 echo "build $WORKSPACE/daily/ssss/obm/android"
-#build "$WORKSPACE/daily/ssss/obm/android" | tee /tmp/ssss-obm.log
+build "$WORKSPACE/daily/ssss/obm/android" | tee /tmp/ssss-obm.log
 backup
 
 echo "repo-sync $WORKSPACE/korg-mirror"

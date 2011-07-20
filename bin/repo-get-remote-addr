@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC by
+
+usage() {
+	cat <<EOF
+$(basename $0) <project_name|path>
+$(basename $0) <-n <project_name>>
+$(basename $0) <-p <path>>
+EOF
+}
+
+nflag="0"
+REPO_PROJECT=
+pflag="0"
+REPO_PATH=
+
+while getopts 'n:p:' OPTION
+do
+	case "$OPTION" in
+		n)
+			nflag="1"
+			REPO_PROJECT="$OPTARG"
+			;;
+		p)
+			pflag="1"
+			REPO_PATH="$OPTARG"
+			;;
+		h)
+			usage
+			exit 0
+			;;
+		?)
+			usage >&2
+			exit 1
+			;;
+	esac
+done
+shift $(($OPTIND - 1))
+
+if [ "$nflag" = "1" ]; then
+	if [ ! "$REPO_PROJECT" ]; then
+		usage >&2
+		exit 1
+	fi
+fi
+
+if [ "$pflag" = "1" ]; then
+	if [ ! "$REPO_PATH" ]; then
+		usage >&2
+		exit 1
+	fi
+fi
+
+REPO_PROJECT_LIST=
+REPO_PATH_LIST=
+
