@@ -7,6 +7,7 @@ CSCOPE_LIST="/tmp/cscope.files.$$"
 
 #find -type f -name '*.mk' > "$CSCOPE_LIST"
 find -type f -name '*.java' -o -name '*.c' -o -name '*.cc' -o -name '*.h' -o -name '*.hpp' -o -name '*.cpp' -o -name '*.xml' -o -name '*.mk' -o -name '*.aidl' > "$CSCOPE_LIST"
+#find -type f > "$CSCOPE_LIST"
 #find -type f -name '*.java' -o -name '*.xml' > "$CSCOPE_LIST"
 #find -name '*.c' -o -name '*.cpp' -o -name '*.java' -o -name '*.h' > cscope.files
 

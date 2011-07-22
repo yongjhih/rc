@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+git log --grep='^Change-Id: ' | grep '    Change-Id: ' | awk '{print $2}' | uniq -d | while read line; do git log --grep="$line" --pretty="format:%h $line %s"; done

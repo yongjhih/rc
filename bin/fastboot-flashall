@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
+# 19 Feb 2011 16:12:21 +0800
+#for i in userdata.img boot.img; do fastboot flash "${i%.*}" "$i"; done
+
+RET="0"
+NEED_SIG="1"
+directories=( "$@" )
+
+if [ ! "$1" ]; then
+	directories=( "." )
+fi
+
+images=()
+available=(
+	"boot.img"
+	"boot.eng.img"
+	"system.img"
+	"userdata.img"
+	"recovery.img"
+)
+whitelist=()
+maxdepth="1"
+
+for dir in "${directories[@]}"; do
+	# 1.
+	#l_images=( $(find "$dir" -maxdepth "$maxdepth" -name "*.img") )
+	# 1.2.
+	#for i in "${l_images[@]}"; do
+		#for j in "${available[@]}"; do
+			#if [[ "$i" =~ "${j}" ]]; then
+				#images=( ${images[@]-} "$i" )
+				#break;
+			#fi
+		#done
+	#done
+
+	# 2.
+	l_images=( $(find "$dir" -maxdepth "$maxdepth" -name \
+		"boot.img" -o -name \
+		"boot.eng.img" -o -name \
+		"system.img" -o -name \
+		"userdata.img" -o -name \
+		"recovery.img" \
+	) )
+	images=( ${images[@]-} "${l_images[@]-}" )
+
+	shift
+done
+
+fastboot-flash "${images[@]}"
+

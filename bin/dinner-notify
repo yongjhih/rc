@@ -1,0 +1,83 @@
+#!/usr/bin/env bash
+#curl "http://eip2.gigabytecm.com/dinner/dobento_save.asp?ben_code=18&ben_name=%C2%FB%ACh%B6%BA"
+# Login
+user="99cd28"
+passwd="0774"
+mail="andrew.chen@gigabyte.com"
+p_flag=
+while getopts 'u:p?k:m:' OPTION
+do
+	case $OPTION in
+		u)
+			user="$OPTARG"
+			;;
+		p)
+			p_flag="1"
+			passwd="$OPTARG"
+			;;
+		m)
+			mail="$OPTARG"
+			;;
+		k)
+			keyword="$OPTARG"
+			;;
+		?)
+			printf "Usage: %s [-u <user>] [-p <passwd>] [-m <email>] [-k <keyword>]\n" $(basename $0) >&2
+			exit 1
+			;;
+	esac
+done
+shift $(($OPTIND - 1))
+
+if [ "$p_flag" ]; then
+	if [ ! "$passwd" ]; then
+		echo -n "Password: "; read passwd
+	fi
+fi
+echo "$user" | tee -a "$log"
+echo "$passwd" | tee -a "$log"
+echo "$email" | tee -a "$log"
+echo "$keyword" | tee -a "$log"
+
+log="/tmp/$$.log"
+cookie="/tmp/dinner.cookie"
+site="http://eip2.gigabytecm.com/dinner"
+list_url="$site/dobento.asp"
+list="/tmp/$$.list"
+login="userid=$user&pwd=$passwd&Submit=送出"
+
+echo "$user" | tee -a "$log"
+# Login
+# userid=user&pwd=passwd&Submit=送出
+if [ ! -f "$cookie" ]; then
+	#curl -d "userid=$user&pwd=$passwd&Submit=%B0e%A5X" -e "$site/index.asp" -D "$cookie" "$site/check.asp" | iconv -f big5 -t utf8 | tee -a "$log"
+	curl -d "$login" -e "$site/index.asp" -D "$cookie" "$site/check.asp" | iconv -f big5 -t utf8 | tee -a "$log"
+fi
+
+# Entry
+#curl -e "http://eip3.gigabytecm.com/dinner/index_bento.asp" -b dinner.cookie "http://eip3.gigabytecm.com/dinner/dobento.asp" | iconv -f big5 -t utf8
+
+# Cancel
+#curl -e "http://eip2.gigabytecm.com/dinner/bento_list.asp" -b dinner.cookie "http://eip2.gigabytecm.com/dinner/del.asp" | iconv -f big5 -t utf8
+
+item=$(curl -b "$cookie" "$list_url" | iconv -f big5 -t utf8 | tee "$list" | sed 's/[\r\n]//g' | sed 's/<div[^>]*>/\n&/g' | grep "$keyword" | grep "訂我" | sed "s/.*href=['\"]\\([^'\"]\\+\\)['\"].*/\\1/")
+item_encode=$(urlencode "$item")
+item_url="$site/$item_encode"
+
+# http://eip2.gigabytecm.com/dinner/dobento_save.asp?ben_code=20&ben_name=香酥雞腿
+# http://eip2.gigabytecm.com/dinner/dobento_save.asp?ben_code=18
+#item="http://eip2.gigabytecm.com/dinner/dobento_save.asp?ben_code=18"
+# http://eip2.gigabytecm.com/dinner/dobento_save.asp?ben_code=18&ben_name=雞腿
+#item_url="http://eip2.gigabytecm.com/dinner/dobento_save.asp?ben_code=18&ben_name=%C2%FB%BBL%B6%BA"
+#item_url="http://eip2.gigabytecm.com/dinner/dobento_save.asp?ben_code=18"
+
+echo "$item" | tee -a "$log"
+echo "$item_url" | tee -a "$log"
+#curl -e "$site/dobento.asp" -b "$cookie" "$item_url" | iconv -f big5 -t utf8 | tee -a "$log"
+curl -b "$cookie" "$item_url" | iconv -f big5 -t utf8 | tee -a "$log"
+
+mail -s "dinner" "$mail" < "$log"
+
+rm -- "$log"
+#rm -- "$cookie"
+

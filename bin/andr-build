@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 
 progname="andr-build"
-tmp="/tmp/$progname/`date --rfc-3339=date`.$$"
+
+#rm -fr -- "/tmp/$progname/"*
+
+tmp="/tmp/${progname}_`date --rfc-3339=date`.$$"
 
 mkdir -p "$tmp"
-
-rm -fr -- "/tmp/$progname/"*
 
 combo=(1 1 7 3)
 [ "$4" ] && combo=($@)
@@ -22,10 +23,10 @@ function build_android_internal()
 	repo sync -d
 
 	#mkctagscope
-	#make -j8 || ( make -j8 clean && make -j8 )
-	make -j8 clean
+	#make -j4 || ( make -j4 clean && make -j4 )
+	make -j4 clean
 	mkctagscope
-	make -j8
+	make -j4
 	if [ "$?" ]; then
 		local revision="`cat .repo/manifest.xml | grep '''default remote=.*revision=".*"''' | sed '''s/.*revision="\([^"]\+\)".*/\1/'''`"
 		pushd "out"
@@ -58,6 +59,7 @@ function build_amss_internal()
 	#git pull || ( git reset --hard && git clean -df )
 	#bash build_amss.sh || ( ( git reset --hard && git clean -df ) || git pull )
 	git reset --hard && git clean -df
+	git pull --rebase
 	mkctagscope
 	bash build_amss.sh
 }

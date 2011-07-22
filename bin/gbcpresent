@@ -39,7 +39,7 @@ POST=`echo $REQUEST | sed 's/[^?]*?//'`
 
 #echo "$POST"
 #echo "$URL"
-source "/home/yjchen/bin/gbcpasswd"
+source "/home/yjchen/bin/.gbcpasswd"
 
 wget --user "$HTUSERNAME" --password "$HTPASSWD" --post-data "$POST" "$URL" -O - |
 tee "/tmp/$year2-$month2-$day2-$gbc_id-gbc-present.html" |

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Google dictionary
+curl -s -A 'Mozilla/4.0' "http://www.google.com/dictionary?aq=f&langpair=en|zh-TW&q=$1&hl=en" \
+| html2text -ascii -nobs -style compact -width 1000 | sed -n -e '/^ /p'| sed '1,4d' | head -n -1
+

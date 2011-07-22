@@ -4,6 +4,7 @@
 	name = Andrew Chen
 	email = andrew.chen@gigabyte.com
 	signingkey = 01C54D62
+	;passphrase =
 [merge]
 	tool = vimdiff
 [alias]
@@ -11,6 +12,7 @@
 	clear = !git reset --hard && git clean -df
 	l = log --graph
 	recurt = !git-recurt
+	pwd = !pwd
 [giggle]
 	main-window-maximized = true
 	main-window-geometry = 0x0+0+0
@@ -26,3 +28,7 @@
 
 [core]
 	editor = vi
+[help]
+	autocorrect = 1
+[rerere]
+	enabled = 0

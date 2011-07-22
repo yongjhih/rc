@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+[ "$1" ] || exit 1
+
+base="$1"
+tmp="/tmp/$$"
+
+for i in {0..100}; do
+	echo "$i:"
+	git rebase "$base~$i" > "$tmp" 2>&1
+
+	if [ "$?" == 0 ]; then
+		echo "# success"
+		exit 0
+	fi
+
+	grep '^fatal: Needed a single revision' "$tmp"
+	if [ "$?" == 0 ]; then
+		exit 1
+	fi
+
+	git rebase --abort > /dev/null 2>&1
+done
+

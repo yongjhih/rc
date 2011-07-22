@@ -1,0 +1,8 @@
+#!/usr/bin/env perl
+
+use App::Taka2PDF;
+
+my $foo = App::Taka2PDF->run();
+#my $foo = App::Taka2PDF->new();
+#$foo->run();
+

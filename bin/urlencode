@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+#php -r "echo urldecode('$@'.\"$1\n\");" | iconv -f big5 -t utf8
+if [ "$1" ]; then
+	line="$1"
+	php -r "echo urlencode(\"$line\");"
+else
+	while read line; do
+		php -r "echo urlencode(\"$line\");"
+	done
+fi
+

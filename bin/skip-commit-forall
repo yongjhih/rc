@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+git filter-branch -f --commit-filter '
+                  skip-commit "$GIT_COMMIT"
+                  if [ "$?" = "0" ];
+                  then
+                          skip_commit "$@";
+                  else
+                          git commit-tree "$@";
+                  fi' HEAD
