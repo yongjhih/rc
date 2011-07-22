@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+git branch -r | grep dsds/master > /dev/null && git log HEAD gbc_obm/dsds/master --not `git merge-base HEAD gbc_obm/dsds/master` --grep='^Change-Id' --pretty='format:%b' | grep Change-Id | awk '{print $2}'  | sort | uniq -d | while read line; do [ "$line" ] || continue; git log gbc_obm/dsds/master --oneline -1 --grep="^Change-Id: $line" ;done

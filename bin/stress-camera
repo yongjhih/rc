@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
+
+if [ ! "$1" ]; then
+	COUNT="1000"
+else
+	COUNT="$1"
+fi
+
+#adb shell am instrument -e class com.android.camera.stress.ImageCapture -w com.android.camera.tests/android.test.InstrumentationTestRunner
+#adb shell am instrument -e class com.android.camera.stress.ImageCapture -w com.android.camera.tests/android.test.InstrumentationTestRunner
+#for i in `eval echo {1.."$COUNT"}`; do
+	#echo -e "$i: `date -R`"
+	#adb shell am instrument -e class com.android.camera.stress.ImageCapture -w com.android.camera.tests/android.test.InstrumentationTestRunner
+	#sleep 3
+#done | tee -a "/tmp/$$.log"
+
+#while : ; do
+	#echo -e "$i: `date -R`"
+	#adb shell input keyevent 80
+	#adb shell input keyevent 27
+	##sleep 3
+#done | tee -a "/tmp/$$.log"
+
+#adb shell am start -W -n com.android.camera/.Camera && 
+for (( i=0; i < $COUNT; i++ )) ; do
+	echo -e "$i: `date -R`"
+	adb shell input keyevent 80 || break
+	adb shell input keyevent 27 || break
+done | tee -a "/tmp/`basename $0`_$$.log"
+

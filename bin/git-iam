@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+[ "$2" ] || exit 1
+git am --ignore-whitespace --ignore-space-change --whitespace=nowarn --directory="$1" "$2"
+#git am -3 --ignore-whitespace --ignore-space-change --whitespace=nowarn --directory="$1" "$2"

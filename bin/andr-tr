@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
+# Mon., 11-24 09:19:13 CST 2010
+# TODO replace by specific field line by line
+
+cat "$2" | tr '\r\n' ' ' |
+sed -e 's/^\s*//g' -e 's/\s*$//g' |
+sed 's/-->/&\n/g' |
+sed 's/<!--.*-->//g' |
+sed 's/\(<string[^>]*>\)\s*/\n\1/g' |
+sed 's/\s*\(<\/string>\)/\1\n/g' |
+while read line; do
+	echo "$line" | grep '^\s*<string[^>]*name="\([^"]*\)"[^>]*>.*</string>\s*' > /dev/null
+	if [ "$?" != "0" ]; then # not match
+		continue
+	fi
+	STRING_NAME="`echo "$line" | sed 's#^\s*<string[^>]*name="\([^"]*\)"[^>]*>.*</string>\s*#\1#'`"
+	STRING_VALUE="`echo "$line" | sed 's#^\s*<string[^>]*name="\([^"]*\)"[^>]*>\(.*\)</string>\s*#\2#'`"
+	#sed -i 's#\s*<!--\s*\(string[^>]*name="\)'"$STRING_NAME"'\("[^>]*>\).*\(</string\)\s*-->\s*'"#    <\1$STRING_NAME\2$STRING_VALUE</string>#" "$1"
+	sed -i 's#\(^\s*<string[^>]*name="'"$STRING_NAME"'"[^>]*>\).*\(</string\s*\)'"#\1$STRING_VALUE\2#" "$1"
+done
+
+exit 0
+

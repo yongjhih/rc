@@ -26,20 +26,20 @@ function build() {
 	. /home/andrew/.andrchoose
 
 	if [ -f "$GBC_FEATURE_PROVIDER" ]; then
-		pushd "$GBC_FEATURE_PROVIDER_PATH"
-		git pull
-		popd
-		echo "add features"
+		#pushd "$GBC_FEATURE_PROVIDER_PATH"
+		#git pull
+		#popd
+		#echo "add features"
 		#feature_switch.py --auto_merge=/dev/shm/merge -p ~/workspace/GbcFeatureProvider/project_config/GSmart_DSDS.cfg
-		"$GBC_FEATURE_PROVIDER_PATH/tools/feature_switch.py" -n --auto_merge="/dev/shm/merge.$$" -p "$GBC_FEATURE_PROVIDER"
-		rm -fr "/dev/shm/merge.$$"
+		#"$GBC_FEATURE_PROVIDER_PATH/tools/feature_switch.py" -n --auto_merge="/dev/shm/merge.$$" -p "$GBC_FEATURE_PROVIDER"
+		#rm -fr "/dev/shm/merge.$$"
 	else
 		echo "no features added"
 	fi
 	mkctagscope
 	repo forall -c 'mkctagscope'
 
-	make || make clean || make
+	make || ( make clean && make )
 }
 
 function backup() {
@@ -47,22 +47,33 @@ function backup() {
 	return 0
 }
 
-echo "repo-sync $WORKSPACE/mirror"
-repo-sync "$WORKSPACE/mirror" || echo "mirror: repo-sync fail"
+#echo "repo-sync $WORKSPACE/mirror"
+#repo-sync "$WORKSPACE/mirror" || echo "mirror: repo-sync fail"
 
-echo "build $WORKSPACE/daily/dsds/pure_7050_qrd/android"
-build "$WORKSPACE/daily/dsds/pure_7050_qrd/android" | tee /tmp/dsds-pure_7050_qrd.log
-backup
-
-#echo "build $WORKSPACE/daily/dsds/base_7050_qrd/android $GBC_FEATURE_PROVIDER_PATH/project_config/GSmart_DSDS.cfg"
-#build "$WORKSPACE/daily/dsds/base_7050_qrd/android" "$GBC_FEATURE_PROVIDER_PATH/project_config/GSmart_DSDS.cfg" | tee /tmp/dsds-base_7050_qrd.log
+#echo "build $WORKSPACE/daily/dsds/pure_7050_qrd/android"
+#build "$WORKSPACE/daily/dsds/pure_7050_qrd/android" | tee /tmp/dsds-pure_7050_qrd.log
 #backup
 
-echo "build $WORKSPACE/daily/ssss/pure/android"
-build "$WORKSPACE/daily/ssss/pure/android" | tee /tmp/ssss-pure.log
+##echo "build $WORKSPACE/daily/dsds/base_7050_qrd/android $GBC_FEATURE_PROVIDER_PATH/project_config/GSmart_DSDS.cfg"
+##build "$WORKSPACE/daily/dsds/base_7050_qrd/android" "$GBC_FEATURE_PROVIDER_PATH/project_config/GSmart_DSDS.cfg" | tee /tmp/dsds-base_7050_qrd.log
+##backup
+
+#echo "build $WORKSPACE/daily/ssss/pure/android"
+#build "$WORKSPACE/daily/ssss/pure/android" | tee /tmp/ssss-pure.log
+#backup
+
+#echo "build $WORKSPACE/daily/ssss/base/android $GBC_FEATURE_PROVIDER_PATH/project_config/GSmart_SSSS.cfg"
+#build "$WORKSPACE/daily/ssss/base/android" "$GBC_FEATURE_PROVIDER_PATH/project_config/GSmart_SSSS.cfg" | tee /tmp/ssss-base.log
+#backup
+
+echo "build $WORKSPACE/daily/dsds/obm/android"
+build "$WORKSPACE/daily/dsds/obm/android" | tee /tmp/dsds-obm.log
 backup
 
-echo "build $WORKSPACE/daily/ssss/base/android $GBC_FEATURE_PROVIDER_PATH/project_config/GSmart_SSSS.cfg"
-build "$WORKSPACE/daily/ssss/base/android" "$GBC_FEATURE_PROVIDER_PATH/project_config/GSmart_SSSS.cfg" | tee /tmp/ssss-base.log
+echo "build $WORKSPACE/daily/ssss/obm/android"
+build "$WORKSPACE/daily/ssss/obm/android" | tee /tmp/ssss-obm.log
 backup
+
+echo "repo-sync $WORKSPACE/korg-mirror"
+repo-sync "$WORKSPACE/korg-mirror" || echo "mirror: repo-sync fail"
 

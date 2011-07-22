@@ -1,0 +1,82 @@
+#!/usr/bin/expect -f
+set fp [open "/home/andrew/bin/.gpgpasswd" r]
+set password [read $fp]
+
+#spawn git tag -s -m "release for pl, cz, rus" dsds/rc/master-1.0
+#spawn git tag -s -m "merge android-2.2.2_r1" dsds/rc2/master-2.0
+#spawn git tag -s -m "Patch QRD for QCT 7140" qrd/w1122
+#spawn git tag -s -m "Patch QRD for QCT 7140" qct/7140/qrd/w1122
+#spawn git tag -s -m "Patch QRD for QCT 7140" qct/7140
+#spawn git tag -s -m "Patch QRD for QCT 7140" qrd/7140
+#spawn git tag -s -m "7227 AG W1127 from QRD" qrd/obm/w1127
+
+spawn git tag -s -m "7227 AG W1125 from QRD" feature/qrd/w1125
+expect "*?assphrase:*"
+set timeout 300
+send "$password\r"
+send "exit\r"
+
+#spawn git tag -s -m "7227 AG W1128 from QRD" feature/qrd/w1128
+#expect "*?assphrase:*"
+#set timeout 300
+#send "$password\r"
+#send "exit\r"
+#spawn git tag -s -m "7227 AG W1127 from QRD" feature/qrd/w1127
+#expect "*?assphrase:*"
+#set timeout 300
+#send "$password\r"
+#send "exit\r"
+#spawn git tag -s -m "7227 AG W1126 from QRD" feature/qrd/w1126
+#expect "*?assphrase:*"
+#set timeout 300
+#send "$password\r"
+#send "exit\r"
+#spawn git tag -s -m "7227 AG W1125 from QRD" feature/qrd/w1125
+#expect "*?assphrase:*"
+#set timeout 300
+#send "$password\r"
+#send "exit\r"
+
+#spawn git tag -s -m "7227 AG W1128 from QRD" qrd/w1128
+#expect "*?assphrase:*"
+#set timeout 300
+#send "$password\r"
+#send "exit\r"
+#spawn git tag -s -m "7227 AG W1127 from QRD" qrd/w1127
+#expect "*?assphrase:*"
+#set timeout 300
+#send "$password\r"
+#send "exit\r"
+#spawn git tag -s -m "7227 AG W1126 from QRD" qrd/w1126
+#expect "*?assphrase:*"
+#set timeout 300
+#send "$password\r"
+#send "exit\r"
+#spawn git tag -s -m "7227 AG W1125 from QRD" qrd/w1125
+#expect "*?assphrase:*"
+#set timeout 300
+#send "$password\r"
+#send "exit\r"
+
+#spawn git tag -s -m "7227 AG W1128 from QRD" qrd/obm/w1128
+#expect "*?assphrase:*"
+#set timeout 300
+#send "$password\r"
+#send "exit\r"
+#spawn git tag -s -m "7227 AG W1127 from QRD" qrd/obm/w1127
+#expect "*?assphrase:*"
+#set timeout 300
+#send "$password\r"
+#send "exit\r"
+#spawn git tag -s -m "7227 AG W1126 from QRD" qrd/obm/w1126
+#expect "*?assphrase:*"
+#set timeout 300
+#send "$password\r"
+#send "exit\r"
+#spawn git tag -s -m "7227 AG W1125 from QRD" qrd/obm/w1125
+#expect "*?assphrase:*"
+#set timeout 300
+#send "$password\r"
+#send "exit\r"
+
+expect eof

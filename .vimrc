@@ -8,6 +8,7 @@ syntax on
 filetype on
 filetype plugin on
 filetype indent on
+filetype plugin indent on
 
 set shiftwidth=8
 set tabstop=8
@@ -34,7 +35,7 @@ set background=dark
 " {{{ indentation
 set autoindent
 set smartindent
-set cindent
+"set cindent
 " {{{ tab
 " http://c9s.blogspot.com/2007/10/vim-tips.html
 " 在確認過 normal mode 下的 <tab> 在 vim7 並無其他特別作用下採用
@@ -127,7 +128,6 @@ else
     highlight Normal guifg=white guibg=black
 endif
 
-
 set laststatus=2
 set statusline=%4*%<\ %1*[%F]
 set statusline+=%4*\ %5*[%{&encoding}, " encoding
@@ -138,7 +138,7 @@ highlight User2 term=underline cterm=underline ctermfg=green
 highlight User3 term=underline cterm=underline ctermfg=yellow
 highlight User4 term=underline cterm=underline ctermfg=white
 highlight User5 ctermfg=cyan
-highlight User6 ctermfg=white 
+highlight User6 ctermfg=white
 
 "au Filetype html,xml,xsl source ~/.vim/scripts/closetag.vim
 
@@ -149,6 +149,12 @@ imap ,, -><C-X><C-O>
 autocmd BufReadPost * :DetectIndent
 set cursorcolumn
 set cursorline
+"hi CursorLine   cterm=underline ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+"hi CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+nnoremap <LEADER>cr :set cursorline! cursorcolumn!<CR>
+"nnoremap <LEADER>cr :set cursorline!<CR>
+nnoremap <silent> <Leader>l ml:execute 'match Search /\%'.line('.').'l/'<CR>
+nnoremap <silent> <Leader>v :execute 'match Search /\%'.virtcol('.').'v/'<CR>
 
 " xmledit {{{
 let g:xml_syntax_folding=1
@@ -188,12 +194,12 @@ if has("cscope")
     "set cscopequickfix=s-,g-,c-,d-,t-,e-,f-,i-
 endif
 
-if has("autocmd")
-   autocmd BufReadPost *
-      \ if line("'\"") > 0 && line ("'\"") <= line("$") |
-      \   exe "normal g'\"" |
-      \ endif
-endif
+"if has("autocmd")
+   "autocmd BufReadPost *
+      "\ if line("'\"") > 0 && line ("'\"") <= line("$") |
+      "\   exe "normal g'\"" |
+      "\ endif
+"endif
 
 " OmniCppComplete {{{
 " configure tags - add additional tags here or comment out not-used ones
@@ -225,3 +231,6 @@ if &term =~ '^screen'
 endif
 " Screen fix }}}
 
+" http://vim.wikia.com/wiki/Su-write
+"command W w !sudo tee % > /dev/null
+"

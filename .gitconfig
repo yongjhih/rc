@@ -11,8 +11,12 @@
 	diffall = !gitdiffall
 	clear = !git reset --hard && git clean -df
 	l = log --graph
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 	recurt = !git-recurt
+	cherries = !git-cherries
 	pwd = !pwd
+	;graphviz = "!f() { echo 'digraph git { node [color=lightblue2, style=filled, fontname=\"LiHeiPro.ttf\"]; '; git log --pretty='format:  %h -> { %p }' \"$@\" | sed 's/[0-9a-f][0-9a-f]*/\"&\"/g' ; echo '}'; }; f"
+	graphviz = "!f() { echo 'digraph git { node [color=lightblue2, style=filled]; '; git log --pretty='format:  %h -> { %p }' \"$@\" | sed 's/[0-9a-f][0-9a-f]*/\"&\"/g' ; echo '}'; }; f"
 [giggle]
 	main-window-maximized = true
 	main-window-geometry = 0x0+0+0
@@ -26,9 +30,18 @@
 	signingkey = 01C54D62
 	signoff = true
 
+[diff]
+	tool = vimdiff
 [core]
 	editor = vi
 [help]
 	autocorrect = 1
+
+[sendemail]
+        ;smtpencryption = tls
+        ;smtpserver = smtp.gmail.com
+        ;smtpuser = yourname@gmail.com
+        ;smtpserverport = 587
+        smtpserver = 10.8.27.21
 [rerere]
 	enabled = 0
