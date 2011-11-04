@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+[ "$1" ] || exit 1
+iid=$1 # issue id
+idir="$HOME/issues/$iid"
+
+pushd "$idir"
+adb logcat -d > "logcat.log"
+adb shell dmesg > "dmesg.log"
+adb shell getprop > "getprop.log"
+adb shell cat /proc/cpuinfo > "cpuinfo.log"
+adb shell cat /proc/meminfo > "meminfo.log"
+popd
+exit 0
+
