@@ -1,0 +1,9 @@
+#! /usr/bin/env bash
+
+n_times=5
+[ "$1" ] && n_times="$1"
+
+for i in {1..$n_times}; do
+	echo $'\07'; sleep 1;
+done
+
