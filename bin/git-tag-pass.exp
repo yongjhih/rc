@@ -12,6 +12,15 @@ set password [read $fp]
 #spawn git tag -s -m "For LA CS pre-release" la_cs-prelease
 #spawn git tag -s -m "7227 AG W1135 from QRD" feature/qrd/w1135_merged
 
+#spawn git tag -s -m "Startpoint of flounder pre cc" flounder_pre_cc-init
+#spawn git tag -s -m "LA QS wapi init" qrd/la_qs_wapi-init
+#spawn git tag -s -m "QRD OBM sku2 (Sunfish) pre merged w1136" qrd/obm/pre-w1136
+#spawn git tag -s -m "Startpoint of Flounder for factory" factory/flounder-init
+#spawn git tag -s -m "Startpoint of Sunfish LA for factory" factory/sunfish_la-init
+#spawn git tag -s -m "android-2.3.5_r1 on github" android-2.3.5_r1-github
+#spawn git tag -s -m "7227 AG W1142 from QRD" qrd/post_qs-w1142
+#spawn git tag -s -m "Startpoint of Post LA QS" qrd/post_qs-init
+spawn git tag -s -m "Startpoint Sku1 7225 QRD for w1138" dsds/w38-init
 #spawn git tag -s -m "For LA QS merged w1135" qrd/la_qs-w1135
 #spawn git tag -s -m "7227 AG W1136 from QRD" feature/qrd/w1136_merged
 #spawn git tag -s -m "For LA QS merged w1136" qrd/la_qs-w1136
@@ -20,7 +29,7 @@ set password [read $fp]
 #spawn git tag -s -m "For LA QS GBC_REV#793 merged w1132" qrd/la_qs-v793-w1132
 #spawn git tag -s -m "7227 AG W1137 from QRD" feature/qrd/w1137_merged
 #spawn git tag -s -m "For LA QS merged w1136" qrd/la_qs-w1136
-spawn git tag -s -m "QRD OBM sku2 (Sunfish) merged w1137" qrd/obm/w1137
+#spawn git tag -s -m "QRD OBM sku2 (Sunfish) merged w1137" qrd/obm/w1137
 expect "*?assphrase:*"
 set timeout 300
 send "$password\r"

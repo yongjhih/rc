@@ -25,7 +25,7 @@ set fileencodings=utf-8,big5,gbk,cp936,iso-2022-jp,sjis,euc-jp,euc-kr,utf-bom,is
 "set termencoding=utf-8
 " 預設儲存編碼 
 set fileencoding=utf-8
-"set spell spelllang=en_us 
+"set spell spelllang=en_us
 set number
 " {{{ colorscheme
 set background=dark
@@ -48,8 +48,8 @@ set background=dark
 
 " {{{ asignment
 " http://c9s.blogspot.com/2007/09/vim-tip.html
-nmap cr=    $F=lcf;
-nmap cl=    $F=hc^
+"nmap cr=    $F=lcf;
+"nmap cl=    $F=hc^
 " }}} asignment
 
 " {{{ Completion
@@ -111,16 +111,16 @@ let xml_use_xhtml = 1
 let html_use_css = 1
 "let html_number_lines = 0
 "let html_no_pre = 1
-let use_xhtml = 1 
+let use_xhtml = 1
 " }}}
 
 " couple symbol
-inoremap "" ""<ESC>i
-inoremap '' ''<ESC>i
-inoremap <> <><ESC>i
-inoremap () ()<ESC>i
-inoremap [] []<ESC>i
-inoremap {} {}<ESC>i
+"inoremap "" ""<ESC>i
+"inoremap '' ''<ESC>i
+"inoremap <> <><ESC>i
+"inoremap () ()<ESC>i
+"inoremap [] []<ESC>i
+"inoremap {} {}<ESC>i
 
 if ! has('gui')
     highlight Comment ctermfg=gray ctermbg=darkblue
@@ -142,8 +142,8 @@ highlight User6 ctermfg=white
 
 "au Filetype html,xml,xsl source ~/.vim/scripts/closetag.vim
 
-imap jj <ESC>
-imap ,, -><C-X><C-O>
+"imap jj <ESC>
+"imap ,, -><C-X><C-O>
 
 " missing below, add back
 "autocmd BufReadPost * :DetectIndent

@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+iptables -t nat -A OUTPUT -p tcp --dport 80 -j DNAT --to 10.8.27.228:3128
