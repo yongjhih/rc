@@ -1,33 +1,47 @@
 #!/usr/bin/env bash
 # Author: Andrew Chen <yongjhih@gmail.com>
 # CC, Creative Commons
-# Author: Andrew Chen <yongjhih@gmail.com>
-# CC, Creative Commons
+# 19 Feb 2011 15:02:05 +0800
 #for i in userdata.img boot.img; do fastboot flash "${i%.*}" "$i"; done
 
+RET="0"
+NEED_SIG="1"
 if [ ! "$1" ]; then
 	cat <<EOF
 $0 <image.img ...>
 EOF
 
-	exit 1
+	RET="1"
+	exit "$RET"
 fi
 
-RET=
 while [ "$1" ]; do
-	FILEPATH="${1##*/}"
-	FILENAME="${FILEPATH%.img}"
-	#for i in userdata.img boot.img; do fastboot flash "${i%.*}" "$i"; done
+	file="$1"
 	if [ "${1%.img}" = "$1" ]; then
 		echo "$1 is not *.img, skip."
-		RET="1"
-	else
-		fastboot flash "$FILENAME" "$1"
-		RET="$?"
+		continue
+	fi
+	#dirfile="${file%/*}"
+	dirfile="`dirname "$file"`"
+	#basefile="${file##*/}"
+	basefile="`basename "$file"`"
+	partition="${basefile%%.*}"
+	filefullname="${file%.img}"
+	signature="${filefullname}.sig"
+
+	if [ "$NEED_SIG" != "0" ]; then
+		if [ -f "$signature" ]; then
+			fastboot signature "$signature"
+		fi
+	fi
+	fastboot flash "$partition" "$file"
+	ret="$?"
+	if [ "$ret" != "0" ]; then
+		RET="$ret"
 	fi
 
 	shift
 done
 
-[ $RET = "0" ] && fastboot reboot
+[ "$RET" = "0" ] && fastboot reboot
 
