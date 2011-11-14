@@ -14,6 +14,6 @@ find -type f -name '*.java' -o -name '*.c' -o -name '*.cc' -o -name '*.h' -o -na
 #cscope -Rbq -i "$CSCOPE_LIST"
 cscope -Rbq -i "$CSCOPE_LIST"
 #ctags -n --fields=+ai --C++-types=+p * -L "$CSCOPE_LIST"
-ctags -R
+ctags -R -I  "$CSCOPE_LIST"
 rm "$CSCOPE_LIST"
 
