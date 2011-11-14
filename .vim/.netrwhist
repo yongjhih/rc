@@ -1,6 +1,6 @@
 let g:netrw_dirhistmax  =10
 let g:netrw_dirhist_cnt =4
-let g:netrw_dirhist_1='/etc/ldap/slapd.d/cn=config'
-let g:netrw_dirhist_2='/etc/ldap/slapd.d/cn=config/cn=schema'
-let g:netrw_dirhist_3='/etc/ldap/slapd.d/cn=config'
-let g:netrw_dirhist_4='/etc/ldap/slapd.d/cn=config/cn=schema'
+let g:netrw_dirhist_1='/etc/samba'
+let g:netrw_dirhist_2='/tmp'
+let g:netrw_dirhist_3='/home/andrew/rc.d/bin/andr-build.d'
+let g:netrw_dirhist_4='/home/andrew/rc.d/bin/cron.daily'

@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+git format-patch --stdout --inline "$1" -1 | git send-email /dev/stdin

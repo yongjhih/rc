@@ -234,4 +234,7 @@ endif
 
 " http://vim.wikia.com/wiki/Su-write
 "command W w !sudo tee % > /dev/null
+command W w !sudo tee % > /dev/null
 "
+autocmd BufWritePost *.rst !rst2s5 % %<.html
+

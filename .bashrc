@@ -220,14 +220,15 @@ screen-ps
 git-forall()
 {
 	find -type d -name .git | while read line; do
-		if [[ "$line" =~ "repo" ]]; then
-			continue
-		fi
-		pushd "${line%*/.git}"
-		eval "$@"
+		repo_path="${line%*/.git}"
+		repo_path="${repo_path#./}"
+		pushd "$repo_path"
+		echo "export REPO_PATH=\"$repo_path\" ; $@" | bash
 		popd
 	done
 }
 
 #export JAVAHOME=/usr/lib/jvm/java-1.6-sun
-
+#export GREP_OPTIONS='-rIPs --exclude-dir=.[a-zA-Z0-9]* --exclude=.* --exclude=*~ --color=auto'
+#alias cgrep='grep --color=always'
+export PATH="$PATH:/var/lib/gems/1.8/bin"

@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+while [ "$1" ]; do
+	#croot
+	p="`echo \"$1\" | sed 's#out/target/product/[^/]\+\(/.*\)#\1#g'`"
+	make -j2 "$1" && \
+		adb push "$1" "$p"
+	adb reboot
+	#cd -
+	shift
+done
+

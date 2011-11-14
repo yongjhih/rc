@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+[ "$1" ] || exit 1
+
+in="$1"
+
+part_line="200000" # 200k lines
+cur_line="1"
+n_lines="`wc -l $in | awk '{print $1}'`"
+
+for ((i="0"; cur_line < "$n_lines"; i++))
+do
+  a="$cur_line"
+  b="$(($cur_line + $part_line - 1))"
+  [[ $b -gt "$n_lines" ]] && b="$n_lines"
+  echo sed -n "${a},${b}p" "$in > $in.${i}"
+  sed -n "${a},${b}p" "$in"  > "${in}.${i}" &
+  cur_line="$b"
+done
+
+echo "$i"
+
