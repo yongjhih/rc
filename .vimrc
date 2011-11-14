@@ -33,8 +33,8 @@ set background=dark
 " }}} colorscheme
 
 " {{{ indentation
-set autoindent
-set smartindent
+"set autoindent
+"set smartindent
 "set cindent
 " {{{ tab
 " http://c9s.blogspot.com/2007/10/vim-tips.html
@@ -146,7 +146,7 @@ imap jj <ESC>
 imap ,, -><C-X><C-O>
 
 " missing below, add back
-autocmd BufReadPost * :DetectIndent
+"autocmd BufReadPost * :DetectIndent
 set cursorcolumn
 set cursorline
 "hi CursorLine   cterm=underline ctermbg=darkred ctermfg=white guibg=darkred guifg=white
@@ -235,5 +235,7 @@ endif
 "command W w !sudo tee % > /dev/null
 command W w !sudo tee % > /dev/null
 "
-autocmd BufWritePost *.rst !rst2s5 % %<.html
+"autocmd BufWritePost *.rst !rst2s5 % %<.html
+"
+set cinoptions=l1
 
