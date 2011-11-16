@@ -138,8 +138,7 @@ colors () {
 
   PS1="${TITLEBAR}\
 $LIGHT_RED\u$NO_COLOUR@$LIGHT_GREEN\h$NO_COLOUR:$LIGHT_BLUE\w$NO_COLOUR\
-[$RED\d$NO_COLOUR $GREEN\t$NO_COLOUR]\$(__git_ps1 \"(%s)\")\
-\n\
+[$RED\d$NO_COLOUR $GREEN\t$NO_COLOUR]\$(__git_ps1 \"(%s)\")\n\
 \$ "
 }
 #$LIGHT_BLUE\w$NO_COLOUR\$(__git_ps1 \"(%s)\")\$ "
