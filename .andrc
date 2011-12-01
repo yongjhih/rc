@@ -11,7 +11,7 @@
 	#. "$HOME/.andrc"
 
 #fi
-local tmp_ps="$PROMPT_COMMAND"
+tmp_ps="$PROMPT_COMMAND"
 
 ANDRC_WORK_PATH="`pwd`"
 while [ "$HOME" != "`pwd`" ]; do
