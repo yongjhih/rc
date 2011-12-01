@@ -3,7 +3,8 @@
 # CC, Creative Commons
 
 while [ "$1" ]; do
-	git cherry-pick "$1"
+	git cherry-pick "$1" || exit "$?"
+	#git cherry-pick "$1" | grep 'failed.' && exit "$?"
 	shift
 done
 
