@@ -2,3 +2,4 @@ vim/view/
 .vim/.netrwhist
 *.swp
 .*passwd
+.vim/.VimballRecord
