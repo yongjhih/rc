@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# cite: http://www.linuxquestions.org/questions/programming-9/merge-lines-in-a-file-using-sed-191121/
+# :a	# label 'a' to jump back to later on
+# N	# Append next line to sed's buffer
+# s/\n/ /	# replace exactly one newline (\n) with a space
+# ta	# if the last replace command was succesfull, jump to label 'a'.
+# 	# (if this does not happen, the entire file was read: end
+sed -e :a -e N -e 's/\n/ /' -e ta
