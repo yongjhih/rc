@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+[ "$1" ] || exit 1
+
+while [ "$1" ]; do
+
+	sqls=(
+	"select * from $1"
+	)
+
+	for s in "${sqls[@]}"; do
+		ssh andrew.chen@git.gbc.intra -p 29419  gerrit gsql -c \""${s};"\"
+	done
+
+	shift
+done
+
+

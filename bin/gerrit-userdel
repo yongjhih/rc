@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+[ "$1" ] || exit 1
+
+while [ "$1" ]; do
+	id="$1"
+
+	sqls=(
+	"delete from accounts where account_id='$id'"
+	"delete from account_ssh_keys where account_id='$id'"
+	"delete from account_external_ids where account_id='$id'"
+	)
+
+	for s in "${sqls[@]}"; do
+		ssh andrew.chen@git.gbc.intra -p 29419  gerrit gsql -c \""${s};"\"
+	done
+
+	shift
+done
+
