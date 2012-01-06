@@ -129,7 +129,10 @@ def main():
     os.system('cp %s/bin/default.prop ./root' % sys.path[0])
 
     os.system('%s/bin/mkbootfs root | %s/bin/minigzip > ramdisk.img.gz' % (sys.path[0], sys.path[0]))
-    os.system('%s/bin/mkbootimg --kernel kernel --ramdisk ramdisk.img.gz --cmdline "mem=216M console=ttyMSM2,115200n8 androidboot.hardware=qcom" -o boot.eng.img --base 0x00200000' % sys.path[0])
+    #os.system('%s/bin/mkbootimg --kernel kernel --ramdisk ramdisk.img.gz --cmdline "mem=216M console=ttyMSM2,115200n8 androidboot.hardware=qcom" -o boot.eng.img --base 0x00200000' % sys.path[0])
+    flounder_kernel_arg = 'mem=212M@0x200000 mem=256M@0x20000000 androidboot.hardware=qcom fb_addr=0xD200000'
+    #os.system('%s/bin/mkbootimg --kernel kernel --ramdisk ramdisk.img.gz --cmdline "%s" -o boot.eng.img --base 0x00200000' % (sys.path[0], flounder_kernel_arg))
+    os.system('%s/bin/mkbootimg --kernel kernel --ramdisk ramdisk.img.gz --cmdline "%s" -o boot.eng.img --base 0x00200000' % (sys.path[0], flounder_kernel_arg))
 
     os.system('rm xxx ramdisk.img.gz ramdisk.img kernel')
 
