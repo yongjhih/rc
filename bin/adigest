@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+while [ "$1" ]; do
+	img="$1"
+	sig="${img%.*}.sig"
+	digest "$img" "$sig"
+	shift
+done
+

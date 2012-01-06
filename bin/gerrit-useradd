@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+users=
+group=
+port=
+
+port="29419" # gbc_official
+
+project_leaders_name="Project\\ Leaders"
+project_leaders=( \
+	"douglas.han" \
+	"jj.yeh" \
+	"ivan.lin" \
+	"jackie.ja" \
+	"omar.lin" \
+	)
+
+users=( "${project_leaders[@]}" )
+group="$project_leaders_name"
+
+seniors_name="Senior"
+seniors=( \
+	"shian.li" \
+	"valkyrie.liu" \
+	"wendly.li" \
+	"jackie.ja" \
+	"jeffer.lin" \
+	)
+
+users=( "${seniors[@]}" )
+group="$seniors_name"
+
+for user in "${users[@]}"; do
+	email="$user@gigabyte.com"
+	ssh andrew.chen@git.gbc.intra -p "$port" gerrit create-account --group "$group" --full-name "$user" --email "$email" "$user"
+done
+
