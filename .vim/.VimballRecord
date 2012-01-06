@@ -1,5 +1,0 @@
-ctags_highlighting.vba: call delete('/home/andrew/.vim/plugin/ctags_highlighting.vim')|call delete('/home/andrew/.vim/mktypes.py')|call delete('/home/andrew/.vim/extra_source/mktypes/setup.py')|call delete('/home/andrew/.vim/doc/ctags_highlighting.txt')
-LargeFile.vba: call delete('/home/andrew/.vim/plugin/LargeFile.vim')|call delete('/home/andrew/.vim/doc/LargeFile.txt')
-visincr.vba: call delete('/home/andrew/.vim/plugin/visincrPlugin.vim')|call delete('/home/andrew/.vim/autoload/visincr.vim')|call delete('/home/andrew/.vim/doc/visincr.txt')|call delete('/home/andrew/.vim/autoload/calutil.vim')
-html5.vim-0.26.vba: call delete('/home/andrew/.vim/autoload/xml/aria.vim')
-SudoEdit.vba: call delete('/home/andrew/.vim/autoload/SudoEdit.vim')|call delete('/home/andrew/.vim/doc/SudoEdit.txt')|call delete('/home/andrew/.vim/plugin/SudoEdit.vim')
