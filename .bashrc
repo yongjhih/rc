@@ -177,10 +177,10 @@ export PERL5LIB="$HOME/perl5/lib/perl5"
 #NO_PROXY='localhost,127.0.0.0/8,*.local,'
 #no_proxy='localhost,127.0.0.0/8,*.local,'
 
-export PROXY=http://10.8.27.228:3128/
-export http_proxy=http://10.8.27.228:3128/
-export https_proxy=https://10.8.27.228:3128/
-export ftp_proxy=ftp://10.8.27.228:3128/
+#export PROXY=http://10.8.27.228:3128/
+#export http_proxy=http://10.8.27.228:3128/
+#export https_proxy=https://10.8.27.228:3128/
+#export ftp_proxy=ftp://10.8.27.228:3128/
 
 if [ ! `echo "$PATH" | grep "$HOME/workspace/GbcFeatureProvider/tools"` ]; then
 	PATH="$PATH:$HOME/workspace/GbcFeatureProvider/tools"

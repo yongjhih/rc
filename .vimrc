@@ -126,6 +126,7 @@ if ! has('gui')
     highlight Comment ctermfg=gray ctermbg=darkblue
 else
     highlight Normal guifg=white guibg=black
+    set guifont=Droid\ Sans\ Mono\ 12
 endif
 
 set laststatus=2
@@ -151,14 +152,14 @@ set cursorcolumn
 set cursorline
 "hi CursorLine   cterm=underline ctermbg=darkred ctermfg=white guibg=darkred guifg=white
 "hi CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
-nnoremap <LEADER>cr :set cursorline! cursorcolumn!<CR>
+"nnoremap <LEADER>cr :set cursorline! cursorcolumn!<CR>
 "nnoremap <LEADER>cr :set cursorline!<CR>
-nnoremap <silent> <Leader>l ml:execute 'match Search /\%'.line('.').'l/'<CR>
-nnoremap <silent> <Leader>v :execute 'match Search /\%'.virtcol('.').'v/'<CR>
+"nnoremap <silent> <Leader>l ml:execute 'match Search /\%'.line('.').'l/'<CR>
+"nnoremap <silent> <Leader>v :execute 'match Search /\%'.virtcol('.').'v/'<CR>
 
 " xmledit {{{
-let g:xml_syntax_folding=1
-au FileType xml setlocal foldmethod=syntax
+"let g:xml_syntax_folding=1
+"au FileType xml setlocal foldmethod=syntax
 " xmledit }}}
 
 " undo-persistence {{{
@@ -177,7 +178,7 @@ au FileType xml setlocal foldmethod=syntax
 ". the last inserted text
 "- the last small (less than a line) delete
 "=5*5 insert 25 into text (mini-calculator)
-if has("cscope")
+"if has("cscope")
     "set csprg=/usr/bin/cscope
     "set csto=0
     "set cst
@@ -192,7 +193,7 @@ if has("cscope")
     "set csverb
     "set cscopetag
     "set cscopequickfix=s-,g-,c-,d-,t-,e-,f-,i-
-endif
+"endif
 
 "if has("autocmd")
    "autocmd BufReadPost *
@@ -203,32 +204,32 @@ endif
 
 " OmniCppComplete {{{
 " configure tags - add additional tags here or comment out not-used ones
-set tags+=~/.vim/tags/cpp
-set tags+=tags
+"set tags+=~/.vim/tags/cpp
+"set tags+=tags
 " build tags of your own project with Ctrl-F12
-map <C-F12> :!ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+"map <C-F12> :!ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 
-let OmniCpp_NamespaceSearch = 1
-let OmniCpp_GlobalScopeSearch = 1
-let OmniCpp_ShowAccess = 1
-let OmniCpp_ShowPrototypeInAbbr = 1 " show function parameters
-let OmniCpp_MayCompleteDot = 1 " autocomplete after .
-let OmniCpp_MayCompleteArrow = 1 " autocomplete after ->
-let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
-let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
+"let OmniCpp_NamespaceSearch = 1
+"let OmniCpp_GlobalScopeSearch = 1
+"let OmniCpp_ShowAccess = 1
+"let OmniCpp_ShowPrototypeInAbbr = 1 " show function parameters
+"let OmniCpp_MayCompleteDot = 1 " autocomplete after .
+"let OmniCpp_MayCompleteArrow = 1 " autocomplete after ->
+"let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
+"let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
 " automatically open and close the popup menu / preview window
-au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
-set completeopt=menuone,menu,longest,preview
+"au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
+"set completeopt=menuone,menu,longest,preview
 " OmniCppComplete }}}
 
 " Screen fix {{{
 " http://blog.othree.net/log/2010/01/07/screen_vim_f1f4_map/
-if &term =~ '^screen'
-    set t_k1=^[[11~
-    set t_k2=^[[12~
-    set t_k3=^[[13~
-    set t_k4=^[[14~
-endif
+"if &term =~ '^screen'
+"    set t_k1=^[[11~
+"    set t_k2=^[[12~
+"    set t_k3=^[[13~
+"    set t_k4=^[[14~
+"endif
 " Screen fix }}}
 
 " http://vim.wikia.com/wiki/Su-write
@@ -237,5 +238,5 @@ command W w !sudo tee % > /dev/null
 "
 "autocmd BufWritePost *.rst !rst2s5 % %<.html
 "
-set cinoptions=l1
+"set cinoptions=l1
 

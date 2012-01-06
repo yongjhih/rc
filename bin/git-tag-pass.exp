@@ -20,7 +20,8 @@ set password [read $fp]
 #spawn git tag -s -m "android-2.3.5_r1 on github" android-2.3.5_r1-github
 #spawn git tag -s -m "7227 AG W1142 from QRD" qrd/post_qs-w1142
 #spawn git tag -s -m "Startpoint of Post LA QS" qrd/post_qs-init
-spawn git tag -s -m "Startpoint Sku1 7225 QRD for w1138" dsds/w38-init
+#spawn git tag -s -m "Startpoint Sku1 7225 QRD for w1138" dsds/w38-init
+spawn git tag -s -m "Startpoint Houston for factory" factory/houston-init
 #spawn git tag -s -m "For LA QS merged w1135" qrd/la_qs-w1135
 #spawn git tag -s -m "7227 AG W1136 from QRD" feature/qrd/w1136_merged
 #spawn git tag -s -m "For LA QS merged w1136" qrd/la_qs-w1136
