@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+
+# PLATFORM_VERSION_CODENAME=REL
+# PLATFORM_VERSION=2.3.4
+# TARGET_PRODUCT=msm7627_sku2
+# TARGET_BUILD_VARIANT=eng
+# TARGET_SIMULATOR=false
+# TARGET_BUILD_TYPE=release
+# TARGET_BUILD_APPS=
+# TARGET_ARCH=arm
+# HOST_ARCH=x86
+# HOST_OS=linux
+# HOST_BUILD_TYPE=release
+# BUILD_ID=GINGERBREAD
+
+WORK_PATH="`pwd`"
+
+function get_android_root() {
+	while [[ "$HOME" != "`pwd`" || "/" != "`pwd`" ]]; do
+		grep 'include build/core/main.mk' Makefile > /dev/null 2>&1
+		if [ "$?" = "0" ]; then
+			pwd
+			break;
+		fi
+		cd .. || break
+	done
+}
+
+ANDROID_ROOT=$(get_android_root)
+
+function adb_install() {
+	target="$1"
+
+	get_android_root
+	install_path="$ANDROID_ROOT/out/target/product/$TARGET_PRODUCT"
+	target_path="`dirname $target`"
+	#install_path="${install_path%%$target_path}"
+	target_path="${target_path#$install_path}"
+	pushd "${target_path}"
+	targets=( `find -regex ".*/$target"` )
+	if [ ! "$targets" ]; then
+		target="`basename $target`"
+		targets=( `find -regex ".*/$target"` )
+	fi
+	for i in "${targets[@]}"; do
+		adb install -r "$i"
+	done
+	popd
+}
+
+while [ "$1" ]; do
+	adb_install "$1"
+	shift
+done
+

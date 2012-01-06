@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+b="gbc_official/qrd/obm/master"
+
+[ "$1" ] && b="$1"
+
+croot
+pushd revision
+
+git fetch --all
+
+git log -1 "$b" | grep '[Ss]et BUILD_NUMBER=' | sed 's/.*BUILD_NUMBER=\(.*\)/\1/'
+
+popd
+cd -
+
+
