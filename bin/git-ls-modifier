@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+
+usage() {
+cat << EOT
+	"$0" [ commit ]
+EOT
+}
+
+commit="HEAD"
+if [ "$1" ]; then
+	commit="$1"
+fi
+
+git_modifier="gigabyte"
+if [ ! "$GIT_MODIFIER" ]; then
+	GIT_MODIFIER="$git_modifier"
+fi
+
+# git show --first-parent --name-only --format='%n' "$commit" | grep .
+left_parent="${commit}^"
+
+parents=( `git rev-list -n 1 --parents "$commit"` )
+merge_base="`git show-branch --merge-base ${parents[@]} | head -1`"
+
+#modifiles=( `git diff -b -w --ignore-space-at-eol "$commit".."$left_parent" --name-only` )
+modifiles=( `git diff -b -w --ignore-space-at-eol --name-only "$left_parent" "$commit"` )
+modiauthors=
+
+get_conflicts() {
+	git show --format="%b" "$commit" | sed -n '/^Conflicts:/,/^\s*$/p' | grep -v '^Conflicts:' | grep -v '^\s*$' | sed -e 's/^\s\+//' -e 's/\s\+$//'
+}
+
+has_conflict() {
+	get_conflicts | grep "\<$1\>"
+	return "$?"
+}
+
+echo "File,Conflict,Author"
+for i in "${modifiles[@]}"; do
+	#authors=( `git log $merge_base..$commit --author=gigabyte --format=%ae $i | sort | uniq` )
+	#authors=( `git log $commit --author=gigabyte --format=%ae $i | sort | uniq` )
+	#authors=( `git log "$merge_base".."$left_parent" --author="$GIT_MODIFIER" --format="%ae" -- "$i" | sort | uniq` )
+	authors=( `git log "$merge_base".."$left_parent" --author="$GIT_MODIFIER" --format="%ae" -- "$i" | sort | uniq | sed 's/@.\+$//'` )
+	has_conflict "$i" > /dev/null 2>&1
+	if [ "$?" = "0" ]; then
+		conflict="(Conflict)"
+	else
+		##
+		# has_conflict do NOT continue, always list conflicts
+		##
+		[ "$authors" ] || continue
+	fi
+
+	IFS_bak="$IFS"
+	IFS=","
+	str_authors="${authors[*]}"
+	IFS="$IFS_bak"
+
+	echo "${i},${conflict},$str_authors"
+done
+
