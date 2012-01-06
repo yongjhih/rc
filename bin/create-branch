@@ -1,8 +1,31 @@
 #!/usr/bin/env bash
 # repo-create-branch
 
-usage() {
-	cat <<EOT
+me="`readlink -f $0`"
+. "`dirname $me`/shflags"
+
+die() {
+	[ "$#" -gt 0 ] && echo "error: $@" >&2
+	flags_help
+	exit 1
+}
+
+_f() {
+	local ret="1"
+
+	[ "$1" ] || return "$ret"
+	[ "$1" -eq "${FLAGS_FALSE}" ] && return "$ret"
+
+	local ret="0"
+	return "$ret"
+}
+
+DEFINE_boolean 'force' false 'Forced update' 'f'
+DEFINE_boolean 'skip' false 'Skip and process manifest only' 's'
+DEFINE_string 'remote' '' 'Specify remote name' 'r'
+DEFINE_boolean 'debug' false 'Enable debug mode' 'd'
+
+FLAGS_HELP=`cat <<EOT
 Usage:
 	$0 [-h|--help]
 	$0 <branch_name>
@@ -17,50 +40,24 @@ Example:
 	$0 -r gbc_official houston_fake7140
 	$0 -r gbc_official houston_fake7140 daily/2012-01-05.xml
 	$0 -s -f houston_10982303 # forced re-initialize manifest
-EOT
-}
+EOT`
 
-##
-# ARGS=`getopt -a -o I:D:T:e:k:LMSsth -l instence:,database:,table:,excute:,key:,list,master,slave,status,tableview,help -- "$@"`
-# [ $? -ne 0 ] && usage
-# #set -- "${ARGS}"
-# eval set -- "${ARGS}"
-##
-OPTS=`getopt -a -o h?sfr:d -l help,skip,force,remote:,debug -- "$@"`
-if [ "$?" != 0 ]; then
-	echo "FATAL ERROR: get options error." >&2
-	exit 1
-fi
-eval set -- "$OPTS"
-while true ; do
-	case "$1" in
-		-h|--help|?)
-			usage
-			exit 0
-			;;
-		-r|--remote)
-			remote="$2"
-			shift 2;;
-		-s|--skip)
-			skip="1"
-			shift;;
-		-f|--force)
-			force="-f "
-			shift;;
-		-d|--debug)
-			debug="1"
-			shift;;
-		--) shift; break;;
-	esac
-done
+FLAGS "$@" || exit 1
+eval set -- "${FLAGS_ARGV}"
+
+_f "${FLAGS_help}" && exit 0
 
 branch="$1"
-[ "$branch" ] || ( usage ; exit 1 )
+[ "$branch" ] || die
+tag="$branch-init"
 
 manifest="default.xml"
 [ "$2" ] && manifest="$2"
 
-tag="$branch-init"
+remote="${FLAGS_remote}"
+_f "${FLAGS_skip}" && skip="1"
+_f "${FLAGS_force}" && force="-f"
+_f "${FLAGS_debug}" && debug="1"
 
 # DEBUG options {{{
 #debug=1
@@ -71,6 +68,8 @@ if [ "$debug" ]; then
 	echo "remote \"$remote\""
 	echo "force \"$force\""
 	echo "skip \"$skip\""
+	echo "debug \"$debug\""
+	echo "help \"$help\""
 
 	exit
 fi
