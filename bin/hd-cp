@@ -6,7 +6,7 @@
 
 wget -q -O - "http://www.coolpc.com.tw/evaluate.php" --post-data=tax=0 |
 iconv -f big5 -t utf8 |
-sed -n '/SATA2規格/,/最新一代 SATA3規格/p' |
+sed -n '/LABEL=.3.5" HDD硬碟/,/LABEL=.3.5" HDD\/SATA3\/企業級/p' |
 sed 's/<[^>]*>//g' | sed '/^\s*$/d' |
 while read line; do
     p=`echo $line | sed 's/.*$\([0-9\.]\+\)\s.*/\1/'`
