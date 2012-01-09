@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
 
 [ "$1" ] || exit 1
-key="`echo "$1" | tr 'a-z' 'A-Z'`"
 
-croot > /dev/null 2>&1
-keyevent_java="frameworks/base/core/java/android/view/KeyEvent.java"
-if [ -f "$keyevent_java" ]; then
-	keyevents="`cat $keyevent_java`"
-else
-	keyevents="`cat <<EOT
+agetkey() {
+	[ "$1" ] || return 1
+	croot > /dev/null 2>&1
+	keyevent_java="frameworks/base/core/java/android/view/KeyEvent.java"
+	if [ -f "$keyevent_java" ]; then
+		keyevents="`cat $keyevent_java`"
+	else
+		keyevents="`cat <<EOT
 public static final int KEYCODE_UNKNOWN=0;
 public static final int KEYCODE_SOFT_LEFT=1;
 public static final int KEYCODE_SOFT_RIGHT=2;
@@ -122,12 +123,27 @@ public static final int KEYCODE_BUTTON_SELECT=109;
 public static final int KEYCODE_BUTTON_MODE=110;
 public static final int KEYCODE_SWITCH_INPUTMETHOD=111;
 EOT`"
+	fi
+
+	eval `echo "$keyevents" | grep 'static\s\+final\s\+int\s\+KEYCODE_' | sed 's#^.*\(KEYCODE_[a-zA-Z_0-9]\+\)\s*=\s*\([0-9]\+\).*#\1=\2;#'`
+
+	while [ "$1" ]; do
+		key="`echo "$1" | tr 'a-z' 'A-Z'`"
+		eval `echo "k=\\$KEYCODE_\$key"`
+		echo "$k"
+		shift
+	done
+}
+
+if [ "`basename $0`" = "agetkey" ]; then
+	agetkey "$@"
+	exit 0
 fi
 
-eval `echo "$keyevents" | grep 'static\s\+final\s\+int\s\+KEYCODE_' | sed 's#^.*\(KEYCODE_[a-zA-Z_0-9]\+\)\s*=\s*\([0-9]\+\).*#\1=\2;#'`
+keys=( `agetkey "$@"` )
 
-eval `echo "k=\\$KEYCODE_\$key"`
-
-echo input keyevent "$k"
-adb shell input keyevent "$k"
+for i in "${keys[@]}"; do
+	echo "$i"
+	adb shell input keyevent "$i"
+done
 
