@@ -240,5 +240,9 @@ command W w !sudo tee % > /dev/null
 "
 "set cinoptions=l1
 
-map <C-L> viwy:vim /<C-R>"/ **/*.*<CR>
+"map <C-L> viwy:vim /<C-R>"/ **/*.*<CR>
+map <C-L> :vim /<C-R>=expand("<cword>")<CR>/ **/*.*<CR>
+
+set grepprg=ack-grep\ --cpp\ --cc\ --perl\ --python\ --make\ --java\ --xml
+nmap _g :grep <C-R>=expand("<cword>")<CR><CR>
 
