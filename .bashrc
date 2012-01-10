@@ -323,6 +323,9 @@ unset _xarray
 	while [ "$1" ]; do
 		for ((i=0; i < "$1"; i++)); do
 			todir="$todir/.."
+			if [ "/" = `readlink -f $todir` ]; then
+				break
+			fi
 		done
 		shift
 	done
