@@ -240,3 +240,5 @@ command W w !sudo tee % > /dev/null
 "
 "set cinoptions=l1
 
+map <C-L> viwy:vim /<C-R>"/ **/*.*<CR>
+
