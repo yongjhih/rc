@@ -316,3 +316,16 @@ _arrayoffset=0
 fi
 unset _xarray
 
+..() {
+	local todir="."
+	[ "$1" ] || todir=".."
+
+	while [ "$1" ]; do
+		for ((i=0; i < "$1"; i++)); do
+			todir="$todir/.."
+		done
+		shift
+	done
+	cd "$todir"
+}
+
