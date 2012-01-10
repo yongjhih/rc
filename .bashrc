@@ -231,3 +231,88 @@ git-forall()
 #export GREP_OPTIONS='-rIPs --exclude-dir=.[a-zA-Z0-9]* --exclude=.* --exclude=*~ --color=auto'
 #alias cgrep='grep --color=always'
 export PATH="$PATH:/var/lib/gems/1.8/bin"
+
+bd()
+{
+	if [ ! "$1" ]; then
+		echo "Usage: bd <regex>"
+		return 1
+	fi
+
+	# 1. non regex
+	todir="${PWD%*/$1*}/$1"
+	#[ -d "$todir" ] && ( cd "$todir" ; return 0 )
+	if [ -d "$todir" ]; then
+		cd "$todir"
+		return 0
+	fi
+
+	# 2. regex
+	if echo "$PWD" | grep "$1" > /dev/null 2>&1; then
+		todir=`echo "$PWD" | sed "s#\(.*[^/]*$1[^/]*\).*#\1#"`
+	fi
+	if [ -d "$todir" ]; then
+		cd "$todir"
+		return 0
+	fi
+
+	# 3. regex
+	T="/tmp"
+	cwd="`readlink -f $PWD`"
+	while [ "$cwd" != "/" ]; do
+		if [ -f "$T/filelist" ]; then
+			#find "$cwd" -wholename ./out -prune -o -wholename ./.repo -prune -o -type f
+			f=`find "$cwd"`
+			ff=`cat "$T/filelist"`
+			echo -e "$f\n$ff" | grep -v '^.\s*$' | sort | uniq > "$T/filelist"
+		else
+			find "$cwd" | grep -v '^.\s*$' > "$T/filelist"
+		fi
+
+		local lines=
+		if [ -f "$T/filelist" ]; then
+			lines=($(grep "$1" $T/filelist | sed -e 's/\/[^/]*$//' | sort | uniq))
+		fi
+		local pathname
+		local choice
+		if [[ "${#lines[@]}" > 1 ]]; then
+			while [[ -z "$pathname" ]]; do
+				local index=1
+				local line
+				for line in ${lines[@]}; do
+					printf "%6s %s\n" "[$index]" $line
+					index=$(($index + 1))
+				done
+				echo
+				echo -n "Select one: "
+				unset choice
+				read choice
+				if [[ $choice -gt ${#lines[@]} || $choice -lt 1 ]]; then
+					echo "Invalid choice"
+					continue
+				fi
+				pathname=${lines[$(($choice-$_arrayoffset))]}
+			done
+		else
+			# even though zsh arrays are 1-based, $foo[0] is an alias for $foo[1]
+			pathname=${lines[0]}
+		fi
+		if [ "$pathname" ]; then
+			cd "$pathname"
+			return 0
+		fi
+		cwd="`readlink -f $cwd/..`"
+	done
+	echo "Not found"
+
+	return 1
+}
+_xarray=(a b c)
+if [ -z "${_xarray[${#_xarray[@]}]}" ]
+then
+_arrayoffset=1
+else
+_arrayoffset=0
+fi
+unset _xarray
+
