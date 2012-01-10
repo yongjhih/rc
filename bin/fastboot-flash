@@ -32,6 +32,8 @@ while [ "$1" ]; do
 	if [ "$NEED_SIG" != "0" ]; then
 		if [ -f "$signature" ]; then
 			fastboot signature "$signature"
+		else
+			adigest "$file"
 		fi
 	fi
 	fastboot flash "$partition" "$file"
