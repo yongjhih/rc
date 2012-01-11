@@ -178,22 +178,22 @@ set cursorline
 ". the last inserted text
 "- the last small (less than a line) delete
 "=5*5 insert 25 into text (mini-calculator)
-"if has("cscope")
+if has("cscope")
     "set csprg=/usr/bin/cscope
     "set csto=0
     "set cst
     "set nocsverb
-    "" add any database in current directory
-    ""if filereadable("cscope.out")
-        ""cs add cscope.out
-        """ else add database pointed to by environment
-    ""elseif $CSCOPE_DB != ""
-        ""cs add $CSCOPE_DB
-    ""endif
+    " add any database in current directory
+    "if filereadable("cscope.out")
+	"cs add cscope.out
+	"" else add database pointed to by environment
+    "elseif $CSCOPE_DB != ""
+	"cs add $CSCOPE_DB
+    "endif
     "set csverb
-    "set cscopetag
+    set cscopetag
     "set cscopequickfix=s-,g-,c-,d-,t-,e-,f-,i-
-"endif
+endif
 
 "if has("autocmd")
    "autocmd BufReadPost *

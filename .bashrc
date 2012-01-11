@@ -260,15 +260,6 @@ bd()
 	T="/tmp"
 	cwd="`readlink -f $PWD`"
 	while [ "$cwd" != "/" ]; do
-		if [ -f "$T/filelist" ]; then
-			#find "$cwd" -wholename ./out -prune -o -wholename ./.repo -prune -o -type f
-			f=`find "$cwd"`
-			ff=`cat "$T/filelist"`
-			echo -e "$f\n$ff" | grep -v '^.\s*$' | sort | uniq > "$T/filelist"
-		else
-			find "$cwd" | grep -v '^.\s*$' > "$T/filelist"
-		fi
-
 		local lines=
 		if [ -f "$T/filelist" ]; then
 			lines=($(grep "$1" $T/filelist | sed -e 's/\/[^/]*$//' | sort | uniq))
@@ -301,6 +292,14 @@ bd()
 			cd "$pathname"
 			return 0
 		fi
+		if [ -f "$T/filelist" ]; then
+			#find "$cwd" -wholename ./out -prune -o -wholename ./.repo -prune -o -type f
+			f=`find "$cwd"`
+			ff=`cat "$T/filelist"`
+			echo -e "$f\n$ff" | grep -v '^.\s*$' | sort | uniq > "$T/filelist"
+		else
+			find "$cwd" | grep -v '^.\s*$' > "$T/filelist"
+		fi
 		cwd="`readlink -f $cwd/..`"
 	done
 	echo "Not found"
@@ -316,19 +315,19 @@ _arrayoffset=0
 fi
 unset _xarray
 
-..() {
-	local todir="."
-	[ "$1" ] || todir=".."
+#..() {
+	#local todir="."
+	#[ "$1" ] || todir=".."
 
-	while [ "$1" ]; do
-		for ((i=0; i < "$1"; i++)); do
-			todir="$todir/.."
-			if [ "/" = `readlink -f $todir` ]; then
-				break
-			fi
-		done
-		shift
-	done
-	cd "$todir"
-}
+	#while [ "$1" ]; do
+		#for ((i=0; i < "$1"; i++)); do
+			#todir="$todir/.."
+			#if [ "/" = `readlink -f $todir` ]; then
+				#break
+			#fi
+		#done
+		#shift
+	#done
+	#cd "$todir"
+#}
 
