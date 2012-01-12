@@ -191,7 +191,7 @@ if has("cscope")
 	"cs add $CSCOPE_DB
     "endif
     "set csverb
-    set cscopetag
+    "set cscopetag
     "set cscopequickfix=s-,g-,c-,d-,t-,e-,f-,i-
 endif
 
@@ -245,4 +245,6 @@ map <C-L> :vim /<C-R>=expand("<cword>")<CR>/ **/*.*<CR>
 
 set grepprg=ack-grep\ --cpp\ --cc\ --perl\ --python\ --make\ --java\ --xml
 nmap _g :grep <C-R>=expand("<cword>")<CR><CR>
+
+set hidden
 
