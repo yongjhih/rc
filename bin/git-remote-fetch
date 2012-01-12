@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+while [ "$1" ]; do
+	if git remote | grep "$1" > /dev/null 2>&1; then
+	git remote-add "$1"
+	fi
+	shift
+done
+
+git fetch
