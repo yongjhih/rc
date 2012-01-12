@@ -14,6 +14,7 @@
 	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 	recurt = !git-recurt
 	cherries = !git-cherries
+	fetch = !git-remote-fetch
 	pwd = !pwd
 	;graphviz = "!f() { echo 'digraph git { node [color=lightblue2, style=filled, fontname=\"LiHeiPro.ttf\"]; '; git log --pretty='format:  %h -> { %p }' \"$@\" | sed 's/[0-9a-f][0-9a-f]*/\"&\"/g' ; echo '}'; }; f"
 	graphviz = "!f() { echo 'digraph git { node [color=lightblue2, style=filled]; '; git log --pretty='format:  %h -> { %p }' \"$@\" | sed 's/[0-9a-f][0-9a-f]*/\"&\"/g' ; echo '}'; }; f"
