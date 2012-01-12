@@ -76,6 +76,9 @@ fi
 # }}}
 
 if [ ! "$skip" ]; then
+	re="gbc_official"
+	[ "$remote" ] && re="$remote"
+
 	echo 1
 	repo forall -c "git clear; git checkout \"`git rev-parse HEAD`\"" > /dev/null 2>&1
 	repo sync -l -j4 > /dev/null 2>&1
@@ -83,7 +86,7 @@ if [ ! "$skip" ]; then
 	echo 2
 	repo init -m "$manifest" > /dev/null 2>&1
 	repo forall -c "git branch -D _tmp; git branch _tmp; git tag -d \"$tag\"; git tag -m \"init $branch tag\" \"$tag\" _tmp ;" > /dev/null 2>&1
-	repo forall -c "git push $force gbc_official \"$tag\":\"$tag\" ; git push $force gbc_official _tmp:\"$branch\";"
+	repo forall -c "git push $force $remote \"$tag\":\"$tag\" ; git push $force $remote _tmp:\"$branch\";"
 
 	echo 3
 	repo forall -c "git clear; git checkout \"`git rev-parse HEAD`\"" > /dev/null 2>&1
@@ -119,7 +122,7 @@ fi
 git commit -a -m "init $tag tag" > /dev/null 2>&1
 git tag -d "$tag" > /dev/null 2>&1
 git tag -m "init $tag tag" "$tag" > /dev/null 2>&1
-git push origin $force "$tag":"$tag"
+git push origin "$force" "$tag":"$tag"
 
 echo 7
 git reset --hard > /dev/null 2>&1
