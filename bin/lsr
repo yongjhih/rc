@@ -6,23 +6,26 @@
 #
 
 # android-ls is not supported -1 -i
-l="./"
 ls -R "$@" |
 while read line; do
 	case "$line" in
 		*:) # pushd by ':'
-			l="${line%:*}/"
+			l="${line%:*}"
 			dst="${l}"
-			list=`ls -l -d -s "$l"`
-			echo -e "${list}\t${dst}"
+			#list=`ls -l -d -s "$l"`
+			#echo -e "${list}\t${dst}"
 		;;
 		?*)
-			dst="${l}${line}"
-			list=`ls -l -d -s "${l}${line}"`
+			if ls "$l" > /dev/null 2>&1; then
+				dst="${l}/${line}"
+				list=`ls -l -d -s "${dst}"`
+			else
+				dst="${line}"
+				list=`ls -l -d -s "${line}"`
+			fi
 			echo -e "${list}\t${dst}"
 		;;
 		*) # popd by empty line
-			l="./"
 		;;
 	esac
 done
