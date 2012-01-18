@@ -1,0 +1,19 @@
+#!/system/bin/sh
+#!/usr/bin/env sh
+
+#
+# find -ls
+#
+
+ls -lisR | while read line; do
+	case "$line" in
+		*:)
+			l="${line%:*}"
+			ls -lids "$l"
+		;;
+		[0-9]*[0-9]*[sd-][r-][w-][x-][r-][w-][x-]*)
+			echo "$line"
+		;;
+	esac
+done
+
