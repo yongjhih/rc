@@ -5,16 +5,21 @@
 # find -ls
 #
 
+# android-ls is not supported -1 -i
 l="./"
-ls -1R | while read line; do
+ls -R "$@" |
+while read line; do
 	case "$line" in
 		*:) # pushd by ':'
 			l="${line%:*}/"
-			ls -lids "$l"
+			dst="${l}"
+			list=`ls -l -d -s "$l"`
+			echo -e "${list}\t${dst}"
 		;;
 		?*)
-			ls -lids "${l}${line}"
-			#echo "${l}${line}"
+			dst="${l}${line}"
+			list=`ls -l -d -s "${l}${line}"`
+			echo -e "${list}\t${dst}"
 		;;
 		*) # popd by empty line
 			l="./"
