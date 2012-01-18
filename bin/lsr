@@ -5,14 +5,19 @@
 # find -ls
 #
 
-ls -lisR | while read line; do
+l="./"
+ls -1R | while read line; do
 	case "$line" in
-		*:)
-			l="${line%:*}"
+		*:) # pushd by ':'
+			l="${line%:*}/"
 			ls -lids "$l"
 		;;
-		[0-9]*[0-9]*[sd-][r-][w-][x-][r-][w-][x-]*)
-			echo "$line"
+		?*)
+			ls -lids "${l}${line}"
+			#echo "${l}${line}"
+		;;
+		*) # popd by empty line
+			l="./"
 		;;
 	esac
 done
