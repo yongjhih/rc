@@ -1,0 +1,48 @@
+#!/system/bin/sh
+#!/usr/bin/env sh
+
+grep() {
+	local f="$1"
+	case "$f" in "") return 1 ;; esac
+	local v="$2"
+
+	local ret=1
+	while read line; do
+		case "$line" in
+			*$f*)
+				ret=0
+				case "$v" in "-v") continue ;; esac
+				echo "$line"
+			;;
+			*)
+				case "$v" in "") continue ;; esac
+				echo "$line"
+			;;
+		esac
+	done
+	return "$ret"
+}
+
+cut() {
+	local f="$1"
+	case "$f" in
+		"") f="0" ;;
+	esac
+
+	local n=
+	while read line; do
+		n="0"
+		for i in $line; do # DO NOT quote $line, e.g. "$line"
+			#echo "$n: $i"
+			case "$n" in "$f") echo "$i"; ;; esac
+			n=$(($n + 1))
+		done
+	done
+}
+
+not_rootfs() {
+	mount |
+	grep "rootfs" -v |
+	cut 1
+}
+

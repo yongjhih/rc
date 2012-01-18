@@ -1,0 +1,60 @@
+#!/system/bin/sh
+#!/usr/bin/env sh
+
+. /system/bin/.gbrc > /dev/null 2>&1
+
+for i in `ls /`; do
+	i="/$i"
+	skip="0"
+	for j in `not_rootfs` "/mnt" "/sdcard"; do
+		case "$j" in
+			${i}*)
+				skip="1"
+				continue
+				;;
+			'/'${i}*)
+				skip="1"
+				continue
+				;;
+		esac
+	done
+	case "$skip" in
+		"0")
+			lsr -l -s "$i"
+			;;
+		*)
+			#echo "skip: $i"
+			;;
+	esac
+done
+
+# stupid {{{
+#d="/"
+#lsr "$d" |
+#while read line; do
+#	skip="0"
+#	for i in `not_rootfs` "/mnt" "/sdcard"; do
+#		#echo sear: ${d}${i}
+#		case "$line" in
+#			${i}*)
+#				skip="1"
+#				continue
+#				;;
+#			${d}${i}*)
+#				skip="1"
+#				continue
+#				;;
+#		esac
+#	done
+#	case "$skip" in
+#		"0")
+#			list=`ls -l -s -d "$line"`
+#			echo -e "$list\t$line"
+#			;;
+#		*)
+#			echo "skip: $line"
+#			;;
+#	esac
+#done
+# }}}
+

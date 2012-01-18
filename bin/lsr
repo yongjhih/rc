@@ -4,29 +4,44 @@
 #
 # find -ls
 #
+. /system/bin/.gbrc > /dev/null 2>&1
+
+while getopts "ls" OPTIONS; do
+	case "$OPTIONS" in
+		l)      opt="1"; l="-l";;
+		s)      opt="1"; s="-s";;
+	esac
+done
+
+shift $(($OPTIND-1))
 
 # android-ls is not supported -1 -i
 ls -R "$@" |
 while read line; do
 	case "$line" in
 		*:) # pushd by ':'
-			l="${line%:*}"
-			dst="${l}"
-			#list=`ls -l -d -s "$l"`
-			#echo -e "${list}\t${dst}"
-		;;
+			d="${line%:*}"
+			dst="${d}"
+			;;
 		?*)
-			if ls "$l" > /dev/null 2>&1; then
-				dst="${l}/${line}"
-				list=`ls -l -d -s "${dst}"`
+			if ls "$d" > /dev/null 2>&1; then
+				dst="${d}/${line}"
+				list=`ls $l $s -d "${dst}"`
 			else
 				dst="${line}"
-				list=`ls -l -d -s "${line}"`
+				list=`ls $l $s -d "${line}"`
 			fi
-			echo -e "${list}\t${dst}"
-		;;
+			case "$opt" in
+				"1")
+					echo -e "${list}\t${dst}"
+					;;
+				"")
+					echo -e "${list}"
+					;;
+			esac
+			;;
 		*) # popd by empty line
-		;;
+			;;
 	esac
 done
 
