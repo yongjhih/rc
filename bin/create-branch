@@ -76,12 +76,11 @@ fi
 # }}}
 
 if [ ! "$skip" ]; then
-	re="gbc_official"
-	[ "$remote" ] && re="$remote"
+	[ "$remote" ] || remote="gbc_official"
 
 	echo 1
 	repo forall -c "git clear; git checkout \"`git rev-parse HEAD`\"" > /dev/null 2>&1
-	repo sync -l -j4 > /dev/null 2>&1
+	repo sync -d -l -j4 > /dev/null 2>&1
 
 	echo 2
 	repo init -m "$manifest" > /dev/null 2>&1
