@@ -4,44 +4,95 @@
 #
 # find -ls
 #
-. /system/bin/.gbrc > /dev/null 2>&1
+. /system/bin/.gbrc
 
-while getopts "ls" OPTIONS; do
-	case "$OPTIONS" in
-		l)      opt="1"; l="-l";;
-		s)      opt="1"; s="-s";;
+list() {
+	local cwd="$1"
+	case "$1" in
+		*/) ;;
+		?*) cwd="$1/" ;;
+		"") cwd="./" ;;
 	esac
-done
 
-shift $(($OPTIND-1))
+	for i in "$cwd".*; do
+		case "$i" in
+			"") ;;
+			".") ;;
+			"..") ;;
+			/".") ;;
+			/"..") ;;
+			*/".") ;;
+			*/"..") ;;
+			?*)
+				if ls -l -s -d "$i" > /dev/null 2>&1; then
+					ls -l -s -d "$i" |
+					while read line; do
+						echo -e "$line\t$cwd"
+						# replace last column
+						#case "$line" in
+						#	?*' -> '?*)
+						#		echo "$line"
+						#		;;
+						#	?*)
+						#		name=`echo "${line##* *-*-* *:* }"`
+						#		pre=`echo "${line% *}"`
+						#		echo "$pre $cwd$name"
+						#		;;
+						#esac
+					done
+				fi
+				;;
+		esac
+	done
+	for i in "$cwd"*; do
+		if ls -l -s -d "$i" > /dev/null 2>&1; then
+			ls -l -s -d "$i" |
+			while read line; do
+				echo -e "$line\t$cwd"
+				# replace last column
+				#case "$line" in
+				#	?*' -> '?*)
+				#		echo "$line"
+				#		;;
+				#	?*)
+				#		name=`echo "${line##* *-*-* *:* }"`
+				#		pre=`echo "${line% *}"`
+				#		echo "$pre $cwd$name"
+				#		;;
+				#esac
+			done
+		fi
+	done
+	next=`echo "$cwd"*/`
+	for i in $next; do
+		if ls "$i" > /dev/null 2>&1; then
+			list "$i"
+		fi
+	done
+	next=`echo "$cwd".*/`
+	for i in $next; do
+		case "$i" in
+			"") ;;
+			".") ;;
+			"..") ;;
+			/".") ;;
+			/"..") ;;
+			*/".") ;;
+			*/"..") ;;
+			*/"."/) ;;
+			*/".."/) ;;
+			*/"."/*) ;;
+			*/".."/*) ;;
+			?*)
+				if ls "$i" > /dev/null 2>&1; then
+					list "$i"
+				fi
+				;;
+		esac
+	done
+}
 
-# android-ls is not supported -1 -i
-ls -R "$@" |
-while read line; do
-	case "$line" in
-		*:) # pushd by ':'
-			d="${line%:*}"
-			dst="${d}"
-			;;
-		?*)
-			if ls "$d" > /dev/null 2>&1; then
-				dst="${d}/${line}"
-				list=`ls $l $s -d "${dst}"`
-			else
-				dst="${line}"
-				list=`ls $l $s -d "${line}"`
-			fi
-			case "$opt" in
-				"1")
-					echo -e "${list}\t${dst}"
-					;;
-				"")
-					echo -e "${list}"
-					;;
-			esac
-			;;
-		*) # popd by empty line
-			;;
-	esac
+for i in "$@"; do
+	list "$i"
 done
 
