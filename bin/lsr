@@ -1,16 +1,48 @@
+#!/usr/bin/env bash
 #!/system/bin/sh
-#!/usr/bin/env sh
 
 #
 # find -ls
 #
-. /system/bin/.gbrc
+if ls /system/bin/.gbrc > /dev/null 2>&1; then
+	. /system/bin/.gbrc
+fi
+if ls "${HOME}/bin/.gbrc" > /dev/null 2>&1; then
+	. "${HOME}/bin/.gbrc"
+fi
+
+if ls /data/local/.gbrc > /dev/null 2>&1; then
+	. /data/local/.gbrc
+fi
+
+export PATH="$PATH:/data/local"
+
+isDir() {
+	if ls "$1"/.* > /dev/null 2>&1; then
+		return 0 # is not dir
+	fi
+
+	return 1 # is not dir
+}
 
 list() {
 	local cwd="$1"
+
 	case "$1" in
 		*/) ;;
-		?*) cwd="$1/" ;;
+		?*)
+			#if isDir "$1"; then
+			#	:
+			#else
+			#	ls -l -s -d "$1" |
+			#	while read line; do
+			#		echo -e "${1}\t${line}"
+			#	done
+			#	return
+			#fi
+
+			cwd="$1/"
+			;;
 		"") cwd="./" ;;
 	esac
 
@@ -24,37 +56,45 @@ list() {
 			*/".") ;;
 			*/"..") ;;
 			?*)
-				if ls -l -s -d "$i" > /dev/null 2>&1; then
-					ls -l -s -d "$i" |
-					while read line; do
-						echo -e "$line\t$cwd"
-						# replace last column
-						#case "$line" in
-						#	?*' -> '?*)
-						#		echo "$line"
-						#		;;
-						#	?*)
-						#		name=`echo "${line##* *-*-* *:* }"`
-						#		pre=`echo "${line% *}"`
-						#		echo "$pre $cwd$name"
-						#		;;
-						#esac
-					done
+				if isDir "$i"; then
+					list "$i"
+					continue; # skip list dir
 				fi
+				if ls -l -s -d "$i" > /dev/null 2>&1; then
+				ls -l -s -d "$i" |
+				while read line; do
+					echo -e "${cwd}${i##*/}\t${line}"
+					# replace last column
+					#case "$line" in
+					#	?*' -> '?*)
+					#		echo "$line"
+					#		;;
+					#	?*)
+					#		name=`echo "${line##* *-*-* *:* }"`
+					#		pre=`echo "${line% *}"`
+					#		echo "$pre $cwd$name"
+					#		;;
+					#esac
+				done
+			fi
 				;;
 		esac
 	done
 	for i in "$cwd"*; do
+		if isDir "$i"; then
+			list "$i"
+			continue; # skip list dir
+		fi
 		if ls -l -s -d "$i" > /dev/null 2>&1; then
 			ls -l -s -d "$i" |
 			while read line; do
-				echo -e "$line\t$cwd"
+				echo -e "${cwd}${i##*/}\t${line}"
 				# replace last column
 				#case "$line" in
 				#	?*' -> '?*)
 				#		echo "$line"
 				#		;;
-				#	?*)
+			#	?*)
 				#		name=`echo "${line##* *-*-* *:* }"`
 				#		pre=`echo "${line% *}"`
 				#		echo "$pre $cwd$name"
@@ -62,33 +102,6 @@ list() {
 				#esac
 			done
 		fi
-	done
-	next=`echo "$cwd"*/`
-	for i in $next; do
-		if ls "$i" > /dev/null 2>&1; then
-			list "$i"
-		fi
-	done
-	next=`echo "$cwd".*/`
-	for i in $next; do
-		case "$i" in
-			"") ;;
-			".") ;;
-			"..") ;;
-			/".") ;;
-			/"..") ;;
-			*/".") ;;
-			*/"..") ;;
-			*/"."/) ;;
-			*/".."/) ;;
-			*/"."/*) ;;
-			*/".."/*) ;;
-			?*)
-				if ls "$i" > /dev/null 2>&1; then
-					list "$i"
-				fi
-				;;
-		esac
 	done
 }
 

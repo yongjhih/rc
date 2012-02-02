@@ -1,18 +1,25 @@
 #!/system/bin/sh
 #!/usr/bin/env sh
 
-. /system/bin/.gbrc
+if ls /system/bin/.gbrc > /dev/null 2>&1; then
+	. /system/bin/.gbrc
+fi
+if ls "${HOME}/bin/.gbrc" > /dev/null 2>&1; then
+	. "${HOME}/bin/.gbrc"
+fi
 
-for i in `ls /`; do
-	i="/$i"
+if ls /data/local/.gbrc > /dev/null 2>&1; then
+	. /data/local/.gbrc
+fi
+
+export PATH="$PATH:/data/local"
+
+for i in `ls -a ./`; do
+	i="./$i"
 	skip="0"
-	for j in `not_rootfs` "/mnt" "/sdcard"; do
-		case "$j" in
+	for j in `not_rootfs` "/mnt" "/sdcard" "/etc" "/proc" "/data" "/config" "/ueventd.rc" "/vendor" ; do
+		case ".$j" in
 			${i}*)
-				skip="1"
-				continue
-				;;
-			'/'${i}*)
 				skip="1"
 				continue
 				;;
