@@ -165,6 +165,23 @@ export PERLLIB="$HOME/perl/lib/perl"
 export PERL_CPANM_OPT="--local-lib=$HOME/perl5"
 export PERL5LIB="$HOME/perl5/lib/perl5"
 
+setup_proxy() {
+	unset PROXY
+	unset http_proxy
+	unset https_proxy
+	unset ftp_proxy
+
+	[ "$1" ] || return
+	export PROXY="http://$1"
+	export http_proxy="http://$1"
+	export https_proxy="https://$1"
+	export ftp_proxy="ftp://$1"
+}
+
+setdown_proxy() {
+	setup_proxy ""
+}
+
 # 5865 for ntlmaps
 #ALL_PROXY=socks://localhost:8010/
 #all_proxy=socks://localhost:8010/
@@ -182,16 +199,28 @@ export PERL5LIB="$HOME/perl5/lib/perl5"
 #export https_proxy=https://10.8.27.228:3128/
 #export ftp_proxy=ftp://10.8.27.228:3128/
 
+#export PROXY="http://gbc-proxy:8080/"
+#export http_proxy="http://gbc-proxy:8080/"
+#export https_proxy="https://gbc-proxy:8080/"
+#export ftp_proxy="ftp://gbc-proxy:8080/"
+
+#export PROXY="http://10.8.9.9:8080/"
+#export http_proxy="http://10.8.9.9:8080/"
+#export https_proxy="https://10.8.9.9:8080/"
+#export ftp_proxy="ftp://10.8.9.9:8080/"
+#setup_proxy "10.8.9.9:8080"
+
 if [ ! `echo "$PATH" | grep "$HOME/workspace/GbcFeatureProvider/tools"` ]; then
 	PATH="$PATH:$HOME/workspace/GbcFeatureProvider/tools"
 fi
 
 #export ANDROID_SRC="$HOME/workspace/android_src_froyo"
+export SDK="$HOME/sdk/android-sdk-linux_x86/tools:$HOME/sdk/android-sdk-linux_x86/platform-tools"
 ANDROID_SDK_TOOL="$HOME/sdk/android-sdk-linux_x86/tools:$HOME/sdk/android-sdk-linux_x86/platform-tools"
 #export ANDROID_SRC="/home/andrew/workspace/android_src_froyo"
 #export ANDROID_SDK_TOOL="/home/andrew/sdk/android-sdk-linux_x86/tools"
 
-PATH="$PATH:$ANDROID_SDK_TOOL"
+PATH="$PATH:$SDK"
 
 alias emuand='emulator -system system.img -data userdata.img -ramdisk ramdisk.img'
 
@@ -230,7 +259,7 @@ git-forall()
 #export JAVAHOME=/usr/lib/jvm/java-1.6-sun
 #export GREP_OPTIONS='-rIPs --exclude-dir=.[a-zA-Z0-9]* --exclude=.* --exclude=*~ --color=auto'
 #alias cgrep='grep --color=always'
-export PATH="$PATH:/var/lib/gems/1.8/bin"
+#export PATH="$PATH:/var/lib/gems/1.8/bin"
 
 bd()
 {
@@ -241,6 +270,10 @@ bd()
 
 	# 1. non regex
 	todir="${PWD%*/$1*}/$1"
+	echo "$todir"
+	todir="${PWD%/$1*}/$1"
+	echo "$todir"
+	todir="${PWD%/$1/*}/$1/"
 	#[ -d "$todir" ] && ( cd "$todir" ; return 0 )
 	if [ -d "$todir" ]; then
 		cd "$todir"
@@ -331,3 +364,6 @@ unset _xarray
 	#cd "$todir"
 #}
 
+export C_INCLUDE_PATH="$C_INCLUDE_PATH:$HOME/include"
+export LIBRARY_PATH="$LIBRARY_PATH:$HOME/lib"
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$HOME/lib"

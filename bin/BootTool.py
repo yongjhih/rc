@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import re
 import sys
 import shutil
 import struct
@@ -91,6 +92,7 @@ def main():
 
     size = 512
     cmdline = struct.unpack('512s', bootimg[cur:cur+size])[0]
+    cmdline = cmdline.strip('\x00')
     cur += size
 
     size = 32
@@ -127,12 +129,13 @@ def main():
     os.mkdir('root')
     os.system('cd root; cat ../ramdisk.img | cpio -id')
     os.system('cp %s/bin/default.prop ./root' % sys.path[0])
+    #s = raw_input('wait.....')
 
+    if ('console=ttyMSM2,115200n8' not in cmdline):
+        cmdline = "%s console=ttyMSM2,115200n8" % (cmdline)
+    
     os.system('%s/bin/mkbootfs root | %s/bin/minigzip > ramdisk.img.gz' % (sys.path[0], sys.path[0]))
-    #os.system('%s/bin/mkbootimg --kernel kernel --ramdisk ramdisk.img.gz --cmdline "mem=216M console=ttyMSM2,115200n8 androidboot.hardware=qcom" -o boot.eng.img --base 0x00200000' % sys.path[0])
-    flounder_kernel_arg = 'mem=212M@0x200000 mem=256M@0x20000000 androidboot.hardware=qcom fb_addr=0xD200000'
-    #os.system('%s/bin/mkbootimg --kernel kernel --ramdisk ramdisk.img.gz --cmdline "%s" -o boot.eng.img --base 0x00200000' % (sys.path[0], flounder_kernel_arg))
-    os.system('%s/bin/mkbootimg --kernel kernel --ramdisk ramdisk.img.gz --cmdline "%s" -o boot.eng.img --base 0x00200000' % (sys.path[0], flounder_kernel_arg))
+    os.system('%s/bin/mkbootimg --kernel kernel --ramdisk ramdisk.img.gz --cmdline "%s" -o boot.eng.img --base 0x00200000 --pagesize %s' % (sys.path[0], cmdline, page_size))
 
     os.system('rm xxx ramdisk.img.gz ramdisk.img kernel')
 
@@ -143,3 +146,8 @@ def main():
 
 if __name__ == '__main__':
     main()
+    
+    
+    
+    
+

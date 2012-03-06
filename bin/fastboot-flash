@@ -19,6 +19,7 @@ while [ "$1" ]; do
 	file="$1"
 	if [ "${1%.img}" = "$1" ]; then
 		echo "$1 is not *.img, skip."
+		shift
 		continue
 	fi
 	#dirfile="${file%/*}"
@@ -31,9 +32,11 @@ while [ "$1" ]; do
 
 	if [ "$NEED_SIG" != "0" ]; then
 		if [ -f "$signature" ]; then
-			fastboot signature "$signature"
+			:
+			#fastboot signature "$signature"
 		else
-			adigest "$file"
+			:
+			#adigest "$file"
 		fi
 	fi
 	fastboot flash "$partition" "$file"

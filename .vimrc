@@ -178,7 +178,7 @@ set cursorline
 ". the last inserted text
 "- the last small (less than a line) delete
 "=5*5 insert 25 into text (mini-calculator)
-if has("cscope")
+"if has("cscope")
     "set csprg=/usr/bin/cscope
     "set csto=0
     "set cst
@@ -193,7 +193,7 @@ if has("cscope")
     "set csverb
     "set cscopetag
     "set cscopequickfix=s-,g-,c-,d-,t-,e-,f-,i-
-endif
+"endif
 
 "if has("autocmd")
    "autocmd BufReadPost *
@@ -241,10 +241,11 @@ command W w !sudo tee % > /dev/null
 "set cinoptions=l1
 
 "map <C-L> viwy:vim /<C-R>"/ **/*.*<CR>
-map <C-L> :vim /<C-R>=expand("<cword>")<CR>/ **/*.*<CR>
+map <C-j> :vim /<C-R>=expand("<cword>")<CR>/ **/*.*<CR>
 
 set grepprg=ack-grep\ --cpp\ --cc\ --perl\ --python\ --make\ --java\ --xml
 nmap _g :grep <C-R>=expand("<cword>")<CR><CR>
 
 set hidden
 
+autocmd BufNewFile,BufRead *.logcat setfiletype logcat
