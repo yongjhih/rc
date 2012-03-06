@@ -248,4 +248,3 @@ nmap _g :grep <C-R>=expand("<cword>")<CR><CR>
 
 set hidden
 
-autocmd BufNewFile,BufRead *.logcat setfiletype logcat

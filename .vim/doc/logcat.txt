@@ -1,0 +1,109 @@
+*logcat.txt*	Syntax and trivial utility for logcat(Log of Android).
+
+Version: 0.1.2
+Author : thinca <thinca+vim@gmail.com>
+License: zlib License
+
+==============================================================================
+CONTENTS					*logcat-contents*
+
+INTRODUCTION			|logcat-introduction|
+FILETYPE			|logcat-filetype|
+SYNTAX				|logcat-syntax|
+INTERFACE			|logcat-interface|
+  COMMANDS			  |logcat-commands|
+CUSTOMIZING			|logcat-customizing|
+CHANGELOG			|logcat-changelog|
+
+
+==============================================================================
+INTRODUCTION					*logcat-introduction*
+
+*logcat* is a Vim plugin to provide syntax file and trivial utility for
+logcat.  logcat is a utility of Android to view the log of Android.
+
+logcat:
+http://developer.android.com/guide/developing/debugging/debugging-log.html
+
+
+Requirements:
+- Vim 7.3 or later
+
+Optional:
+- vimshell
+
+Latest version:
+https://github.com/thinca/vim-logcat
+
+
+
+==============================================================================
+FILETYPE					*logcat-filetype*
+
+This plugin detects the filetype logcat by two ways.
+
+- .logcat extension
+- A file that content starts by "--------- beginning of".
+
+
+
+==============================================================================
+SYNTAX						*logcat-syntax*
+
+This plugin supports the following formats.  These are automatically detected.
+
+- brief
+- process
+- tag
+- thread
+- time
+- threadtime
+- long
+
+"raw" is not supported because the information is too less.
+
+
+
+==============================================================================
+INTERFACE					*logcat-interface*
+
+------------------------------------------------------------------------------
+COMMANDS					*logcat-commands*
+
+:Logcat [arguments]				*:Logcat*
+	Starts "logcat" with |vimshell|.  If you are not installing vimshell
+	plugin, this command is not defined.
+	[arguments] is passed to logcat command.  ex: -v time
+
+:Logcat! [arguments]
+	Execute |:LogcatClear| before |:Logcat|.
+
+:LogcatClear					*:LogcatClear*
+	Executes "logcat -c".
+
+
+
+==============================================================================
+CUSTOMIZING					*logcat-customizing*
+
+g:logcat_no_metainfo				*g:logcat_no_metainfo*
+b:logcat_no_metainfo				*b:logcat_no_metainfo*
+	No highlights the tag, time, and process.
+
+
+
+==============================================================================
+CHANGELOG					*logcat-changelog*
+
+0.1.2	2011-12-06
+	- Supported "threadtime" format.
+
+0.1.1	2011-10-04
+	- |:Logcat| command accepts bang(!).
+
+0.1.0	2011-09-07
+	- Initial version.
+
+
+==============================================================================
+vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl
