@@ -17,8 +17,8 @@ fi
 
 while [ "$1" ]; do
 	file="$1"
-	if [ "${1%.img}" = "$1" ]; then
-		echo "$1 is not *.img, skip."
+	if [[ "${1%.img}" = "$1" && "${1%.img.*}" = "$1" ]]; then
+		echo "$1 is not valid image file name, skip."
 		shift
 		continue
 	fi
@@ -27,13 +27,16 @@ while [ "$1" ]; do
 	#basefile="${file##*/}"
 	basefile="`basename "$file"`"
 	partition="${basefile%%.*}"
-	filefullname="${file%.img}"
+	filefullname="${file%.img*}"
+	if [ ! "$filefullname" ]; then
+		filefullname="${file%.img.*}"
+	fi
 	signature="${filefullname}.sig"
 
 	if [ "$NEED_SIG" != "0" ]; then
 		if [ -f "$signature" ]; then
 			:
-			#fastboot signature "$signature"
+			fastboot signature "$signature"
 		else
 			:
 			#adigest "$file"
