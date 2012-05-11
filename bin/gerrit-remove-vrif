@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+port="29419"
+[ "$1" ] && port="$1"
+
+sqls=(
+"DELETE FROM approval_categories      WHERE category_id = 'VRIF'"
+"DELETE FROM approval_category_values WHERE category_id = 'VRIF'"
+"DELETE FROM patch_set_approvals WHERE category_id = 'VRIF'"
+)
+
+for s in "${sqls[@]}"; do
+	ssh andrew.chen@git.gbc.intra -p "$port" gerrit gsql -c \""${s};"\"
+done
+

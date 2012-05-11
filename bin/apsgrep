@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+pattren=".*"
+[ "$1" ] && pattern="$1"
+
+adb shell ps | grep "$pattern"
+

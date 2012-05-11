@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+#repo forall -c "git ls-remote ssh://gbc_feature@git.gbc.intra/android/\${REPO_PROJECT}.git | awk '{print $2}' | sed 's#^\s*refs/head/##' | grep '$1'  > /dev/null && echo \$REPO_PATH"
+content=$(repo forall -c "if git remote -v | grep gbc_feature > /dev/null 2>&1 ; then git branch -r | grep gbc_feature | grep '$1' > /dev/null 2>&1 && echo \$REPO_PATH; else { git ls-remote ssh://gbc_feature@git.gbc.intra/android/\${REPO_PROJECT}.git | awk '{print $2}' | sed 's#^\s*refs/head/##' | grep '$1'  > /dev/null && echo \$REPO_PATH ;} ; fi")
+
+echo "$content"
+
+ret=1
+[ "$content" ] && ret=0
+exit "$ret"
+

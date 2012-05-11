@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+port="29419"
+[ "$1" ] && port="$1"
+
+ssh andrew.chen@git.gbc.intra -p "$port" gerrit flush-caches
+

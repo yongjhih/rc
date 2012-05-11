@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+if [ -t 0 ]; then
+	[ "$1" ] || exit 1
+	adb shell ps | grep "$1" | awk '{print $2}' | xargs adb shell kill
+else
+	cat - | awk '{print $2}' | xargs adb shell kill
+fi
+

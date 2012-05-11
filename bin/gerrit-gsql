@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+port="29419"
+
+while [ "$1" ]; do
+	ssh andrew.chen@git.gbc.intra -p "$port" gerrit gsql -c \""${1};"\"
+	shift
+done
+
