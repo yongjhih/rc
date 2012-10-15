@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 # Author: Andrew Chen <yongjhih@gmail.com>
 # CC, Creative Commons
 admin=root
