@@ -118,7 +118,12 @@ fi
 
 # $__git_ps1
 
-colors () {
+# rewritten with adamnfish.posterous.com/uber-ps1-with-added-git
+if [ -f "$HOME/bash_completion.d/git" ]; then
+	. "$HOME/bash_completion.d/git"
+fi
+
+_colors() {
   local NO_COLOUR="\[\033[0m\]"
   local BLUE="\[\033[0;34m\]"
   local LIGHT_BLUE="\[\033[1;34m\]"
@@ -142,7 +147,7 @@ $LIGHT_RED\u$NO_COLOUR@$LIGHT_GREEN\h$NO_COLOUR:$LIGHT_BLUE\w$NO_COLOUR\
 \$ "
 }
 #$LIGHT_BLUE\w$NO_COLOUR\$(__git_ps1 \"(%s)\")\$ "
-colors
+_colors
 
 EDITOR="vi"
 VISUAL="$EDITOR"
@@ -210,13 +215,13 @@ setdown_proxy() {
 #export ftp_proxy="ftp://10.8.9.9:8080/"
 #setup_proxy "10.8.9.9:8080"
 
-if [ ! `echo "$PATH" | grep "$HOME/workspace/GbcFeatureProvider/tools"` ]; then
-	PATH="$PATH:$HOME/workspace/GbcFeatureProvider/tools"
-fi
+#if [ ! `echo "$PATH" | grep "$HOME/workspace/GbcFeatureProvider/tools"` ]; then
+#	PATH="$PATH:$HOME/workspace/GbcFeatureProvider/tools"
+#fi
 
 #export ANDROID_SRC="$HOME/workspace/android_src_froyo"
-export SDK="$HOME/sdk/android-sdk-linux_x86/tools:$HOME/sdk/android-sdk-linux_x86/platform-tools"
-ANDROID_SDK_TOOL="$HOME/sdk/android-sdk-linux_x86/tools:$HOME/sdk/android-sdk-linux_x86/platform-tools"
+export SDK="$HOME/sdk/android-sdk-linux_x86/tools:$HOME/sdk/android-sdk-linux_x86/platform-tools:$HOME/sdk/android-cts/tools"
+export ANDROID_SDK_TOOL="$SDK"
 #export ANDROID_SRC="/home/andrew/workspace/android_src_froyo"
 #export ANDROID_SDK_TOOL="/home/andrew/sdk/android-sdk-linux_x86/tools"
 
@@ -228,7 +233,7 @@ export PYTHONPATH="$HOME/lib"
 
 #set bell-style visible
 
-function screen-ps()
+function _screen-ps()
 {
 #case $TERM in
 		#xterm*|rxvt*)
@@ -243,7 +248,7 @@ function screen-ps()
 				#;;
 #esac
 }
-screen-ps
+_screen-ps
 
 git-forall()
 {
@@ -366,4 +371,16 @@ unset _xarray
 
 export C_INCLUDE_PATH="$C_INCLUDE_PATH:$HOME/include"
 export LIBRARY_PATH="$LIBRARY_PATH:$HOME/lib"
-export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$HOME/lib"
+#export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$HOME/lib"
+
+#export PATH="$PATH:$HOME/pip/bin"
+
+export GEM_PATH=$HOME/gems
+export PATH=$HOME/local/bin:$PATH
+
+export USE_CCACHE=1
+#export CCACHE_DIR=~/.ccache
+#export OUT_DIR_COMMON_BASE="$HOME/tmp/android-out-common"
+
+#export GIT_SSH="/home/andrew/bin/connect-proxy-ssh"
+#export GIT_PROXY_COMMAND="/home/andrew/bin/connect-proxy"
