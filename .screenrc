@@ -10,3 +10,4 @@ term xterm # fix notify-send, d-bus connection refused
 
 #shelltitle '] |bash'
 
+#idle 420 screen lock
