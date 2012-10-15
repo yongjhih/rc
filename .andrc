@@ -42,8 +42,9 @@ function adb-push () {
 	[ ! "$1" ] && return 1
 
 	while [ "$1" ]; do
+		f="`echo $1 | sed 's#out/target/product/[^/]\+/##'`"
 		# adb push system/lib/libcamera.so /system/lib
-		adb push "$1" "/${1%/*}"
+		adb push "$1" "/${f%/*}"
 		state=$?
 		if [ ! "$state" = 0 ]; then
 			return "$state"
