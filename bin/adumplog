@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-adb logcat -d > "logcat.log"
+adb pull /proc/config.gz
+adb logcat -d > "logcat.log" &
 adb shell dmesg > "dmesg.log"
 adb shell getprop > "getprop.log"
 
@@ -10,3 +11,4 @@ adb shell cat /proc/partitions > "partitions.log"
 adb shell df > "df.log"
 adb shell free > "free.log"
 
+#adb shell dumpstate > dumpstate.log

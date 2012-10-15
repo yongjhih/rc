@@ -11,8 +11,7 @@ if [ ! "$1" ]; then
 $0 <image.img ...>
 EOF
 
-	RET="1"
-	exit "$RET"
+	exit 1
 fi
 
 while [ "$1" ]; do
@@ -34,22 +33,21 @@ while [ "$1" ]; do
 	signature="${filefullname}.sig"
 
 	if [ "$NEED_SIG" != "0" ]; then
+		if [ ! -f "$signature" ]; then
+			digest "$file" "$signature"
+		fi
 		if [ -f "$signature" ]; then
-			:
 			fastboot signature "$signature"
-		else
-			:
-			#adigest "$file"
 		fi
 	fi
 	fastboot flash "$partition" "$file"
 	ret="$?"
-	if [ "$ret" != "0" ]; then
+	if [[ "$ret" != "0" && "$RET" = "0" ]]; then
 		RET="$ret"
 	fi
 
 	shift
 done
 
+#fastboot -w
 [ "$RET" = "0" ] && fastboot reboot
-
