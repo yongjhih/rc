@@ -35,6 +35,8 @@
 	tool = vimdiff
 [core]
 	editor = vi
+	excludesfile = /home/andrew/.gitignore
+	;gitproxy = /home/andrew/bin/git-proxy
 [help]
 	autocorrect = 1
 
@@ -48,3 +50,5 @@
 	suppressfrom = true
 [rerere]
 	enabled = 0
+[gc]
+	auto = 0
