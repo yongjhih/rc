@@ -23,7 +23,7 @@ set incsearch
 set fileencodings=utf-8,big5,gbk,cp936,iso-2022-jp,sjis,euc-jp,euc-kr,utf-bom,iso8859-1
 "set encoding=utf-8
 "set termencoding=utf-8
-" 預設儲存編碼 
+" 預設儲存編碼
 set fileencoding=utf-8
 "set spell spelllang=en_us
 set number
@@ -126,20 +126,32 @@ if ! has('gui')
     highlight Comment ctermfg=gray ctermbg=darkblue
 else
     highlight Normal guifg=white guibg=black
-    set guifont=Droid\ Sans\ Mono\ 12
+    "set guifont=Droid\ Sans\ Mono\ 12
+    "set guifont=Monaco\ for\ Powerline:h10
+    set guifont=Monaco\ for\ Powerline\ 10
 endif
+"set guifont=Monaco\ for\ Powerline:h12
 
+"" set term=bold
+"" set gui=bold
+"let g:Powerline_theme="skwp"
+"let g:Powerline_colorscheme="skwp"
+let g:Powerline_symbols = 'fancy'
+"colorscheme solarized
+"set t_Co=256
+" {{{ statusline
 set laststatus=2
-set statusline=%4*%<\ %1*[%F]
-set statusline+=%4*\ %5*[%{&encoding}, " encoding
-set statusline+=%{&fileformat}%{\"\".((exists(\"+bomb\")\ &&\ &bomb)?\",BOM\":\"\").\"\"}]%m
-set statusline+=%4*%=\ %6*%y%4*\ %3*%l%4*,\ %3*%c%4*\ \<\ %2*%P%4*\ \>
-highlight User1 ctermfg=red
-highlight User2 term=underline cterm=underline ctermfg=green
-highlight User3 term=underline cterm=underline ctermfg=yellow
-highlight User4 term=underline cterm=underline ctermfg=white
-highlight User5 ctermfg=cyan
-highlight User6 ctermfg=white
+"set statusline=%4*%<\ %1*[%F]
+"set statusline+=%4*\ %5*[%{&encoding}, " encoding
+"set statusline+=%{&fileformat}%{\"\".((exists(\"+bomb\")\ &&\ &bomb)?\",BOM\":\"\").\"\"}]%m
+"set statusline+=%4*%=\ %6*%y%4*\ %3*%l%4*,\ %3*%c%4*\ \<\ %2*%P%4*\ \>
+"highlight User1 ctermfg=red
+"highlight User2 term=underline cterm=underline ctermfg=green
+"highlight User3 term=underline cterm=underline ctermfg=yellow
+"highlight User4 term=underline cterm=underline ctermfg=white
+"highlight User5 ctermfg=cyan
+"highlight User6 ctermfg=white
+" }}}
 
 "au Filetype html,xml,xsl source ~/.vim/scripts/closetag.vim
 
@@ -282,10 +294,22 @@ Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
 Bundle "honza/snipmate-snippets"
 Bundle 'garbas/vim-snipmate'
-Bundle 'cscope.vim'
-Bundle 'cscope_macros.vim'
+Bundle 'snipmate-snippets'
+Bundle 'Lokaltog/vim-powerline'
+"Bundle 'python.vim'
+"Bundle 'pyflakes.vim'
+Bundle 'kchmck/vim-coffee-script'
+Bundle 'flazz/vim-colorschemes'
+Bundle 'ap/vim-css-color'
+Bundle 'matchit.zip'
+"Bundle 'cscope.vim'
+"Bundle 'cscope_macros.vim'
+"Bundle 'cscope_map'
 "Bundle 'autoload_cscope.vim'
-"
+Bundle 'autotags'
+Bundle 'nelson/cscope_maps'
+"Bundle 'cscope-quickfix'
+Bundle 'log.vim'
 
 " non github repos
 "Bundle 'git://git.wincent.com/command-t.git'
@@ -302,3 +326,4 @@ filetype plugin indent on     " required!
 " see :h vundle for more details or wiki for FAQ
 " NOTE: comments after Bundle command are not allowed..
 " }}}
+let g:vundle_default_git_proto = 'https'
