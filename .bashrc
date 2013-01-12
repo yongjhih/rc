@@ -243,7 +243,7 @@ function _screen-ps()
                 #PROMPT_COMMAND='echo -ne "\033k\033\134\033k${HOSTNAME}[`basename ${PWD}`]\033\134"'
 				#;;
 		#*)
-		export PROMPT_COMMAND='echo -ne "\033k`basename ${PWD}`\033\\"'
+		export PROMPT_COMMAND='echo -ne "\033k`basename "${PWD}"`\033\\"'
 		#PROMPT_COMMAND='echo -e '\033k'mytitle'\033\\'
 				#;;
 #esac
@@ -369,6 +369,14 @@ unset _xarray
 	#cd "$todir"
 #}
 
+function cd-safe() {
+local d="$1"
+if [ -f "$d" ]; then
+	d="`dirname \"$1\"`"
+fi
+command cd "$d"
+}
+
 export C_INCLUDE_PATH="$C_INCLUDE_PATH:$HOME/include"
 export LIBRARY_PATH="$LIBRARY_PATH:$HOME/lib"
 #export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$HOME/lib"
@@ -384,3 +392,22 @@ export USE_CCACHE=1
 
 #export GIT_SSH="/home/andrew/bin/connect-proxy-ssh"
 #export GIT_PROXY_COMMAND="/home/andrew/bin/connect-proxy"
+#export TERM="xterm-256color"
+#export TERM=screen-256color
+alias kiall='killall'
+alias drush-dl='drush dl --package-handler=git_drupalorg'
+alias cd='cd-safe'
+#alias rm='rm-safe'
+#
+#function rm-safe() {
+#while [ "$1" ]; do
+#	if [ "$1" = "/" ]; then
+#		echo "WTF /"
+#		return 1
+#	fi
+#	shift
+#done
+##rm "$@"
+#}
+#
+
