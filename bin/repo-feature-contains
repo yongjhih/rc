@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-from="$1"
-to="$2"
-
-git branch -r --contains "$to" 2> /dev/null | grep "$from" > /dev/null 2>&1
-
-exit "$?"
-

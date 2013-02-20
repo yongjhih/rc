@@ -34,7 +34,7 @@ while [ "$1" ]; do
 
 	if [ "$NEED_SIG" != "0" ]; then
 		if [ ! -f "$signature" ]; then
-			digest "$file" "$signature"
+			echo digest "$file" "$signature"
 		fi
 		if [ -f "$signature" ]; then
 			fastboot signature "$signature"

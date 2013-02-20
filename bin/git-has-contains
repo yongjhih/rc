@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+child="$1"
+parent="$2"
+
+git branch -r --contains "$child" 2> /dev/null | grep "$parent" > /dev/null 2>&1
+
+exit "$?"
+

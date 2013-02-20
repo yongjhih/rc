@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+parent="$1"
+
+if [ ! "$parent" ]; then
+	exit 1
+fi
+
+#<tr><td>1</td><td><a href="detail_feature?fid=1">phone/ds_ringtone/1</a></td><td><a href="?creator_name=henry.zhang">henry.zhang</a></td><td><a href="?owner_name=henry.zhang">henry.zhang</a></td><td>2011-05-30 15:52:59</td><td>2011-05-30 15:52:59</td></tr>
+#<td><a href="detail_feature?fid=1">phone/ds_ringtone/1</a></td><td>
+
+feature_list=( `wget -q "http://icore/gbc-feature/feature_list" -O - | grep 'detail_feature?' | sed 's#.*<tr>.*detail_feature[^>]\+>\([^<]\+\)</a>.*#\1#'| sort | uniq` )
+
+repo forall -c 'git-remote-add gbc_feature >/dev/null 2>&1; git fetch gbc_feature >/dev/null 2>&1;'
+
+for f in "${feature_list[@]}"; do
+	#echo "$f" >&2
+	repo forall -c "git-has-contains gbc_feature/$f $parent > /dev/null 2>&1 && echo $f"
+done
+

@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+#lcr
+#scr
+
+# find -type f | sed 's#/[^/]\+$##' | sort | uniq | shorten
+
+sha1me=`sha1sum "${BASH_SOURCE[0]}" | awk '{print $1}'`
+tmp_file="/tmp/${sha1me}"
+tmp_file2="/tmp/${sha1me}2"
+
+cat > "$tmp_file"
+cp "$tmp_file" "$tmp_file2"
+
+cat "$tmp_file" | while read line; do
+	sed -i "s#$line/.*##" "$tmp_file2"
+done
+
+cat "$tmp_file2" | sed '/^\s*$/d'
+

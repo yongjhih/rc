@@ -3,8 +3,52 @@
 #iptables -t nat -D OUTPUT -p tcp --dport 80 -j DNAT --to 127.0.0.1:8081
 #iptables -t nat -D OUTPUT -p tcp --dport 80 -j DNAT --to 10.8.27.228:8081
 #iptables -t nat -A OUTPUT ! -d 10.0.0.0/8 -p tcp -m tcp --dport 80 -j DNAT --to-destination 10.8.27.228:3128
-iptables -t nat -D OUTPUT ! -d 10.0.0.0/8 -p tcp --dport 80 -j REDIRECT --to-ports 8081
-iptables -t nat -A OUTPUT ! -d 10.0.0.0/8 -p tcp --dport 80 -j REDIRECT --to-ports 8081
+#iptables -t nat -D OUTPUT ! -d 10.8.27.0/24 -p tcp --dport 80 -j REDIRECT --to-ports 8081
+##iptables -t nat -A OUTPUT ! -d 10.8.27.0/24 -p tcp --dport 80 -j REDIRECT --to-ports 8081
+#
+#iptables -t nat -D OUTPUT ! -d 10.8.27.0/24 -p tcp --dport 443 -j REDIRECT --to-ports 8443
+##iptables -t nat -A OUTPUT ! -d 10.8.27.0/8 -p tcp --dport 443 -j REDIRECT --to-ports 8443
+#
+#iptables -t nat -D OUTPUT ! -d 10.0.0.0/24 -p tcp --dport 80 -j REDIRECT --to-ports 8081
+#iptables -t nat -D OUTPUT ! -d 10.0.0.0/8 -p tcp --dport 80 -j REDIRECT --to-ports 8081
+#iptables -t nat -A OUTPUT ! -d 10.0.0.0/8 -p tcp --dport 80 -j REDIRECT --to-ports 8081
+#
+#iptables -t nat -D OUTPUT ! -d 10.0.0.0/24 -p tcp --dport 443 -j REDIRECT --to-ports 8443
+#iptables -t nat -D OUTPUT ! -d 10.0.0.0/8 -p tcp --dport 443 -j REDIRECT --to-ports 8443
+#iptables -t nat -A OUTPUT ! -d 10.0.0.0/8 -p tcp --dport 443 -j REDIRECT --to-ports 8443
 
-iptables -t nat -D OUTPUT ! -d 10.0.0.0/8 -p tcp --dport 443 -j REDIRECT --to-ports 8443
-iptables -t nat -A OUTPUT ! -d 10.0.0.0/8 -p tcp --dport 443 -j REDIRECT --to-ports 8443
+function redsocks() {
+
+iptables -t nat -$1 OUTPUT ! -d 10.0.0.0/8 -p tcp --dport 443 -j REDIRECT --to-ports 12345
+
+## REDSOCKS
+## Create new chain
+##iptables -t nat -N REDSOCKS
+#
+## Ignore LANs and some other reserved addresses.
+##iptables -t nat -A REDSOCKS -d 0.0.0.0/8 -j RETURN
+#iptables -t nat -$1 REDSOCKS -d 10.0.0.0/8 -j RETURN
+#iptables -t nat -$1 REDSOCKS -d 127.0.0.0/8 -j RETURN
+#iptables -t nat -$1 REDSOCKS -d 169.254.0.0/16 -j RETURN
+#iptables -t nat -$1 REDSOCKS -d 172.16.0.0/12 -j RETURN
+#iptables -t nat -$1 REDSOCKS -d 192.168.0.0/16 -j RETURN
+#iptables -t nat -$1 REDSOCKS -d 224.0.0.0/4 -j RETURN
+#iptables -t nat -$1 REDSOCKS -d 240.0.0.0/4 -j RETURN
+#
+## Anything else should be redirected to port 12345
+#iptables -t nat -$1 REDSOCKS -p tcp -j REDIRECT --to-ports 12345
+#
+## Any tcp connection made by `darkk' should be redirected.
+#iptables -t nat -$1 OUTPUT -p tcp --dport 443 -j REDSOCKS
+#iptables -t nat -$1 OUTPUT -p tcp --dport 80 -j REDSOCKS
+
+##iptables -t nat -X REDSOCKS
+}
+
+if [ "$1" ]; then
+	redsocks "$1"
+else
+	redsocks D
+	redsocks A
+fi
+

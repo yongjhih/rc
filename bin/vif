@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+files=( )
+while [ "$1" ]; do
+	files=( "${files[@]}" `find -name "*$1*"` )
+	shift
+done
+vi -p "${files[@]}"
+
