@@ -1,1 +1,133 @@
-create-branch
+#!/usr/bin/env bash
+# repo-create-branch
+
+me="`readlink -f $0`"
+. "`dirname $me`/shflags"
+
+die() {
+	[ "$#" -gt 0 ] && echo "error: $@" >&2
+	flags_help
+	exit 1
+}
+
+_f() {
+	local ret="1"
+
+	[ "$1" ] || return "$ret"
+	[ "$1" -eq "${FLAGS_FALSE}" ] && return "$ret"
+
+	local ret="0"
+	return "$ret"
+}
+
+DEFINE_boolean 'force' false 'Forced update' 'f'
+DEFINE_boolean 'skip' false 'Skip and process manifest only' 's'
+DEFINE_string 'remote' '' 'Specify remote name' 'r'
+DEFINE_boolean 'debug' false 'Enable debug mode' 'd'
+
+FLAGS_HELP=`cat <<EOT
+Usage:
+	$0 [-h|--help]
+	$0 <branch_name>
+	$0 <branch_name> [manifest]
+	$0 [ -r <remote> ] <branch_name> [manifest]
+	$0 [-s|--skip] [-f|--force] <branch_name> [manifest]
+	$0 [ -r <remote> ] [-s|--skip] [-f|--force] <branch_name> [manifest]
+
+Example:
+	$0 houston_fake7140
+	$0 houston_fake7140 daily/2012-01-05.xml
+	$0 -r gbc_official houston_fake7140
+	$0 -r gbc_official houston_fake7140 daily/2012-01-05.xml
+	$0 -s -f houston_10982303 # forced re-initialize manifest
+EOT`
+
+FLAGS "$@" || exit 1
+eval set -- "${FLAGS_ARGV}"
+
+_f "${FLAGS_help}" && exit 0
+
+branch="$1"
+[ "$branch" ] || die
+tag="$branch-init"
+
+manifest="default.xml"
+[ "$2" ] && manifest="$2"
+
+remote="${FLAGS_remote}"
+_f "${FLAGS_skip}" && skip="1"
+_f "${FLAGS_force}" && force="-f"
+_f "${FLAGS_debug}" && debug="1"
+
+# DEBUG options {{{
+#debug=1
+if [ "$debug" ]; then
+	echo "branch \"$branch\""
+	echo "manifest \"$manifest\""
+	echo "tag \"$tag\""
+	echo "remote \"$remote\""
+	echo "force \"$force\""
+	echo "skip \"$skip\""
+	echo "debug \"$debug\""
+	echo "help \"$help\""
+
+	exit
+fi
+# }}}
+
+if [ ! "$skip" ]; then
+	[ "$remote" ] || remote="gbc_official"
+
+	echo 1
+	repo forall -c "git clear; git checkout \"`git rev-parse HEAD`\"" > /dev/null 2>&1
+	repo sync -d -l -j4 > /dev/null 2>&1
+
+	echo 2
+	repo init -m "$manifest" > /dev/null 2>&1
+	repo forall -c "git branch -D _tmp; git branch _tmp; git tag -d \"$tag\"; git tag -m \"init $branch tag\" \"$tag\" _tmp ;" > /dev/null 2>&1
+	repo forall -c "git push $force $remote \"$tag\":\"$tag\" ; git push $force $remote _tmp:\"$branch\";"
+
+	echo 3
+	repo forall -c "git clear; git checkout \"`git rev-parse HEAD`\"" > /dev/null 2>&1
+	repo forall -c "git branch -D _tmp; " > /dev/null 2>&1
+
+	repo forall -c "git tag -d \"$tag\"" > /dev/null 2>&1
+fi
+
+# manifest {{{
+. ~/.andrc
+croot
+
+echo 4
+pushd .repo/manifests
+git branch -D _tmp > /dev/null 2>&1
+git checkout -b _tmp > /dev/null 2>&1
+echo 5
+#sed -i "s#\(^.*<default\s\+\w*\s*remote=\"gbc_official\"\s\+\w*\s*revision=\"\)[^\"]*\(\"\s*\w*\s*/>\)#$branch#" default.xml > /dev/null 2>&1
+if [ "$remote" ]; then
+	sed -i "s#\(^.*<default\s\+remote=\"\)[^\"]*\(\"\s\+revision=\"\)[^\"]*\(\"\s*\w*\s*/>\)#\\1$remote\\2$branch\\3#" default.xml > /dev/null 2>&1
+else
+	sed -i "s#\(^.*<default\s\+remote=\"[^\"]*\"\s\+revision=\"\)[^\"]*\(\"\s*\w*\s*/>\)#\\1$branch\\2#" default.xml > /dev/null 2>&1
+fi
+git commit -a -m "init $branch" > /dev/null 2>&1
+git push origin $force _tmp:"$branch"
+
+echo 6
+if [ "$remote" ]; then
+	sed -i "s#\(^.*<default\s\+remote=\"\)[^\"]*\(\"\s\+revision=\"\)[^\"]*\(\"\s*\w*\s*/>\)#\\1$remote\\2refs/tags/$tag\\3#" default.xml > /dev/null 2>&1
+else
+	sed -i "s#\(^.*<default\s\+remote=\"[^\"]*\"\s\+revision=\"\)[^\"]*\(\"\s*\w*\s*/>\)#\\1refs/tags/$tag\\2#" default.xml > /dev/null 2>&1
+fi
+git commit -a -m "init $tag tag" > /dev/null 2>&1
+git tag -d "$tag" > /dev/null 2>&1
+git tag -m "init $tag tag" "$tag" > /dev/null 2>&1
+git push origin "$force" "$tag":"$tag"
+
+echo 7
+git reset --hard > /dev/null 2>&1
+git checkout default > /dev/null 2>&1
+git reset --hard origin/default > /dev/null 2>&1
+git branch -D _tmp > /dev/null 2>&1
+popd
+# manifest }}}
+
