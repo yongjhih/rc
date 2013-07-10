@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+i=0
+while IFS=: read line; do
+	tput setaf "$((i+1))"
+	echo "$line"
+	tput setaf default
+
+	if [ -z "$line" ]; then
+		((i++))
+	fi
+	i=$((i % 7))
+done
+
