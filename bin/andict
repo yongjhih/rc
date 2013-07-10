@@ -12,10 +12,7 @@ while IFS=: read line; do
 	tput setaf "$((i+1))"
 	echo "$line"
 	tput setaf default
-
-	if [ -z "$line" ]; then
-		((i++))
-	fi
+	[ -z "$line" ] && ((i++))
 	i=$((i % 7))
 done |
 pager -r
