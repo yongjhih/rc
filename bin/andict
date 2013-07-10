@@ -3,7 +3,7 @@
 [ "$1" ] &&
 w3m -dump "http://tw.dictionary.yahoo.com/dictionary?p=${1}" 2>/dev/null |
 sed -n '/^字典搜尋/,/^\[s.*\]/p' |
-sed -e '/知識/,$d' -e '/英語課程快搜/,$d' -e '/字典中找到/,/查看全部/d' |
+sed -e '/知識/,$d' -e '/英語課程快搜/,$d' -e '1,/查看全部/d' |
 sed -e '/^字典搜尋/d' -e '/^\s*Dr/d' -e '/^\s*\^/d' |
 uniq -u |
 pager
