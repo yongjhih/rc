@@ -1,0 +1,82 @@
+#!/usr/bin/env bash
+# 很抱歉，無法找到符合 resisters 的結果。以下為 resisters 在字典中的結果。
+[ "$1" ] &&
+w3m -dump "http://tw.dictionary.yahoo.com/dictionary?p=${1}" 2>/dev/null |
+sed -n '/^字典搜尋/,/^\[s.*\]/p' |
+sed -e '/知識/,$d' -e '/英語課程快搜/,$d' -e '/字典中找到/,/查看全部/d' |
+sed -e '/^字典搜尋/d' -e '/^\s*Dr/d' -e '/^\s*\^/d' |
+uniq -u |
+pager
+#
+# 英語課程快搜
+# 
+# [上課地點：] [課程類型：] [搜尋課程]
+# 最近查詢字詞
+# 
+# 說明刪除所有記錄
+# 
+#  1. rest 刪除
+#  2. resisters 刪除
+#  3. hel 刪除
+#  4. resisto 刪除
+#  5. resistor 刪除
+#  6. hi 刪除
+#  7. cyano 刪除
+#  8. cyanogen 刪除
+#  9. helo 刪除
+# 10. hello 刪除
+# 
+# 看影片學英語
+# 
+# [s31372656549]
+#
+# 看電影學英文～認識古魯一家
+
+##############################3
+
+# 知識+ 相關搜尋
+#   
+#   • 知識+
+# 
+# 知識+
+# 
+#  1. 在這個句子中rest所代表的意思是?
+# 
+#     the rest 是其餘之物，這句話的意思：問Mini相關問題來完成這個表的其他部分。再
+#     查一次字典，應該可以發現「休息」項的後面還有解釋（我的遠東字典）是這樣排的
+#     。
+# 
+#  2. rest assured 如何翻譯?
+# 
+#     rest assured, 確定, 放心, 安心, 肯定 ....... 比 sure 還要 sure 的意思各行各
+#     業都有用這個字作廣告, 如保險, 藥品, 殺蟲劑, 防毒軟體, 等等
+# 
+#  3. 我想問一句英文的翻譯..because the rest..
+# 
+#     You shouldn't marry a m a n simply because the rest of your family are in
+#     love with him. 妳不應該只因為妳其他的家人喜愛他，就嫁給
+# 
+# 查看更多Yahoo!奇摩知識+相關結果查看網頁搜尋相關結果
+# 
+# 英語課程快搜
+# 
+# [上課地點：] [課程類型：] [搜尋課程]
+# 最近查詢字詞
+# 
+# 說明刪除所有記錄
+# 
+#  1. rest 刪除
+#  2. resisters 刪除
+#  3. hel 刪除
+#  4. resisto 刪除
+#  5. resistor 刪除
+#  6. hi 刪除
+#  7. cyano 刪除
+#  8. cyanogen 刪除
+#  9. helo 刪除
+# 10. hello 刪除
+# 
+# 看影片學英語
+# 
+# [s31373365518]
+
