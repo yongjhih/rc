@@ -20,7 +20,6 @@ while IFS=: read line; do
 done |
 pager -r
 
-
 # hah
 #
 # 英語課程快搜
@@ -94,4 +93,30 @@ pager -r
 # 看影片學英語
 # 
 # [s31373365518]
+
+#         <!-- BEGIN: marquee -->
+# <div class="marquee-placeholder">
+#     <div class="marquee-wrapper">
+#         <ol class="list">
+#             
+#             <li>
+#                 <span class="category">大考多益一把抓：</span>
+#                 <a href="http://tw.promo.campaign.yahoo.net/english/detail.php?id=184">從古老錢幣的投資價值 看比較級用法</a>
+#             </li>
+#             
+#             <li>
+#                 <span class="category">大考多益一把抓：</span>
+#                 <a href="http://tw.promo.campaign.yahoo.net/english/detail.php?id=183">大考英文「商務情境」的關鍵詞1</a>
+#             </li>
+#             
+#             <li>
+#                 <span class="category">多益一點通：</span>
+#                 <a href="http://tw.promo.campaign.yahoo.net/english/detail.php?id=172">將多益訓練 融入日常生活裡</a>
+#             </li>
+#             
+#         </ol>
+#     </div>
+# </div>
+#         <!-- END: marquee -->
+#
 
