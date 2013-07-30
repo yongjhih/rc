@@ -8,6 +8,7 @@ sed -e '/^知識/,$d' -e '/^英語課程快搜/,$d' -e '/^查看全部/,1d' |
 sed -e '/^字典搜尋/d' -e '/^\s*Dr/d' -e '/^\s*\^/d' |
 grep -v '.*多益.*：' |
 grep -v '.*考試大補貼.*：' |
+grep -v '^鍵盤捷徑：' |
 sed -e '/^\s\+• 釋義/d' -e '/^\s\+• 相關詞/d' |
 while IFS=: read line; do
 	if [ -z "$line" ]; then
