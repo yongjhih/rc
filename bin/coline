@@ -2,15 +2,13 @@
 
 i=0
 while IFS=: read line; do
-	if [ -z "$line" ]; then
-		echo "$line"
-		((i++))
-		i=$((i % 7))
-		continue
-	fi
 	tput setaf "$((i+1))"
-	echo -n "$line"
+	echo "$line"
 	tput setaf default
-	tput sgr0
-	echo
+
+	if [ -z "$line" ]; then
+		((i++))
+	fi
+	i=$((i % 7))
 done
+
