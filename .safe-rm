@@ -1,0 +1,9 @@
+/home/*
+/home/*/Documents
+/home/*/Mail
+/home/*/Desktop
+/home/*/Pictures
+/home/*/.local
+/home/*/.config
+/home/*/.mozilla
+/home/*/.gnupg
