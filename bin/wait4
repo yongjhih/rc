@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+while :; do eval "$1" && break; done

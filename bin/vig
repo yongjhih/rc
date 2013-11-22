@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+files=( )
+while [ "$1" ]; do
+	files=( "${files[@]}" `grep -Rl --binary-files=without-match "$1" * 2> /dev/null | cut -d ':' -f 1 | sort | uniq | grep -v tags | grep -v '.*\.out'` )
+shift
+done
+vi -p "${files[@]}"

@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+while [ "$1" ]; do
+	find -path "*$1*" | grep -v '.*/\..*$' | grep -v '.*\.class' | grep -v '.*\.orig'
+	shift
+done

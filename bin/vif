@@ -2,7 +2,11 @@
 
 files=( )
 while [ "$1" ]; do
-	files=( "${files[@]}" `find -name "*$1*"` )
+	#files=( "${files[@]}" `find -path "*$1*"` )
+	#files=( `printf -- '%s\n' "${files[@]}" | grep -v '\./\..*' | grep -v '.*\.class'` )
+	#files=( `printf -- '%s\n' "${files[@]}" | grep -v '.*/\..*$' | grep -v '.*\.class' | grep -v '.*\.orig'` )
+
+	files=( "${files[@]}" `fin "$1"` )
 	shift
 done
 vi -p "${files[@]}"
