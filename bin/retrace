@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+mapping="${2:-mapping.txt}"
+sed 's/[^:]*: //' < ${1} | ~/adt-bundle-linux/sdk/tools/proguard/bin/retrace.sh "$mapping"
