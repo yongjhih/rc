@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+for i in ${1}/*.pk8; do
+	signapk "$i" "$2"
+	adb install -r "${2%.apk}-signed.apk"
+	# TODO success break;
+done

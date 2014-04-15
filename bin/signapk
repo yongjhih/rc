@@ -1,0 +1,87 @@
+#!/usr/bin/env bash
+#
+# 2013-03-27 13:31:28
+#
+# top-down thinking
+# signapk ../../../build/target/product/security/shared.pk8 PinyinIME.apk
+# signapk ../../../vendor/qcom/security/shared.pk8 PinyinIME.apk
+# signapk ../../../vendor/gigabyte/security/shared.pk8 PinyinIME.apk
+# signapk shared.pk8 PinyinIME.apk
+# signapk shared PinyinIME.apk
+# signapk shared.pem PinyinIME.apk
+# signapk shared.x509.pem PinyinIME.apk
+# signapk <key> <apk ...>
+#
+# java -jar "$signapk_lib" "${key%.pk8}.x509.pem" "${key}" "$1" "${1%.apk}-signed.apk" && echo "${1%.apk}-signed.apk"
+#
+# cp out/host/linux-x86/framework/signapk.jar ~/bin/
+
+# check input first
+[ "$2" ] || exit 1
+
+if [ ! -f "$key" ]; then # indent for first time failed
+	echo "$key not found" >&2
+	key="${1}.pk8"
+	# suffix
+	if [ ! -f "$key" ]; then
+		echo "$key not found" >&2
+		key="${1%.*}.pk8"
+	fi
+	if [ ! -f "$key" ]; then
+		echo "$key not found" >&2
+		key="${1%%.*}.pk8"
+	fi
+	# path
+	if [ ! -f "$key" ]; then
+		echo "$key not found" >&2
+		key="${ANDROID_BUILD_TOP}/build/target/product/security/${1}"
+	fi
+	# path with suffix
+	if [ ! -f "$key" ]; then
+		echo "$key not found" >&2
+		key="${ANDROID_BUILD_TOP}/build/target/product/security/${1}.pk8"
+	fi
+	if [ ! -f "$key" ]; then
+		echo "$key not found" >&2
+		key="${ANDROID_BUILD_TOP}/build/target/product/security/${1%.*}.pk8"
+	fi
+	if [ ! -f "$key" ]; then
+		echo "$key not found" >&2
+		key="${ANDROID_BUILD_TOP}/build/target/product/security/${1%%.*}.pk8"
+	fi
+
+	if [ ! -f "$key" ]; then
+		echo "$key not found, exit ..." >&2
+		exit 1
+	fi
+	echo "$key found" >&2
+fi
+shift
+
+signapk_lib="${ANDROID_BUILD_TOP}/out/host/linux-x86/framework/signapk.jar"
+if [ ! -f "$signapk_lib" ]; then # indent for first time failed
+	echo "$signapk_lib not found" >&2
+	signapk_lib="$HOME/bin/signapk.jar"
+	if [ ! -f "$signapk_lib" ]; then
+		echo "$signapk_lib not found, exit ..." >&2
+		exit 1
+	fi
+fi
+
+while [ "$1" ]; do
+	case "$1" in
+		*.apk)
+			if [ ! -f "$1" ]; then
+				echo "$1 not found" >&2
+				shift
+				continue
+			fi
+			java -jar "$signapk_lib" "${key%.pk8}.x509.pem" "${key}" "$1" "${1%.apk}-signed.apk" && echo "${1%.apk}-signed.apk"
+		;;
+		*)
+			echo "$1 skip" >&2
+		;;
+	esac
+	shift
+done
+
