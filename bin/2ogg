@@ -1,0 +1,8 @@
+#!/bin/bash
+while [ -f "$1" ]; do
+	name="${1%\.*}"
+	mplayer -novideo -ao pcm:fast "$1"
+	oggenc -o "$name.ogg" audiodump.wav
+	rm -f audiodump.wav
+	shift
+done

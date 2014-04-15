@@ -1,0 +1,32 @@
+#!/bin/bash
+#while [ "$1" ]; do
+#	file="$1"
+#	name="${file%\.*}"
+#	ffmpeg -b 320k -i "$1" "$name.mp3"
+#	shift
+#done
+
+#-ao alsa:noblock:device=hw=0.3
+
+#mplayer -vc null -vo null -dumpaudio -dumpfile audio.mp3 video.flv
+#mplayer -vc null -vo null -dumpaudio -dumpfile "$name.mp3" "$file"
+
+#mplayer -ao pcm -vo audiodump.wav somefile.flv
+#mplayer -ao pcm -vo "$name.wav" "$file"
+
+#ffmpeg -i video.flv -acodec vorbis -ac 2 -vcodec libtheora -f ogg video.ogg
+#ffmpeg -i "$file" -acodec libvorbis -ac 2 -vcodec libtheora -f ogg "$name.ogg"
+
+#ffmpeg -i inputfile.flv -acodec copy outputfile.aac
+#ffmpeg -i "$file" -acodec copy "$name.aac"
+
+#mplayer -ao pcm -vo audiodump.wav somefile.flv
+#lame audiodump.wav -q 2 -b 192 somefile.mp3
+while [ -f "$1" ]; do
+	name="${1%\.*}"
+	mplayer -novideo -ao pcm:fast "$1"
+	lame -f audiodump.wav
+	mv audiodump.mp3 "$name.mp3"
+	rm -f audiodump.wav
+	shift
+done
