@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+ssh -o ProxyCommand="/home/andrew/bin/connect-proxy %h %p" $@
