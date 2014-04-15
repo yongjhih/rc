@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+#chmod a+r -R "$@"
+#find "$@" -type d -exec chmod a+x {} \;
+
+if [ ! "$1" ]; then
+	chmod a+r -R "."
+	find "." -type d -exec chmod a+x {} \;
+fi
+
+while [ "$1" ]; do
+	if [ -f "$1" ]; then
+		chmod a+r "$1"
+	elif [ -d "$1" ]; then
+		chmod a+r -R "$1"
+		find "$1" -type d -exec chmod a+x {} \;
+	fi
+	shift
+done
+
