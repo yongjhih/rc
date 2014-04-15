@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+#while read -t 0 notused; do
+#   read input
+#   echo "ignoring $input"
+#done
+
+if test -t 0; then
+	echo "0"
+	while read -t 0 notused; do
+		read input
+		echo "ignoring $input"
+	done
+fi
+
