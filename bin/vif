@@ -6,7 +6,8 @@ while [ "$1" ]; do
 	#files=( `printf -- '%s\n' "${files[@]}" | grep -v '\./\..*' | grep -v '.*\.class'` )
 	#files=( `printf -- '%s\n' "${files[@]}" | grep -v '.*/\..*$' | grep -v '.*\.class' | grep -v '.*\.orig'` )
 
-	files=( "${files[@]}" `fin "$1"` )
+        readarray -t f <<< "`fin "$1"`"
+	files=( "${files[@]}" "${f[@]}" )
 	shift
 done
 vi -p "${files[@]}"
