@@ -28,7 +28,7 @@ done
 if [ ! -f "$mapping" ]; then
     echo "warning: $mapping: No such file or directory"
 
-    echo "$0 [a.log] [mapping.txt]"
+    echo "$0 [*.log] [*.txt]"
     exit 1
 fi
 
