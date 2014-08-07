@@ -1,4 +1,40 @@
 #!/usr/bin/env bash
 
-mapping="${2:-mapping.txt}"
-sed 's/[^:]*: //' < ${1} | ~/adt-bundle-linux/sdk/tools/proguard/bin/retrace.sh "$mapping"
+if [ -f "a.log" ]; then
+    log="a.log"
+fi
+
+mapping="mapping.txt"
+
+while [ "$1" ]; do
+    case "$1" in
+        *.txt)
+            if [ ! -f "$1" ]; then
+                echo "warning: $1: No such file or directory"
+            fi
+            mapping="$1"
+            ;;
+        *.log)
+            if [ ! -f "$1" ]; then
+                echo "warning: $1: No such file or directory"
+            fi
+            log="$1"
+            ;;
+    esac
+
+    shift
+done
+
+if [ ! -f "$mapping" ]; then
+    echo "warning: $mapping: No such file or directory"
+
+    echo "$0 [a.log] [mapping.txt]"
+    exit 1
+fi
+
+if [ -f "$log" ]; then
+    sed 's/[^:]*: //' "$log" | "$ANDROID_HOME/tools/proguard/bin/retrace.sh" "$mapping"
+else
+    sed 's/[^:]*: //' | "$ANDROID_HOME/tools/proguard/bin/retrace.sh" "$mapping"
+fi
+
