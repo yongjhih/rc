@@ -16,8 +16,8 @@ while read line; do
     # Toshiba 500GB (DT01ACA050)/32M/7200轉/二年保, $1590 ★
     p=`echo $line | sed 's/.*$\([0-9\.]\+\)\s.*/\1/'`
     t=`echo $line | sed 's/.*[^0-9\.]\([0-9\.]\+\)T.*/\1/'`
-    buffer=`echo $line | sed 's#.*\([0-9]\+MB\?\)/\([^/]\+\).*#\1#'`
-    rpm=`echo $line |    sed 's#.*\([0-9]\+MB\?\)/\([^/]\+\).*#\2#'`
+    buffer=`echo $line | sed 's#.*[^[0-9]]*\([0-9]\+MB\?\)/\([^/]\+\).*#\1#'`
+    rpm=`echo $line |    sed 's#.*[^[0-9]]*\([0-9]\+MB\?\)/\([^/]\+\).*#\2#'`
 
     if [ "$buffer" = "$line" ]; then
         buffer=""
