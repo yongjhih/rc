@@ -19,29 +19,19 @@ while read line; do
     t=`echo $line | sed 's/.* \([0-9\.]\+\)TB\? .*/\1/'`
     buffer=`echo $line | sed 's#.*[^[0-9]]*\([0-9]\+MB\?\)/\([^/]\+\).*#\1#'`
     rpm=`echo $line |    sed 's#.*[^[0-9]]*\([0-9]\+MB\?\)/\([^/]\+\).*#\2#'`
-    year=`echo $line |    sed 's#.*\(.年\).*#\1#'`
-    type=`echo $line |    sed 's#.*)【\([^】]\+\)】.*#\1#'`
-    vendor=`echo $line |    sed 's#^\(\w\+\) .*#\1#'`
+    year=`echo $line |   sed 's#.*\(.年\).*#\1#'`
+    type=`echo $line |   sed 's#.*)【\([^】]\+\)】.*#\1#'`
+    vendor=`echo $line | sed 's#^\(\w\+\) .*#\1#'`
 
-    if [ "$buffer" = "$line" ]; then
-        buffer=""
-    fi
+    [ "$buffer" = "$line" ] && buffer=""
 
-    if [ "$rpm" = "$line" ]; then
-        rpm=""
-    fi
+    [ "$rpm" = "$line" ] && rpm=""
 
-    if [ "$year" = "$line" ]; then
-        year=""
-    fi
+    [ "$year" = "$line" ] && year=""
 
-    if [ "$type" = "$line" ]; then
-        type=""
-    fi
+    [ "$type" = "$line" ] && type=""
 
-    if [ "$vendor" = "$line" ]; then
-        vendor=""
-    fi
+    [ "$vendor" = "$line" ] && vendor=""
 
     case "$t" in
             [0-9.]*) c=`echo $t | awk '{print $1*1024}'`
