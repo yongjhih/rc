@@ -16,7 +16,7 @@ while read line; do
     # Toshiba 500GB (DT01ACA050)/32M/7200轉/二年保, $1590 ★
     # WD 3TB (30PURX)【監控碟(紫標)】
     p=`echo $line | sed 's/.*$\([0-9\.]\+\)\s.*/\1/'`
-    t=`echo $line | sed 's/.*[^0-9\.]\([0-9\.]\+\)T.*/\1/'`
+    t=`echo $line | sed 's/.* \([0-9\.]\+\)TB\? .*/\1/'`
     buffer=`echo $line | sed 's#.*[^[0-9]]*\([0-9]\+MB\?\)/\([^/]\+\).*#\1#'`
     rpm=`echo $line |    sed 's#.*[^[0-9]]*\([0-9]\+MB\?\)/\([^/]\+\).*#\2#'`
     year=`echo $line |    sed 's#.*\(.年\).*#\1#'`
@@ -46,7 +46,7 @@ while read line; do
     case "$t" in
             [0-9.]*) c=`echo $t | awk '{print $1*1024}'`
             ;;
-            *) c=`echo $line | sed 's/.*[^0-9\.]\([0-9\.]\+\)G.*/\1/'`
+            *) c=`echo $line | sed 's/.* \([0-9\.]\+\)GB\? .*/\1/'`
     esac
 
     r=`echo $p $c | awk '{print $1/$2}'`
