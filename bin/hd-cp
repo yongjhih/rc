@@ -14,10 +14,13 @@ sed 's/<[^>]*>//g' | sed '/^\s*$/d' |
 while read line; do
     #echo "$line"
     # Toshiba 500GB (DT01ACA050)/32M/7200轉/二年保, $1590 ★
+    # WD 3TB (30PURX)【監控碟(紫標)】
     p=`echo $line | sed 's/.*$\([0-9\.]\+\)\s.*/\1/'`
     t=`echo $line | sed 's/.*[^0-9\.]\([0-9\.]\+\)T.*/\1/'`
     buffer=`echo $line | sed 's#.*[^[0-9]]*\([0-9]\+MB\?\)/\([^/]\+\).*#\1#'`
     rpm=`echo $line |    sed 's#.*[^[0-9]]*\([0-9]\+MB\?\)/\([^/]\+\).*#\2#'`
+    year=`echo $line |    sed 's#.*\(.年\).*#\1#'`
+    type=`echo $line |    sed 's#.*)【\([^】]\+\)】.*#\1#'`
 
     if [ "$buffer" = "$line" ]; then
         buffer=""
@@ -27,6 +30,14 @@ while read line; do
         rpm=""
     fi
 
+    if [ "$year" = "$line" ]; then
+        year=""
+    fi
+
+    if [ "$type" = "$line" ]; then
+        type=""
+    fi
+
     case "$t" in
             [0-9.]*) c=`echo $t | awk '{print $1*1024}'`
             ;;
@@ -34,6 +45,6 @@ while read line; do
     esac
 
     r=`echo $p $c | awk '{print $1/$2}'`
-    echo -e "$r\t\$$p\t${c}G\t${buffer}\t${rpm}\t$line"
+    echo -e "$r\t\$$p\t${c}G\t${buffer}\t${rpm}\t${type}\t${year}\t$line"
 done | sort -n
 
