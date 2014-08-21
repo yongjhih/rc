@@ -21,6 +21,7 @@ while read line; do
     rpm=`echo $line |    sed 's#.*[^[0-9]]*\([0-9]\+MB\?\)/\([^/]\+\).*#\2#'`
     year=`echo $line |    sed 's#.*\(.年\).*#\1#'`
     type=`echo $line |    sed 's#.*)【\([^】]\+\)】.*#\1#'`
+    vendor=`echo $line |    sed 's#^\(\w\+\) .*#\1#'`
 
     if [ "$buffer" = "$line" ]; then
         buffer=""
@@ -38,6 +39,10 @@ while read line; do
         type=""
     fi
 
+    if [ "$vendor" = "$line" ]; then
+        vendor=""
+    fi
+
     case "$t" in
             [0-9.]*) c=`echo $t | awk '{print $1*1024}'`
             ;;
@@ -45,6 +50,6 @@ while read line; do
     esac
 
     r=`echo $p $c | awk '{print $1/$2}'`
-    echo -e "$r\t\$$p\t${c}G\t${buffer}\t${rpm}\t${type}\t${year}\t$line"
+    echo -e "$r\t\$$p\t${c}G\t${buffer}\t${rpm}\t${type}\t${vendor}\t${year}\t$line"
 done | sort -n
 
