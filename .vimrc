@@ -10,8 +10,10 @@ filetype plugin on
 filetype indent on
 filetype plugin indent on
 
-set shiftwidth=8
-set tabstop=8
+"set shiftwidth=8
+set shiftwidth=4
+set expandtab
+"set tabstop=8
 "set softtab=8
 "set expandtab
 set foldmethod=marker
@@ -27,11 +29,6 @@ set fileencodings=utf-8,big5,gbk,cp936,iso-2022-jp,sjis,euc-jp,euc-kr,utf-bom,is
 set fileencoding=utf-8
 "set spell spelllang=en_us
 set number
-" {{{ colorscheme
-set background=dark
-"colorscheme c9s
-" }}} colorscheme
-
 " {{{ indentation
 "set autoindent
 "set smartindent
@@ -80,20 +77,23 @@ set list
 set listchars=tab:\|\ ,eol:$,trail:_
 " indent line }}}
 
-" ydict {{{
-map <C-K> viwy:!ydict <C-R>"<CR>
-"set keywordprg=ydict
-" ydict }}}
+" fy {{{
+map <C-K> viwy:!fy <C-R>"<CR>
+"set keywordprg=fy
+" fy }}}
+"
+"map <C-L> viw:s/_\(\w\)/\U\1/\%V
+map <C-L> viw:s/_\(\w\)/\U\1/g<CR>
 
 " grep {{{
 " http://fourdollars.blogspot.com/2008/06/help-new-vimgrep.html
 " grep }}}
 
 " {{{ tab
-map th :tabnext<CR>
-map tl :tabprev<CR>
-map tn :tabnew<CR>
-map td :tabclose<CR>
+"map th :tabnext<CR>
+"map tl :tabprev<CR>
+"map tn :tabnew<CR>
+"map td :tabclose<CR>
 " }}}
 
 " {{{ xml-plugin, xmledit, xml.vim
@@ -123,7 +123,7 @@ let use_xhtml = 1
 "inoremap {} {}<ESC>i
 
 if ! has('gui')
-    highlight Comment ctermfg=gray ctermbg=darkblue
+    "highlight Comment ctermfg=gray ctermbg=darkblue
 else
     highlight Normal guifg=white guibg=black
     "set guifont=Droid\ Sans\ Mono\ 12
@@ -207,12 +207,13 @@ set cursorline
     "set cscopequickfix=s-,g-,c-,d-,t-,e-,f-,i-
 "endif
 
-"if has("autocmd")
-   "autocmd BufReadPost *
-      "\ if line("'\"") > 0 && line ("'\"") <= line("$") |
-      "\   exe "normal g'\"" |
-      "\ endif
-"endif
+" make sure ~/.viminfo writable
+if has("autocmd")
+   autocmd BufReadPost *
+      \ if line("'\"") > 0 && line ("'\"") <= line("$") |
+      \   exe "normal g'\"" |
+      \ endif
+endif
 
 " OmniCppComplete {{{
 " configure tags - add additional tags here or comment out not-used ones
@@ -280,36 +281,40 @@ Bundle 'tpope/vim-fugitive'
 "Bundle 'tpope/vim-rails.git'
 " vim-scripts repos
 Bundle 'L9'
-Bundle 'FuzzyFinder'
+"Bundle 'FuzzyFinder'
 Bundle 'taglist.vim'
-Bundle 'VisIncr'
+"Bundle 'VisIncr'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
 Bundle 'tpope/vim-surround'
 Bundle 'Align'
-Bundle 'YankRing.vim'
+"Bundle 'YankRing.vim'
 
 " snipmate
 Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
-Bundle "honza/snipmate-snippets"
+"Bundle "honza/snipmate-snippets"
 Bundle 'garbas/vim-snipmate'
-Bundle 'snipmate-snippets'
+Bundle 'othree/vim-autocomplpop'
+"Bundle 'snipmate-snippets'
 Bundle 'Lokaltog/vim-powerline'
 "Bundle 'python.vim'
 "Bundle 'pyflakes.vim'
-Bundle 'kchmck/vim-coffee-script'
+"Bundle 'kchmck/vim-coffee-script'
 Bundle 'flazz/vim-colorschemes'
-Bundle 'ap/vim-css-color'
-Bundle 'matchit.zip'
+"Bundle 'ap/vim-css-color'
+"Bundle 'matchit.zip'
 "Bundle 'cscope.vim'
 "Bundle 'cscope_macros.vim'
 "Bundle 'cscope_map'
 "Bundle 'autoload_cscope.vim'
-Bundle 'autotags'
+"Bundle 'autotags'
 Bundle 'nelson/cscope_maps'
 "Bundle 'cscope-quickfix'
-Bundle 'log.vim'
+"Bundle 'log.vim'
+"Bundle 'naseer/logcat'
+Bundle 'kelwin/vim-smali'
+Bundle 'junegunn/vim-easy-align'
 
 " non github repos
 "Bundle 'git://git.wincent.com/command-t.git'
@@ -327,3 +332,28 @@ filetype plugin indent on     " required!
 " NOTE: comments after Bundle command are not allowed..
 " }}}
 let g:vundle_default_git_proto = 'https'
+" {{{ colorscheme
+"colorscheme devbox-dark-256
+" light background selection
+colorscheme wombat256
+"colorscheme molokai-dark-yu
+"set background=dark
+"colorscheme c9s
+" }}} colorscheme
+
+set fileformats+=dos
+let g:acp_behaviorSnipmateLength = 1
+imap <C-J> <Plug>snipMateNextOrTrigger
+smap <C-J> <Plug>snipMateNextOrTrigger
+set clipboard=unnamedplus
+vnoremap <silent> <Enter> :EasyAlign<cr>
+
+function! Incr()
+  let a = line('.') - line("'<")
+  let c = virtcol("'<")
+  if a > 0
+    execute 'normal! '.c.'|'.a."\<C-a>"
+  endif
+  normal `<
+endfunction
+vnoremap <C-a> :call Incr()<CR>
