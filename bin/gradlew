@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+function cd-safe() {
+    if [ "$1" ]; then
+        local d="$1"
+        if [ -f "$d" ]; then
+            d="`dirname \"$1\"`"
+        fi
+        if [ ! -d "$d" ]; then
+            :
+            #echo "mkdir -p $d"
+            #mkdir -p "$d"
+        fi
+    fi
+    command cd "$d"
+}
+
+gradlew=`findup gradlew`
+
+cd-safe "$gradlew"
+./gradlew "$@"

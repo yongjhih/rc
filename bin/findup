@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -e
+path="."
+while [[ "`readlink -f $path`" != "/" ]];
+do
+    find "$path"  -maxdepth 1 -mindepth 1 -name "$1"
+    path=${path}/..
+done
