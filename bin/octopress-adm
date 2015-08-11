@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+function init() {
+	if [ "$1" ]; then
+		git clone https://github.com/imathis/octopress.git "$1"
+		pushd "$1"
+	fi
+
+	rvm install ruby-1.9.2-p290
+	gem install bundler
+	bundle install
+	bundle update
+	rake install
+
+	if [ "$1" ]; then
+		popd
+	fi
+}
+
+cmd="$1"; shift
+"$cmd" "$@"
+

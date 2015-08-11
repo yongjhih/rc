@@ -1,0 +1,12 @@
+#!/bin/bash
+
+while read line; do
+pushd $line
+git init
+git remote add gbc_feature ssh://gbc_feature@git.gbc.intra/android/platform/vendor/qcom-proprietary/$line
+git checkout -b 8x25_dsda
+git add .
+git commit -m 'Import R8625SSNSKQLYA2025'
+git push gbc_feature 8x25_dsda:pub/8x25_dsda
+popd
+done

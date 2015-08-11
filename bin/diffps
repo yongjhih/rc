@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+mv /tmp/currps /tmp/lastps
+
+adb shell ps | awk '{print $9}' > /tmp/currps
+diff /tmp/currps /tmp/lastps
+

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [ -t 0 ]; then
-	adb logcat | coloredlogcat
+	adb logcat "$@" | coloredlogcat
 else
 	cat - | coloredlogcat
 fi

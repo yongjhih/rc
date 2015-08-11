@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 #curl "http://eip2.gigabytecm.com/dinner/dobento_save.asp?ben_code=18&ben_name=%C2%FB%ACh%B6%BA"
 # Login
+# ' or '1'='1
 . ~/.dinner
 echo "${BASH_SOURCE[0]}"
 sha1me=`sha1sum "${BASH_SOURCE[0]}" | awk '{print $1}'`

@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+[ "$1" ] || exit 1
+
+from="$1"
+[ ! "$2" ] && from="HEAD"
+
+to="${2-$1}"
+
+git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative "$from"..."$to"

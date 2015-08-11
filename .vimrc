@@ -83,7 +83,8 @@ map <C-K> viwy:!fy <C-R>"<CR>
 " fy }}}
 "
 "map <C-L> viw:s/_\(\w\)/\U\1/\%V
-map <C-L> viw:s/_\(\w\)/\U\1/g<CR>
+map <C-,> viw:s/_\(\w\)/\U\1/g<CR>
+map <C-.> viw:s/\(\u\w\)/_\L\1/g<CR>
 
 " grep {{{
 " http://fourdollars.blogspot.com/2008/06/help-new-vimgrep.html
@@ -125,7 +126,7 @@ let use_xhtml = 1
 if ! has('gui')
     "highlight Comment ctermfg=gray ctermbg=darkblue
 else
-    highlight Normal guifg=white guibg=black
+    "highlight Normal guifg=white guibg=black
     "set guifont=Droid\ Sans\ Mono\ 12
     "set guifont=Monaco\ for\ Powerline:h10
     set guifont=Monaco\ for\ Powerline\ 10
@@ -265,60 +266,74 @@ set hidden
 set nocompatible               " be iMproved
 filetype off                   " required!
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
 " let Vundle manage Vundle
 " required! 
-Bundle 'gmarik/vundle'
+Plugin 'gmarik/Vundle.vim'
 
 " My Bundles here:
 "
 " original repos on github
-Bundle 'tpope/vim-fugitive'
-"Bundle 'Lokaltog/vim-easymotion'
-"Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
-"Bundle 'tpope/vim-rails.git'
+Plugin 'tpope/vim-fugitive'
+Plugin 'Lokaltog/vim-easymotion'
+Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+"Plugin 'tpope/vim-rails.git'
 " vim-scripts repos
-Bundle 'L9'
-"Bundle 'FuzzyFinder'
-Bundle 'taglist.vim'
-"Bundle 'VisIncr'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'scrooloose/nerdtree'
-Bundle 'tpope/vim-surround'
-Bundle 'Align'
-"Bundle 'YankRing.vim'
+Plugin 'L9'
+"Plugin 'FuzzyFinder'
+"Plugin 'taglist.vim'
+Plugin 'majutsushi/tagbar'
+Plugin 'kien/ctrlp.vim'
+Plugin 'fatih/vim-go'
+Plugin 'scrooloose/syntastic'
+"Plugin 'VisIncr'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdtree'
+Plugin 'tpope/vim-surround'
+Plugin 'Align'
+"Plugin 'YankRing.vim'
 
 " snipmate
-Bundle "MarcWeber/vim-addon-mw-utils"
-Bundle "tomtom/tlib_vim"
-"Bundle "honza/snipmate-snippets"
-Bundle 'garbas/vim-snipmate'
-Bundle 'othree/vim-autocomplpop'
-"Bundle 'snipmate-snippets'
-Bundle 'Lokaltog/vim-powerline'
-"Bundle 'python.vim'
-"Bundle 'pyflakes.vim'
-"Bundle 'kchmck/vim-coffee-script'
-Bundle 'flazz/vim-colorschemes'
-"Bundle 'ap/vim-css-color'
-"Bundle 'matchit.zip'
-"Bundle 'cscope.vim'
-"Bundle 'cscope_macros.vim'
-"Bundle 'cscope_map'
-"Bundle 'autoload_cscope.vim'
-"Bundle 'autotags'
-Bundle 'nelson/cscope_maps'
-"Bundle 'cscope-quickfix'
-"Bundle 'log.vim'
-"Bundle 'naseer/logcat'
-Bundle 'kelwin/vim-smali'
-Bundle 'junegunn/vim-easy-align'
+" Plugin 'MarcWeber/vim-addon-mw-utils'
+" Plugin 'tomtom/tlib_vim'
+"Plugin 'honza/snipmate-snippets'
+"Plugin 'garbas/vim-snipmate'
+"Plugin 'othree/vim-autocomplpop'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'honza/vim-snippets'
+Plugin 'SirVer/ultisnips'
+Plugin 'sjl/gundo.vim'
+"Plugin 'snipmate-snippets'
+Plugin 'Lokaltog/vim-powerline'
+"Plugin 'python.vim'
+"Plugin 'pyflakes.vim'
+"Plugin 'kchmck/vim-coffee-script'
+Plugin 'flazz/vim-colorschemes'
+"Plugin 'ap/vim-css-color'
+"Plugin 'matchit.zip'
+"Plugin 'cscope.vim'
+"Plugin 'cscope_macros.vim'
+"Plugin 'cscope_map'
+"Plugin 'autoload_cscope.vim'
+"Plugin 'autotags'
+"Plugin 'nelson/cscope_maps'
+"Plugin 'cscope-quickfix'
+"Plugin 'log.vim'
+"Plugin 'naseer/logcat'
+Plugin 'kelwin/vim-smali'
+Plugin 'junegunn/vim-easy-align'
+Plugin 'jeetsukumaran/vim-buffergator'
+Plugin 'tfnico/vim-gradle'
+Plugin 'sealemar/vtl'
 
 " non github repos
 "Bundle 'git://git.wincent.com/command-t.git'
 " ...
+
+" All of your Plugins must be added before the following line, required
+call vundle#end()
 
 filetype plugin indent on     " required!
 "
@@ -335,7 +350,7 @@ let g:vundle_default_git_proto = 'https'
 " {{{ colorscheme
 "colorscheme devbox-dark-256
 " light background selection
-colorscheme wombat256
+colorscheme holokai
 "colorscheme molokai-dark-yu
 "set background=dark
 "colorscheme c9s
@@ -343,8 +358,8 @@ colorscheme wombat256
 
 set fileformats+=dos
 let g:acp_behaviorSnipmateLength = 1
-imap <C-J> <Plug>snipMateNextOrTrigger
-smap <C-J> <Plug>snipMateNextOrTrigger
+"imap <C-J> <Plug>snipMateNextOrTrigger
+"smap <C-J> <Plug>snipMateNextOrTrigger
 set clipboard=unnamedplus
 vnoremap <silent> <Enter> :EasyAlign<cr>
 
@@ -357,3 +372,78 @@ function! Incr()
   normal `<
 endfunction
 vnoremap <C-a> :call Incr()<CR>
+
+" Buffergator {{{
+let g:buffergator_suppress_keymaps = 1
+let g:buffergator_autodismiss_on_select = 0
+"let g:buffergator_autoupdate = 1
+nnoremap <Leader>b :BuffergatorToggle<CR>
+" }}}
+
+set wildmenu
+set wildmode=list:longest
+
+"cnoremap tabe e
+
+" Reselect visual block after indent/outdent {{{
+"vnoremap < <gv
+"vnoremap > >gv
+" }}}
+
+" Make Y behave like other capitals {{{
+map Y y$
+" }}}
+
+" Improve up/down movement on wrapped lines {{{
+nnoremap j gj
+nnoremap k gk
+" }}}
+
+" Toggling search highlights {{{
+noremap <silent><Leader>/ :nohls<CR>
+" }}}
+
+" Tagbar configs {{{
+let g:tagbar_left = 1
+let g:tagbar_width = 30
+noremap <Leader>t :TagbarToggle<CR>
+" }}}
+
+" Toggle invisibles (list) {{{
+noremap <Leader>i :set list!<CR>
+" }}}
+
+" Paste mode toggling configs {{{
+" Toggling paste mode outside insert mode "
+map <Leader>v :set invpaste<CR>:set paste?<CR>
+" Toggling paste mode inside insert mode "
+set pastetoggle=<Leader>v
+" Turning off paste mode when leaving insert
+autocmd InsertLeave * set nopaste
+" }}}
+
+" NERD Commenter configs {{{
+" let NERDSpaceDelims=1
+" }}}
+
+" UltiSnips configs {{{
+let g:UltiSnipsExpandTrigger="<c-j>"
+" }}}
+
+" Gundo configs {{{
+nnoremap U :GundoToggle<CR>
+" }}}
+
+" CtrlP configs {{{
+" Press F5 in CtrlP to clear the cache
+let g:ctrlp_clear_cache_on_exit = 0
+let g:ctrlp_map = '<Leader>p'
+let g:ctrlp_max_files = 0
+let g:buffergator_viewport_split_policy = 'R'
+" }}}
+
+" syntastic {{{
+let g:syntastic_java_checkers=['checkstyle']
+" }}}
+"nnoremap gt :bn<CR>
+"nnoremap gT :bp<CR>

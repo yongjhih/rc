@@ -2,7 +2,7 @@
 
 package=`adb-pm-package "$1"`
 if [ "$package" ]; then
-    cmd="adb shell pm clear \"${package}\""
+    cmd="adb shell pm clear ${package}"
     echo "$cmd"
     $cmd
 else

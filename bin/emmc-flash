@@ -1,0 +1,148 @@
+#!/usr/bin/env bash
+# ls /dev/disk/by-id/ -l
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0 -> ../../sdc
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part1 -> ../../sdc1
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part10 -> ../../sdc10
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part11 -> ../../sdc11
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part12 -> ../../sdc12
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part13 -> ../../sdc13
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part14 -> ../../sdc14
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part15 -> ../../sdc15
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part16 -> ../../sdc16
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part17 -> ../../sdc17
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part18 -> ../../sdc18
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part19 -> ../../sdc19
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part2 -> ../../sdc2
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part20 -> ../../sdc20
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part21 -> ../../sdc21
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part22 -> ../../sdc22
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part3 -> ../../sdc3
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part4 -> ../../sdc4
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part5 -> ../../sdc5
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part6 -> ../../sdc6
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part7 -> ../../sdc7
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part8 -> ../../sdc8
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part9 -> ../../sdc9
+#
+# sudo dd if=tz.mbn of=/dev/sdc8
+# sudo dd if=rpm.mbn of=/dev/sdc6
+# sudo dd if=emmc_appsboot.mbn of=/dev/sdc5
+# sudo dd if=sbl3.mbn of=/dev/sdc4
+# sudo dd if=sbl2.mbn of=/dev/sdc3
+# sudo dd if=sbl1.mbn of=/dev/sdc2
+# sudo dd if=NON-HLOS.bin of=/dev/sdc1
+
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part1 -> ../../sdc1 # sudo dd if=NON-HLOS.bin of=/dev/sdc1
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part10 -> ../../sdc10
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part11 -> ../../sdc11
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part12 -> ../../sdc12
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part13 -> ../../sdc13
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part14 -> ../../sdc14
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part15 -> ../../sdc15
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part16 -> ../../sdc16
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part17 -> ../../sdc17
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part18 -> ../../sdc18
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part19 -> ../../sdc19
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part2 -> ../../sdc2 # sudo dd if=sbl1.mbn of=/dev/sdc2
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part20 -> ../../sdc20
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part21 -> ../../sdc21
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part22 -> ../../sdc22
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part3 -> ../../sdc3 # sudo dd if=sbl2.mbn of=/dev/sdc3
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part4 -> ../../sdc4 # sudo dd if=sbl3.mbn of=/dev/sdc4
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part5 -> ../../sdc5 # sudo dd if=emmc_appsboot.mbn of=/dev/sdc5
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part6 -> ../../sdc6 # sudo dd if=rpm.mbn of=/dev/sdc6
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part7 -> ../../sdc7
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part8 -> ../../sdc8 # sudo dd if=tz.mbn of=/dev/sdc8
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part9 -> ../../sdc9
+#
+
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part1 -> ../../sdc1 # sudo dd if=NON-HLOS.bin of=/dev/sdc1
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part2 -> ../../sdc2 # sudo dd if=sbl1.mbn of=/dev/sdc2
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part3 -> ../../sdc3 # sudo dd if=sbl2.mbn of=/dev/sdc3
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part4 -> ../../sdc4 # sudo dd if=sbl3.mbn of=/dev/sdc4
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part5 -> ../../sdc5 # sudo dd if=emmc_appsboot.mbn of=/dev/sdc5
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part6 -> ../../sdc6 # sudo dd if=rpm.mbn of=/dev/sdc6
+# usb-Qualcomm_MMC_Storage_1234567890ABCDEF-0:0-part8 -> ../../sdc8 # sudo dd if=tz.mbn of=/dev/sdc8
+
+# Number  Start (sector)    End (sector)  Size       Code  Name
+#    1          131072          262143   64.0 MiB    0700  modem
+#    2          262144          262399   128.0 KiB   FFFF  sbl1
+#    3          262400          262911   256.0 KiB   FFFF  sbl2
+#    4          262912          263935   512.0 KiB   FFFF  sbl3
+#    5          263936          265983   1024.0 KiB  FFFF  aboot
+#    6          265984          267007   512.0 KiB   FFFF  rpm
+#    7          393216          413695   10.0 MiB    FFFF  boot
+#    8          524288          525311   512.0 KiB   FFFF  tz
+#    9          525312          525313   1024 bytes  FFFF  pad
+#   10          525314          531457   3.0 MiB     FFFF  modemst1
+#   11          531458          537601   3.0 MiB     FFFF  modemst2
+#   12          655360         2088959   700.0 MiB   8300  system
+#   13         2088960         2105343   8.0 MiB     8300  persist
+#   14         2105344         2514943   200.0 MiB   8300  cache
+#   15         2621440         2623487   1024.0 KiB  FFFF  misc
+#   16         2752512         2772991   10.0 MiB    FFFF  recovery
+#   17         2883584         2889727   3.0 MiB     FFFF  fsg
+#   18         2889728         2889743   8.0 KiB     FFFF  ssd
+#   19         2889744         2889753   5.0 KiB     8300  grow
+#   20         2889754         2906137   8.0 MiB     8300  splash
+#   21         2906138         2922521   8.0 MiB     8300  keyfs
+#   22         3014656         7634910   2.2 GiB     8300  userdata
+
+
+if [ "`adb get-state`" = "device" ]; then
+	adb-root
+	sleep 2
+	adb shell setprop persist.sys.downloadmode 1
+	adb shell 'echo c > /proc/sysrq-trigger'
+fi
+
+wait-for-emmc() {
+	echo "wait-for-emmc"
+	while :; do
+		ls /dev/disk/by-id/usb-Qualcomm_MMC_Storage_* > /dev/null 2>&1 && return
+	done
+}
+
+wait-for-emmc
+
+#sudo gdisk -l /dev/sdc
+
+p="`ls /dev/disk/by-id/usb-Qualcomm_MMC_Storage_*-part1 | head -1`"
+readlink -f "$p"
+echo sudo dd if=NON-HLOS.bin of="$p"
+p="`ls /dev/disk/by-id/usb-Qualcomm_MMC_Storage_*-part2 | head -1`"
+readlink -f "$p"
+echo sudo dd if=sbl1.mbn of="$p"
+p="`ls /dev/disk/by-id/usb-Qualcomm_MMC_Storage_*-part3 | head -1`"
+readlink -f "$p"
+echo sudo dd if=sbl2.mbn of="$p"
+p="`ls /dev/disk/by-id/usb-Qualcomm_MMC_Storage_*-part4 | head -1`"
+readlink -f "$p"
+echo sudo dd if=sbl3.mbn of="$p"
+p="`ls /dev/disk/by-id/usb-Qualcomm_MMC_Storage_*-part5 | head -1`"
+readlink -f "$p"
+echo sudo dd if=emmc_appsboot.mbn of="$p"
+p="`ls /dev/disk/by-id/usb-Qualcomm_MMC_Storage_*-part6 | head -1`"
+readlink -f "$p"
+echo sudo dd if=rpm.mbn of="$p"
+p="`ls /dev/disk/by-id/usb-Qualcomm_MMC_Storage_*-part8 | head -1`"
+readlink -f "$p"
+echo sudo dd if=tz.mbn of="$p"
+
+echo -n "y/n? "; read yn
+if [ "$yn" = "y" ]; then
+	p="`ls /dev/disk/by-id/usb-Qualcomm_MMC_Storage_*-part1 | head -1`"
+	sudo dd if=NON-HLOS.bin of="$p"
+	p="`ls /dev/disk/by-id/usb-Qualcomm_MMC_Storage_*-part2 | head -1`"
+	sudo dd if=sbl1.mbn of="$p"
+	p="`ls /dev/disk/by-id/usb-Qualcomm_MMC_Storage_*-part3 | head -1`"
+	sudo dd if=sbl2.mbn of="$p"
+	p="`ls /dev/disk/by-id/usb-Qualcomm_MMC_Storage_*-part4 | head -1`"
+	sudo dd if=sbl3.mbn of="$p"
+	p="`ls /dev/disk/by-id/usb-Qualcomm_MMC_Storage_*-part5 | head -1`"
+	sudo dd if=emmc_appsboot.mbn of="$p"
+	p="`ls /dev/disk/by-id/usb-Qualcomm_MMC_Storage_*-part6 | head -1`"
+	sudo dd if=rpm.mbn of="$p"
+	p="`ls /dev/disk/by-id/usb-Qualcomm_MMC_Storage_*-part8 | head -1`"
+	sudo dd if=tz.mbn of="$p"
+fi

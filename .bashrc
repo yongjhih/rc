@@ -220,16 +220,26 @@ setdown_proxy() {
 #fi
 
 #export ANDROID_SRC="$HOME/workspace/android_src_froyo"
-export SDK="$HOME/sdk/android-sdk-linux_x86/tools:$HOME/sdk/android-sdk-linux_x86/platform-tools:$HOME/sdk/android-cts/tools"
-export ANDROID_SDK_TOOL="$SDK"
+#export SDK="$HOME/sdk/android-sdk-linux_x86/tools:$HOME/sdk/android-sdk-linux_x86/platform-tools:$HOME/sdk/android-cts/tools"
+#export ANDROID_SDK_TOOL="$SDK"
 #export ANDROID_SRC="/home/andrew/workspace/android_src_froyo"
 #export ANDROID_SDK_TOOL="/home/andrew/sdk/android-sdk-linux_x86/tools"
 
-PATH="$PATH:$SDK"
+export ANDROID_HOME="$HOME/adt-bundle-linux/sdk"
+export ANDROID_SDK="$ANDROID_HOME"
+export ANDROID_NDK="$HOME/android-ndk"
+export PROGUARD_HOME="${ANDROID_HOME}/tools/proguard"
+
+PATH="$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools"
+PATH="$PATH:$HOME/android-ndk"
+PATH="$PATH:$HOME/workspace/phabricator/arcanist/bin"
+PATH="$PATH:$HOME/workspace/phabricator/phabricator/bin"
 
 alias emuand='emulator -system system.img -data userdata.img -ramdisk ramdisk.img'
 
-export PYTHONPATH="$HOME/lib"
+#export PYTHONPATH="$PYTHONPATH:$HOME/lib"
+#export PYTHONPATH="$PYTHONPATH:$PYTHON_PATH:$HOME/lib"
+#export PYTHONPATH="$(dirname `which python`)"
 
 #set bell-style visible
 
@@ -265,6 +275,14 @@ git-forall()
 #export GREP_OPTIONS='-rIPs --exclude-dir=.[a-zA-Z0-9]* --exclude=.* --exclude=*~ --color=auto'
 #alias cgrep='grep --color=always'
 #export PATH="$PATH:/var/lib/gems/1.8/bin"
+#update-java-alternatives -l
+#export JAVA_HOME=/usr/lib/jvm/java-7-oracle
+#export PATH=$PATH:$JAVA_HOME/bin
+#export CLASSPATH=$JAVA_HOME/lib
+#export JRE_HOME=$JAVA_HOME/jre
+export JAVA8_HOME="/usr/lib/jvm/java-8-oracle"
+export JAVA7_HOME="/usr/lib/jvm/java-7-oracle"
+export JAVA_HOME="$JAVA8_HOME"
 
 bd()
 {
@@ -370,9 +388,16 @@ unset _xarray
 #}
 
 function cd-safe() {
-local d="$1"
-if [ -f "$d" ]; then
-	d="`dirname \"$1\"`"
+if [ "$1" ]; then
+	local d="$1"
+	if [ -f "$d" ]; then
+		d="`dirname \"$1\"`"
+	fi
+	if [ ! -d "$d" ]; then
+		:
+		#echo "mkdir -p $d"
+		#mkdir -p "$d"
+	fi
 fi
 command cd "$d"
 }
@@ -387,8 +412,9 @@ export GEM_PATH=$HOME/gems
 export PATH=$HOME/local/bin:$PATH
 
 export USE_CCACHE=1
-#export CCACHE_DIR=~/.ccache
+#export CCACHE_DIR="$HOME/.ccache"
 #export OUT_DIR_COMMON_BASE="$HOME/tmp/android-out-common"
+export CCACHE_DIR="/tmp/ccache"
 
 #export GIT_SSH="/home/andrew/bin/connect-proxy-ssh"
 #export GIT_PROXY_COMMAND="/home/andrew/bin/connect-proxy"
@@ -410,4 +436,25 @@ alias cd='cd-safe'
 ##rm "$@"
 #}
 #
+export TERM=screen-256color
+#export http_proxy=http://10.8.9.9:8080
+#export https_proxy=http://10.8.9.9:8080
 
+#export LANGUAGE=en:zh_TW:zh
+export LANGUAGE=en
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+export LC_MESSAGE=en_US.UTF-8
+alias j='autojump'
+
+USER_BASH_COMPLETION_DIR="$HOME/.bash_completion.d"
+
+if [[ -d $USER_BASH_COMPLETION_DIR && -r $BASH_COMPLETION_DIR && \
+    -x $USER_BASH_COMPLETION_DIR ]]; then
+    for i in $(LC_ALL=C command ls "$USER_BASH_COMPLETION_DIR"); do
+        i=$USER_BASH_COMPLETION_DIR/$i
+        [[ ${i##*/} != @(*~|*.bak|*.swp|\#*\#|*.dpkg*|*.rpm@(orig|new|save)|Makefile*) \
+            && -f $i && -r $i ]] && . "$i"
+    done
+fi
+unset i

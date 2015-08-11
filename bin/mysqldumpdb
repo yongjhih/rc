@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+#mysqldump --single-transaction --flush-logs --master-data "$@" > $@
+#mysqldump "$@" > $@

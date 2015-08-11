@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+#avconv -i concat:aa.mp3\|aa.mp3\|aa.mp3\|aa.mp3\|aa.mp3 -c copy aa5.mp3
+
+#function join { local IFS="$1"; shift; echo "$*"; }
+
+#join() {
+#    delimiter="$1"
+#    shift
+#    arr=$*
+#    arr="${arr:2}" # throw away separator and following space
+#    arr="${arr// /$separator}"
+#    echo "$arr"
+#}
+
+#function join {
+#   perl -e '$s = shift @ARGV; print join($s, @ARGV);' "$@";
+#}
+
+args=()
+for ((i=0; i < "$1"; i++)); do
+    args+=("$2")
+done
+
+#join "\\|" "${args[@]}"
+
+#echo avconv -i concat:`join "\\|" "${args[@]}"` -c copy "$3"
+IFS="|"
+avconv -i concat:"${args[*]}" -c copy "$3"

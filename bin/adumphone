@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+adumplog
+
+mkdir system
+pushd system
+adb pull system
+popd
+

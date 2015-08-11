@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+parent="$1"
+
+if [ ! "$parent" ]; then
+	exit 1
+fi
+
+feature_list=( `wget -q "http://icore/gbc-feature/feature_list" -O - | grep 'detail_feature?' | sed 's#.*<tr>.*detail_feature[^>]\+>\([^<]\+\)</a>.*#\1#'| sort | uniq` )
+
+git-remote-add gbc_feature >/dev/null 2>&1
+git fetch gbc_feature >/dev/null 2>&1
+
+for f in "${feature_list[@]}"; do
+	git-has-contains gbc_feature/$f $parent > /dev/null 2>&1 && echo $f
+done

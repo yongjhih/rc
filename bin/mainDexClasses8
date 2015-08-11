@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+./mainDexClasses --output a.keep "/home/andrew/workspace/8tory-gitlab/gitlab/android/Gallery2/build/intermediates/dependency-cache:/home/andrew/workspace/8tory-gitlab/gitlab/android/Gallery2/build/intermediates/classes/debug:/home/andrew/workspace/8tory-gitlab/gitlab/android/story/libs/android-support-multidex.jar"

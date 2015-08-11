@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+rm my-release-key.keystore
+keytool -genkey -v -keystore my-release-key.keystore -alias alias_name -keyalg RSA -keysize 2048 -validity 10000
+android update project -p .
+
+# 每次要Build新的程式
+rm -f libs/armeabi/libhello-jni.so
+rm -rf obj
+ndk-build
+ant release
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore bin/*.apk alias_name < passwd
+# 最後產生的是 XXX.apk
+zipalign -f -v 4 bin/*.apk XXX.apk
+

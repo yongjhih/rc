@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+adb wait-for-device && adb root && adb wait-for-device
+while [ "`adb get-state`" != "device" ]; do
+	sleep 1
+done

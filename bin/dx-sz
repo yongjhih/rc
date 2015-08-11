@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if [ ! $1 ]; then
+    dex-size .
+else
+    dex-size "$@"
+fi

@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+adb-root && adb shell sqlite3 /data/data/com.android.providers.settings/databases/settings.db ".dump" | grep "$@"

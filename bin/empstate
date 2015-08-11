@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+user="996031"
+[ "$1" ] && user="$1"
+
+user=`echo $user | tr 'a-z' 'A-Z'`
+file="/tmp/empstate-${user}"
+force=
+
+export http_proxy=
+if [[ ! -f "$file.html" || $force ]]; then
+	#url="http://geip.gigabyte.com.tw/gpublic/empservice/admininfo/empstate/DEFAULT.ASP"
+	url="http://geip/gpublic/empservice/admininfo/empstate/DEFAULT.ASP"
+	today_y=`date "+%Y"`
+	today_m=`date "+%m"`
+	today_d=`date "+%d"`
+#wget --post-data 'year1=2013&month1=2&day1=1&year2=2013&month2=2&day2=6&CodeID=ALL&MVNO=996031&Dept=&cpf37=&tpe01=&B1=' http://geip/gpublic/empservice/admininfo/empstate/DEFAULT.ASP
+	#year1=2013&month1=1&day1=1&year2=2013&month2=2&day2=6&CodeID=ALL&MVNO=996031&Dept=&cpf37=&tpe01=&B1=
+	post="year1=1990&month1=6&day1=1&year2=${today_y#0}&month2=${today_m#0}&day2=${today_d#0}&CodeID=ALL&MVNO=$user&Dept=&cpf37=&tpe01=&B1="
+	#post="year1=2004&month1=6&day1=1&year2=${today_y#0}&month2=${today_m#0}&day2=${today_d#0}&CodeID=ALL&MVNO=$user&Dept=&cpf37=&tpe01=&B1="
+
+	echo wget --post-data "$post" "$url" -O "$file.html"
+	wget --post-data "$post" "$url" -O "$file.html"
+        if [[ "$?" != 0 || ! -s "$file.html" ]]; then
+            post="year1=2010&month1=10&day1=1&year2=${today_y#0}&month2=${today_m#0}&day2=${today_d#0}&CodeID=ALL&MVNO=$user&Dept=&cpf37=&tpe01=&B1="
+            wget --post-data "$post" "$url" -O "$file.html"
+        fi
+fi
+
+if [[ ! -f "$file.utf8.html" || $force ]]; then
+	iconv -f big5 -t utf8 "$file.html" > "$file.utf8.html"
+fi
+
+if [[ ! -f "$file.1.html" || $force ]]; then
+	grep '<TD [^>]\+><FONT [^>]\+>.*</FONT></TD>' "$file.utf8.html" | sed "s|<TD [^>]\+><FONT [^>]\+>\(.*\)</FONT></TD>|\1|" | sed -e 's|^\s\+||' -e 's|\s\+$||' | grep -v '<!--.*-->' | sed -n '/href/,$p' > "$file.1.html"
+fi
+
+username="$(sed -n '329p' $file.utf8.html | sed 's|<TD [^>]\+><FONT [^>]\+>\(.*\)</FONT></TD>|\1|' | sed -e 's|^\s\+||' -e 's|\s\+$||' )"
+department="$(sed -n '330p' $file.utf8.html | sed 's|<TD [^>]\+><FONT [^>]\+>\(.*\)</FONT></TD>|\1|' | sed -e 's|^\s\+||' -e 's|\s\+$||' )"
+empstat "$user" "${username}-${department}"

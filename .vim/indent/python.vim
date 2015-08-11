@@ -1,1 +1,0 @@
-/usr/share/vim-scripts/indent/python.vim

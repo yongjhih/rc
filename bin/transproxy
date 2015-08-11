@@ -3,6 +3,7 @@
 #iptables -t nat -D OUTPUT -p tcp --dport 80 -j DNAT --to 127.0.0.1:8081
 #iptables -t nat -D OUTPUT -p tcp --dport 80 -j DNAT --to 10.8.27.228:8081
 #iptables -t nat -A OUTPUT ! -d 10.0.0.0/8 -p tcp -m tcp --dport 80 -j DNAT --to-destination 10.8.27.228:3128
+#iptables -t nat -A OUTPUT ! -d 10.0.0.0/8 -p tcp --dport 80 -j DNAT --to-destination 10.8.27.228:3128
 #iptables -t nat -D OUTPUT ! -d 10.8.27.0/24 -p tcp --dport 80 -j REDIRECT --to-ports 8081
 ##iptables -t nat -A OUTPUT ! -d 10.8.27.0/24 -p tcp --dport 80 -j REDIRECT --to-ports 8081
 #

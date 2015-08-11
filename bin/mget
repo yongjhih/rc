@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+#wget -e robots=off \
+#       --referer="http://www.google.com" \
+#       --user-agent="Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:2.8.1.6) Gecko/20090725 Firefox/3.0.0.6" \
+#-r \
+#-A '*topicdetail.php*,*topiclist.php*,*317*' \
+#--random-wait \
+#http://www.mobile01.com/topiclist.php?f=317
+#
+## --convert-links \
+## --no-clobber \
+## --recursive \
+## --level=3 \
+## --relative \
+## --no-parent \
+##-A 'topicdetail.php*,topiclist.php*' \
+
+# http://www.mobile01.com/topiclist.php?f=317
+# http://www.mobile01.com/topicdetail.php?f=317&t=3535207&last=46039881
+
+#httrack "http://www.mobile01.com/" -O . \
+httrack -i "www.mobile01.com/topiclist.php?f=317" -O . \
+-%c10 \
+"-*" \
+"+www.mobile01.com/topiclist.php?f=317*" \
+"+www.mobile01.com/topicdetail.php?f=317*" \
+-mime:*/* +mime:text/html \

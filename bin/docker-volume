@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+[ "$1" ] || exit 1
+sudo docker inspect "$1" | grep "vfs/dir"

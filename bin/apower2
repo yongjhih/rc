@@ -1,0 +1,14 @@
+#!/system/bin/sh
+#adb shell sendevent /dev/input/event8 0001 0074 00000001
+#adb shell sendevent /dev/input/event8 0000 0000 00000000
+#adb shell sendevent /dev/input/event8 0001 0074 00000000
+#adb shell sendevent /dev/input/event8 0000 0000 00000000
+sleep 10
+while :; do
+	sendevent /dev/input/event8 0001 116 00000001
+	sendevent /dev/input/event8 0000 0000 00000000
+	sendevent /dev/input/event8 0001 116 00000000
+	sendevent /dev/input/event8 0000 0000 00000000
+	sleep 5
+done
+

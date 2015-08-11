@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+feature_list=`links -dump http://icore/gbc-feature/feature_list | grep '^[0-9]' | awk '{print $2,$4}'`
+
+while read line; do
+	case "$line" in
+		"^|-")
+		;;
+		*)
+			echo "$feature_list" | while read feature owner; do
+				# | 826 || audio/audio_routing/_a-4.0/826 || karl.chen ||
+					# echo "$line" | sed "s#^|\s*\([0-9]\+\)\s*||\s*\([^| ]\+\)\s*||\s*\([^| ]\+\)\s*\(.*\)#| \1 || \2 || \3 || \4#"
+				f=`echo "$line" | sed "s#^|\s*\([0-9]\+\)\s*||\s*\([^| ]\+\)\s*||\s*\([^| ]\+\)\s*\(.*\)#\2#"`
+				if [ "$f" == "$feature" ]; then
+					#line=`echo "$line" | sed "s#^|\s*\([0-9]\+\)\s*||\s*\([^| ]\+\)\s*||\s*\([^| ]\+\)\s*\(.*\)#| \1 || \2 || $owner || \4#"`
+					echo $feature $owner
+				fi
+			done
+		;;
+	esac
+	#echo "$line"
+done < a

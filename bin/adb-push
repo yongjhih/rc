@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# out/target/product/bravo/system/app/SystemUI.apk
+while [ "$1" ]; do
+	croot
+	if [ ! -f "$1" ]; then
+		echo "$1 not found" >&2
+		continue
+	fi
+	#ANDROID_BUILD_TOP=/home/andrew/workspace/gbc_official/bravo/android
+	#OUT=/home/andrew/workspace/gbc_official/bravo/android/out/target/product/bravo
+	out="${OUT#$ANDROID_BUILD_TOP}"
+	dest="${1#$out}"
+
+	adb-remount
+	echo adb push "$1" "$dest"
+
+	cd -
+	shift
+done

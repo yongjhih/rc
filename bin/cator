@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+[ "$2" ] || ( echo "Usage:  cat_color <0-7> file" ; exit 1 )
+
+tput setaf "$1"
+cat "$2"
+tput setaf default
+

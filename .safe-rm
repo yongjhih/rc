@@ -7,3 +7,6 @@
 /home/*/.config
 /home/*/.mozilla
 /home/*/.gnupg
+/home/*/*
+${HOME}/*
+~/*

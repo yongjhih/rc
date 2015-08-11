@@ -1,0 +1,205 @@
+#!/usr/bin/env python
+#-*- coding: utf-8 -*-
+
+import re
+import sys
+import fnmatch
+import os
+
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
+def main():
+    key = 'wifi_eap_method'
+    (keys, values) = stringvalue_to_atstring(key)
+
+    arrays_xmls = []
+    for root, dirnames, filenames in os.walk('res'):
+        for filename in fnmatch.filter(filenames, 'strings.xml'):
+            arrays_xmls.append(os.path.join(root, filename))
+
+    for f in arrays_xmls:
+        if 'values-' in f:
+            stringarray_to_strings(key, keys[:], f, f)
+
+    append_into_strings_xml(keys[:], values[:])
+
+def append_into_strings_xml(keys, values):
+    fname = 'res/values/strings.xml'
+    with open(fname) as f:
+        input = f.readlines()
+    f.close()
+    output = open(fname, 'w')
+
+    i = -1
+    try:
+        i = input.index('</resources>')
+    except ValueError:
+        i = -1
+    string = ''
+    for k in keys:
+        string = '%s    <string name="%s">%s</string>\n' % (string, k, values.pop(0))
+
+    input.insert(i, string)
+
+    for line in input:
+        output.write(line)
+    output.close()
+
+def stringvalue_to_atstring(key):
+    # <string-array name="screen_timeout_entries">
+    #     <item>15 seconds</item>
+    #     <item>30 seconds</item>
+    #     <item>1 minute</item>
+    #     <item>2 minutes</item>
+    #     <item>5 minutes</item>
+    #     <item>10 minutes</item>
+    #     <item>30 minutes</item>
+    #     <item>Never</item>
+    # </string-array>
+    available_values = [
+        r'preferred_network_mode_lte_wcdma',
+        #r'preferred_network_mode_lte',
+        #r'preferred_network_mode_global',
+        #r'preferred_network_mode_gsm_wcdma_lte',
+        #r'preferred_network_mode_cdma_lte_evdo',
+        #r'preferred_network_mode_cdma_evdo_gsm_wcdma',
+        r'preferred_network_mode_evdo',
+        r'preferred_network_mode_cdma_wo_dvdo',
+        r'preferred_network_mode_cdma_evdo_auto',
+        r'preferred_network_mode_gsm_wcdma_auto',
+        r'preferred_network_mode_wcdma',
+        r'preferred_network_mode_gsm',
+        r'preferred_network_mode_gsm_wcdma',
+    ]
+    fname = 'res/values/strings.xml'
+    with open(fname) as f:
+        input = f.readlines()
+    f.close()
+    output = open(fname, 'w')
+    start = '<string-array name="%s">' % key
+    stop = '</string-array>'
+    to_value_prefix = r'preferred_network_mode_'
+    keys = []
+    values = []
+
+    enabled = False
+    n = 0
+    for line in input:
+        if enabled:
+            if stop in line:
+                enabled = False
+                n = 0
+            else:
+                from_value = re.sub('(^\s*<item[^>]*>)([^<]+)(</item>)', r'\2', line).rstrip('\n')
+                to_value = ''
+                if 'minute' in from_value:
+                    to_value = re.sub(' minute.*', r'm', from_value)
+                elif 'second' in from_value:
+                    to_value = re.sub(' second.*', r's', from_value)
+                elif 'never' in from_value or 'Never' in from_value:
+                    to_value = 'never'
+                #to_value = '%s%s' % (to_value_prefix, to_value)
+                to_value = available_values[n]
+                keys.append(to_value)
+                values.append(from_value)
+                i = re.sub('(^\s*<item[^>]*>)([^<]+)(</item>)', r'\1', line).rstrip('\n')
+                j = re.sub('(^\s*<item[^>]*>)([^<]+)(</item>)', r'\3', line)
+                line = '%s%s%s%s' % (i, r'@string/', to_value, j)
+                n = n + 1
+
+        if start in line:
+            enabled = True
+
+        output.write(line)
+    output.close()
+    return keys[:], values[:]
+
+def stringarray_to_strings(key, values, input_fname, output_fname):
+    #  <string-array name="screen_timeout_entries">
+    #    <item msgid="3342301044271143016">"15 秒"</item>
+    #    <item msgid="8881760709354815449">"30 秒"</item>
+    #    <item msgid="7589406073232279088">"1 分鐘"</item>
+    #    <item msgid="7001195990902244174">"2 分鐘"</item>
+    #    <item msgid="5721688686241190620">"10 分鐘"</item>
+    #    <item msgid="7156442995039264948">"30 分鐘"</item>
+    #  </string-array>
+
+    """
+    values = [
+        r'preferred_network_mode_lte_wcdma',
+        r'preferred_network_mode_lte',
+        r'preferred_network_mode_global',
+        r'preferred_network_mode_gsm_wcdma_lte',
+        r'preferred_network_mode_cdma_lte_evdo',
+        r'preferred_network_mode_cdma_evdo_gsm_wcdma',
+        r'preferred_network_mode_evdo',
+        r'preferred_network_mode_cdma_wo_dvdo',
+        r'preferred_network_mode_cdma_evdo_auto',
+        r'preferred_network_mode_gsm_wcdma_auto',
+        r'preferred_network_mode_wcdma',
+        r'preferred_network_mode_gsm',
+        r'preferred_network_mode_gsm_wcdma',
+    ]
+    """
+
+    #  <string-array name="screen_timeout_entries">
+    #    <item msgid="3342301044271143016">"15 秒"</item>
+    #    <item msgid="8881760709354815449">"30 秒"</item>
+    #    <item msgid="7589406073232279088">"1 分钟"</item>
+    #    <item msgid="7001195990902244174">"2 分钟"</item>
+    #    <item msgid="7489864775127957179">"5 分钟"</item>
+    #    <item msgid="2314124409517439288">"10 分钟"</item>
+    #    <item msgid="6864027152847611413">"30 分钟"</item>
+    #    <item>"永不"</item>
+    #  </string-array>
+
+    """
+    values = [
+        r'preferred_network_mode_lte_wcdma',
+        r'preferred_network_mode_lte',
+        r'preferred_network_mode_global',
+        r'preferred_network_mode_gsm_wcdma_lte',
+        r'preferred_network_mode_cdma_lte_evdo',
+        r'preferred_network_mode_cdma_evdo_gsm_wcdma',
+        r'preferred_network_mode_evdo',
+        r'preferred_network_mode_cdma_wo_dvdo',
+        r'preferred_network_mode_cdma_evdo_auto',
+        r'preferred_network_mode_gsm_wcdma_auto',
+        r'preferred_network_mode_wcdma',
+        r'preferred_network_mode_gsm',
+        r'preferred_network_mode_gsm_wcdma',
+    ]
+    """
+
+    with open(input_fname) as f:
+        input = f.readlines()
+    f.close()
+    output = open(output_fname, 'w')
+    start = '<string-array name="%s">' % key
+    stop = '</string-array>'
+
+    enabled = False
+    for line in input:
+        if enabled:
+            if stop in line:
+                enabled = False
+                line = ''
+            else:
+                if len(values) > 0:
+                    line = re.sub('<item[^>]*>', '<string name=\"{0}\">'.format(values.pop(0)), line)
+                    line = re.sub('</item>', '</string>', line)
+                else:
+                    line = ''
+
+        if start in line:
+            enabled = True
+            line = ''
+
+        output.write(line)
+    output.close()
+    return values
+
+if __name__ == '__main__':
+    main()
+

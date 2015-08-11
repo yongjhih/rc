@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+name="`basename $1`"
+
+adb -s 192.168.1.133:5555 shell su -c mount -o remount,rw mtd@system /system
+adb -s 192.168.1.133:5555 push "$1" "/data/local/tmp/$name"
+adb -s 192.168.1.133:5555 shell su -c cp /data/local/tmp/$name "$2"

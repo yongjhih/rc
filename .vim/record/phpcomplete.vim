@@ -1,1 +1,0 @@
-{"installer_type":"text","generated_by":"Vimana-2010.09303","files":[{"checksum":"d6568ed0a154819ab897f17b71785d2a","file":"/home/andrew/.vim/ftplugin/phpcomplete.vim"}],"version":0.3,"package":"phpcomplete.vim"}

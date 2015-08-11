@@ -78,6 +78,14 @@ while [ "$1" ]; do
 			fi
 			java -jar "$signapk_lib" "${key%.pk8}.x509.pem" "${key}" "$1" "${1%.apk}-signed.apk" && echo "${1%.apk}-signed.apk"
 		;;
+		*.zip)
+			if [ ! -f "$1" ]; then
+				echo "$1 not found" >&2
+				shift
+				continue
+			fi
+			java -jar "$signapk_lib" "${key%.pk8}.x509.pem" "${key}" "$1" "${1%.zip}-signed.zip" && echo "${1%.zip}-signed.zip"
+		;;
 		*)
 			echo "$1 skip" >&2
 		;;

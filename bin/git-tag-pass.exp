@@ -32,7 +32,10 @@ set password [read $fp]
 #spawn git tag -s -m "QRD OBM sku2 (Sunfish) merged w1137" qrd/obm/w1137
 #spawn git tag -s -m "Startpoint qrd/post_qs_wapi from qrd/post_qs" qrd/post_qs_wapi-init
 #spawn git tag -s -m "R7627USNSKQLYA10982301 before" houston-R7627USNSKQLYA10982301-before gbc_official/houston
-spawn git tag -s -m "Merged R7627USNSKQLYA10982301 into houston" houston-R7627USNSKQLYA10982301
+#spawn git tag -s -m "Merged R7627USNSKQLYA10982301 into houston" houston-R7627USNSKQLYA10982301
+#spawn git tag -s -m "qrd8230-t2-es" "qrd8230-t2-es"
+#spawn git tag -s -m "From master build#528" "8-0.0.1_r3"
+spawn git tag -s -m "0.1" "0.1"
 expect "*?assphrase:*"
 set timeout 300
 send "$password\r"

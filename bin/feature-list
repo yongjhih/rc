@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+links -dump http://icore/gbc-feature/feature_list | grep '^[0-9]' | sort | uniq | awk '{print $2,$4}'

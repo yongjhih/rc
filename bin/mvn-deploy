@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+#mvn org.apache.maven.plugins:maven-deploy-plugin:2.8.2:deploy-file -Durl=file:///tmp/mvn \
+#                                                                            -DrepositoryId=parse \
+#                                                                            -Dfile=Parse-1.8.0.jar \
+#                                                                            -DpomFile=parse-1.8.0.pom
+
+out="/tmp/mvn"
+url="file://${out}"
+# repositoryId=parse
+file=
+groupId=com.infstory
+artifactId=parse
+version=
+packaging=jar
+# generatePom=false
+
+javadoc=
+
+for i in *; do
+    case "$i" in
+        Parse-*.jar) # Parse-1.8.0.jar
+            file="$i"
+            version="${i##*-}"
+            version="${version%.jar}"
+        ;;
+        Parse-*-javadoc) # Parse-1.8.0-javadoc
+            javadoc="${i}.jar"
+            pushd "$i"
+            zip -r "../${javadoc}" .
+            popd
+        ;;
+    esac
+done
+
+echo $file
+echo $version
+
+mvn org.apache.maven.plugins:maven-deploy-plugin:2.8.2:deploy-file -Durl="$url" \
+                                                                   -Dfile="$file" \
+                                                                   -DgroupId="$groupId" \
+                                                                   -DartifactId="$artifactId" \
+                                                                   -Dversion="$version" \
+                                                                   -Dpackaging="$packaging" \
+                                                                   -Djavadoc="$javadoc" \

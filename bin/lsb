@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+stdin="`cat`"
+stdout="$stdin"
+echo "$stdin" | while read line; do
+	#a="`echo \"$stdout\" | sed -n \"/$line.\+/d\"`"
+	#a="`echo \"$stdout\" | sed "s/a/b/g"`"
+	#a="`echo \"$stdout\" | sed "s/a/b/g"`"
+	a=`echo "$stdout" | sed "s/$line.\+//g" | sort | uniq`
+	stdout="$a"
+done
+echo "$stdout"
+

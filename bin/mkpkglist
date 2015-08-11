@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+mkpkglist() {
+echo "GMS :="
+find -name '*.mk' -exec grep '^\s*\bLOCAL_MODULE\b' {} \; | sed 's/.*=\s*//' | sed 's/^/GMS += /'
+echo "PRODUCT_PACKAGE += \$(GMS)"
+}
+
+mkpkglist > gms.mk

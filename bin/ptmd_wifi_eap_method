@@ -1,0 +1,122 @@
+#!/usr/bin/env python
+#-*- coding: utf-8 -*-
+
+import re
+import sys
+import fnmatch
+import os
+
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
+def main():
+    key = 'wifi_eap_method'
+    (keys, values) = stringvalue_to_atstring(key)
+
+    arrays_xmls = []
+    for root, dirnames, filenames in os.walk('res'):
+        for filename in fnmatch.filter(filenames, 'arrays.xml'):
+            arrays_xmls.append(os.path.join(root, filename))
+
+    for f in arrays_xmls:
+        if 'values-' in f:
+            stringarray_to_strings(key, keys[:], f, f)
+
+    append_into_strings_xml(keys[:], values[:])
+
+def append_into_strings_xml(keys, values):
+    fname = 'res/values/strings.xml'
+    with open(fname) as f:
+        input = f.readlines()
+    f.close()
+    output = open(fname, 'w')
+
+    i = -1
+    try:
+        i = input.index('</resources>')
+    except ValueError:
+        i = -1
+    string = ''
+    for k in keys:
+        string = '%s    <string name="%s">%s</string>\n' % (string, k, values.pop(0))
+
+    input.insert(i, string)
+
+    for line in input:
+        output.write(line)
+    output.close()
+
+def stringvalue_to_atstring(key):
+    available_values = [
+        r'wifi_eap_method_peap',
+        r'wifi_eap_method_tls',
+        r'wifi_eap_method_ttls',
+        r'wifi_eap_method_pwd',
+        r'wifi_eap_method_sim',
+    ]
+    fname = 'res/values/arrays.xml'
+    with open(fname) as f:
+        input = f.readlines()
+    f.close()
+    output = open(fname, 'w')
+    start = '<string-array name="%s"' % key
+    stop = '</string-array>'
+    keys = []
+    values = []
+
+    enabled = False
+    n = 0
+    for line in input:
+        if enabled:
+            if stop in line:
+                enabled = False
+                n = 0
+            elif not '<!--' in line:
+                from_value = re.sub('(^\s*<item[^>]*>)([^<]+)(</item>)', r'\2', line).rstrip('\n')
+                to_value = available_values[n]
+                keys.append(to_value)
+                values.append(from_value)
+                i = re.sub('(^\s*<item[^>]*>)([^<]+)(</item>)', r'\1', line).rstrip('\n')
+                j = re.sub('(^\s*<item[^>]*>)([^<]+)(</item>)', r'\3', line)
+                line = '%s%s%s%s' % (i, r'@string/', to_value, j)
+                n = n + 1
+
+        if start in line:
+            enabled = True
+
+        output.write(line)
+    output.close()
+    return keys[:], values[:]
+
+def stringarray_to_strings(key, values, input_fname, output_fname):
+    with open(input_fname) as f:
+        input = f.readlines()
+    f.close()
+    output = open(output_fname, 'w')
+    start = '<string-array name="%s"' % key
+    stop = '</string-array>'
+
+    enabled = False
+    for line in input:
+        if enabled:
+            if stop in line:
+                enabled = False
+                line = ''
+            else:
+                if len(values) > 0:
+                    line = re.sub('<item[^>]*>', '<string name=\"{0}\">'.format(values.pop(0)), line)
+                    line = re.sub('</item>', '</string>', line)
+                else:
+                    line = ''
+
+        if start in line:
+            enabled = True
+            line = ''
+
+        output.write(line)
+    output.close()
+    return values
+
+if __name__ == '__main__':
+    main()
+

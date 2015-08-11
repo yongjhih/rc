@@ -1,1 +1,0 @@
-{"installer_type":"text","generated_by":"Vimana-2010.09303","files":[{"checksum":"ed15184d6cc7eb807b05402870bf8b90","file":"/home/andrew/.vim/colors/python.vim"}],"version":0.3,"package":"python.vim"}

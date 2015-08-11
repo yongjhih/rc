@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+parent_path="$1"
+owners=
+
+git diff --diff-filter=ACMRT --name-only M8930BAAAANLYD17220..gbc_official/8x30 --author=gigabyte | while read line; do
+	owners=( `git log --author=gigabyte --format="%ae" -- "$line" | sort | uniq | sed "s#@gigabyte.com.*##"` )
+	if [ ! "${owners[*]}" ]; then continue; fi
+	IFS_bak="$IFS"
+	IFS=','
+	owners_list="${owners[*]}"
+	IFS="$IFS_bak"
+
+	echo "| || $parent_path/$line || $owners_list"
+	echo "|-"
+done
+

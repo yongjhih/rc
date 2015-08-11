@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+
+help() {
+    echo help
+}
+
+c="android.intent.category.LAUNCHER"
+d=
+filter=
+a="android.intent.action.MAIN"
+
+while (( "$#" )); do
+    case "$1" in
+        -h|--help|-help)
+            help | pager -r -X -F
+            exit 0
+            ;;
+        -d)
+            d="-d"
+            ;;
+        -e)
+            d="-e"
+            ;;
+        -c)
+            case "$2" in
+                home)
+                    c="android.intent.category.HOME"
+                    shift
+                    ;;
+                [A-Z]*) # startsWith(uppsercase)
+                    c="android.intent.category.$2"
+                    shift
+                    ;;
+                *)
+                    c="$2"
+                    shift
+                    ;;
+            esac
+            ;;
+        *)
+            filter="$1"
+            ;;
+    esac
+
+    shift
+done
+
+package=
+if [ "$filter" ]; then
+    packages=( `adb "$d" shell pm list packages "$filter"` )
+    package="`echo ${packages[0]#*package:} | tr --delete '\r'`"
+fi
+
+#echo $d
+#echo $c
+#echo $a
+#echo $filter
+#echo $package
+
+#adb -d shell am start -c android.intent.category.HOME -a  com.google.android.leanbacklauncher
+echo adb "$d" shell am start -c "$c" -a "$a" "$package"
+adb "$d" shell am start -c "$c" -a "$a" "$package"

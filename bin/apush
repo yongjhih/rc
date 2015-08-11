@@ -2,7 +2,7 @@
 
 # PLATFORM_VERSION_CODENAME=REL
 # PLATFORM_VERSION=2.3.4
-# TARGET_PRODUCT=msm7627_sku2
+# TARGET_DEVICE=msm7627_sku2
 # TARGET_BUILD_VARIANT=eng
 # TARGET_SIMULATOR=false
 # TARGET_BUILD_TYPE=release
@@ -32,11 +32,11 @@ function adb_push() {
 	target="$1"
 
 	get_android_root
-	install_path="$ANDROID_ROOT/out/target/product/$TARGET_PRODUCT"
+	install_path="$ANDROID_ROOT/out/target/product/$TARGET_DEVICE"
 	target_path="`dirname $target`"
 	#install_path="${install_path%%$target_path}"
 	target_path="${target_path#$install_path}"
-	todir="${target_path#*out/target/product/$TARGET_PRODUCT}"
+	todir="${target_path#*out/target/product/$TARGET_DEVICE}"
 	pushd "${target_path}" > /dev/null 2>&1
 	targets=( `find -regex ".*/$target"` )
 	if [ ! "$targets" ]; then
@@ -44,7 +44,7 @@ function adb_push() {
 		targets=( `find -regex ".*/$target"` )
 	fi
 	for i in "${targets[@]}"; do
-		adb push "$i" "$todir"
+		echo adb push "$i" "$todir"
 	done
 	popd > /dev/null 2>&1
 }

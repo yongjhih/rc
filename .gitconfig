@@ -2,20 +2,22 @@
 	ui = auto
 [user]
 	name = Andrew Chen
-	email = andrew.chen@gigabyte.com
+	email = yongjhih@gmail.com
 	signingkey = 01C54D62
 	;passphrase =
 [merge]
 	tool = vimdiff
+        ;renameLimit = 9999999
 [alias]
 	diffall = !gitdiffall
 	clear = !git reset --hard && git clean -df
 	l = log --graph
-	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	lg = log --graph --decorate --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 	recurt = !git-recurt
 	cherries = !git-cherries
 	fetch = !git-remote-fetch
 	pwd = !pwd
+	diff-branch = !git-diff-branch
 	;graphviz = "!f() { echo 'digraph git { node [color=lightblue2, style=filled, fontname=\"LiHeiPro.ttf\"]; '; git log --pretty='format:  %h -> { %p }' \"$@\" | sed 's/[0-9a-f][0-9a-f]*/\"&\"/g' ; echo '}'; }; f"
 	graphviz = "!f() { echo 'digraph git { node [color=lightblue2, style=filled]; '; git log --pretty='format:  %h -> { %p }' \"$@\" | sed 's/[0-9a-f][0-9a-f]*/\"&\"/g' ; echo '}'; }; f"
 [giggle]
@@ -35,7 +37,7 @@
 	tool = vimdiff
 [core]
 	editor = vi
-	excludesfile = /home/andrew/.gitignore
+	excludesfile = ~/.gitignore
 	;gitproxy = /home/andrew/bin/git-proxy
 [help]
 	autocorrect = 1
@@ -46,9 +48,12 @@
         ;smtpuser = yourname@gmail.com
         ;smtpserverport = 587
 	;smtpserver = 10.8.27.21
-        smtpserver = 10.8.27.38
+	;smtpserver = 10.8.27.38
+        smtpserver = localhost
 	suppressfrom = true
 [rerere]
 	enabled = 0
 [gc]
 	auto = 0
+[http]
+	sslVerify = false

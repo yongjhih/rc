@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# push
+#adb push Media.db /data/local/tmp/Media.db
+#adb shell 'cih-su -c cp /data/local/tmp/Media.db /data/data/com.story8.android.gallery/databases/Media.db'
+
+#adb shell 'cih-su -c cp /data/data/com.story8.android.gallery/databases/Media.db /data/local/tmp/'
+#adb shell 'cih-su -c chmod 777 /data/local/tmp/Media.db'
+#adb pull /data/local/tmp/Media.db
+
+#adb shell 'cih-su -c "cp /data/data/com.story8.android.gallery/databases/Media.db /data/local/tmp/"'
+#adb shell 'cih-su -c "chmod 777 /data/local/tmp/Media.db"'
+#adb pull /data/local/tmp/Media.db
+
+adb -e shell 'su -c "cp /data/data/com.story8.android.gallery/databases/Media.db /data/local/tmp/"'
+adb -e shell 'su -c "chmod 777 /data/local/tmp/Media.db"'
+adb -e pull /data/local/tmp/Media.db

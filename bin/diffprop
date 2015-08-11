@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+mv /tmp/currprop /tmp/lastprop
+
+adb shell getprop > /tmp/currprop
+diff /tmp/currprop /tmp/lastprop
+

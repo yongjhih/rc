@@ -1,0 +1,10 @@
+#!/bin/sh
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
+for file in "$@"; do
+iconv -f gbk -t utf-8 "$file" -o "$file.tmp"
+mv -- "$file" "$file.bak"
+mv -- "$file.tmp" "$file"
+done

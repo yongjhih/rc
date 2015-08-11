@@ -3,3 +3,5 @@ vim/view/
 *.swp
 .*passwd
 .vim/.VimballRecord
+.irssi/
+.vim/

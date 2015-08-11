@@ -1,0 +1,281 @@
+<!-- chage: 41311 -->    
+
+
+
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="zh-tw">
+<meta http-equiv="Content-Type" content="text/html; charset=big5">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>員工出勤資料查詢</title>
+
+</head>
+
+
+<body>
+
+<form method="POST" action="DEFAULT.ASP">
+<center>
+<table width=100% cellpadding="0" cellspacing="0" height="112">
+  <tr>
+    <td height="21" width=100%>
+      <p align="center"><b><font color="#FF0000" size="6">員工出勤資料查詢</font></b>
+    <hr>
+    </td>
+  </tr>
+  <tr>
+    <td align="right" width="100%">
+
+      <p align="center" style="margin-top: 0; margin-bottom: 0">查詢區間：<select size="1" name="year1">
+       
+      <option value="2012" >2012</option> 
+       
+      <option value="2013" selected>2013</option> 
+       
+      <option value="2014" >2014</option> 
+       
+      <option value="2015" >2015</option> 
+       
+      <option value="2016" >2016</option> 
+       
+      <option value="2017" >2017</option> 
+       
+      </select>年<select size="1" name="month1"> 
+       
+      <option value="1" >1</option> 
+       
+      <option value="2" selected>2</option> 
+       
+      <option value="3" >3</option> 
+       
+      <option value="4" >4</option> 
+       
+      <option value="5" >5</option> 
+       
+      <option value="6" >6</option> 
+       
+      <option value="7" >7</option> 
+       
+      <option value="8" >8</option> 
+       
+      <option value="9" >9</option> 
+       
+      <option value="10" >10</option> 
+       
+      <option value="11" >11</option> 
+       
+      <option value="12" >12</option> 
+       
+      </select>月<select size="1" name="day1"> 
+       
+      <option value="1" >1</option> 
+       
+      <option value="2" >2</option> 
+       
+      <option value="3" >3</option> 
+       
+      <option value="4" >4</option> 
+       
+      <option value="5" >5</option> 
+       
+      <option value="6" selected>6</option> 
+       
+      <option value="7" >7</option> 
+       
+      <option value="8" >8</option> 
+       
+      <option value="9" >9</option> 
+       
+      <option value="10" >10</option> 
+       
+      <option value="11" >11</option> 
+       
+      <option value="12" >12</option> 
+       
+      <option value="13" >13</option> 
+       
+      <option value="14" >14</option> 
+       
+      <option value="15" >15</option> 
+       
+      <option value="16" >16</option> 
+       
+      <option value="17" >17</option> 
+       
+      <option value="18" >18</option> 
+       
+      <option value="19" >19</option> 
+       
+      <option value="20" >20</option> 
+       
+      <option value="21" >21</option> 
+       
+      <option value="22" >22</option> 
+       
+      <option value="23" >23</option> 
+       
+      <option value="24" >24</option> 
+       
+      <option value="25" >25</option> 
+       
+      <option value="26" >26</option> 
+       
+      <option value="27" >27</option> 
+       
+      <option value="28" >28</option> 
+       
+      <option value="29" >29</option> 
+       
+      <option value="30" >30</option> 
+       
+      <option value="31" >31</option> 
+       
+      </select>日至<select size="1" name="year2"> 
+        
+      <option value="2012" >2012</option> 
+        
+      <option value="2013" selected>2013</option> 
+        
+      <option value="2014" >2014</option> 
+        
+      <option value="2015" >2015</option> 
+        
+      <option value="2016" >2016</option> 
+        
+      <option value="2017" >2017</option> 
+       
+      </select>年<select size="1" name="month2"> 
+       
+      <option value='1' >1</option> 
+       
+      <option value='2' selected>2</option> 
+       
+      <option value='3' >3</option> 
+       
+      <option value='4' >4</option> 
+       
+      <option value='5' >5</option> 
+       
+      <option value='6' >6</option> 
+       
+      <option value='7' >7</option> 
+       
+      <option value='8' >8</option> 
+       
+      <option value='9' >9</option> 
+       
+      <option value='10' >10</option> 
+       
+      <option value='11' >11</option> 
+       
+      <option value='12' >12</option> 
+       
+      </select>月<select size="1" name="day2"> 
+       
+      <option value="1" >1</option>       
+       
+      <option value="2" >2</option>       
+       
+      <option value="3" >3</option>       
+       
+      <option value="4" >4</option>       
+       
+      <option value="5" >5</option>       
+       
+      <option value="6" selected>6</option>       
+       
+      <option value="7" >7</option>       
+       
+      <option value="8" >8</option>       
+       
+      <option value="9" >9</option>       
+       
+      <option value="10" >10</option>       
+       
+      <option value="11" >11</option>       
+       
+      <option value="12" >12</option>       
+       
+      <option value="13" >13</option>       
+       
+      <option value="14" >14</option>       
+       
+      <option value="15" >15</option>       
+       
+      <option value="16" >16</option>       
+       
+      <option value="17" >17</option>       
+       
+      <option value="18" >18</option>       
+       
+      <option value="19" >19</option>       
+       
+      <option value="20" >20</option>       
+       
+      <option value="21" >21</option>       
+       
+      <option value="22" >22</option>       
+       
+      <option value="23" >23</option>       
+       
+      <option value="24" >24</option>       
+       
+      <option value="25" >25</option>       
+       
+      <option value="26" >26</option>       
+       
+      <option value="27" >27</option>       
+       
+      <option value="28" >28</option>       
+       
+      <option value="29" >29</option>       
+       
+      <option value="30" >30</option>       
+       
+      <option value="31" >31</option>       
+        
+      </select>日</p>
+
+      <p align="center" style="margin-top: 0; margin-bottom: 0">異常碼：
+        <select size="1" name="CodeID">
+        
+          <option value='ALL' >全部</option>
+        
+          <option value='N' >正常</option>
+        
+          <option value='Y' >異常</option>
+        
+        </select>&nbsp;&nbsp;&nbsp;&nbsp; 查詢人員工號：
+        <input type="text" name="MVNO" size="10" value="" MAXLENGTH = "8">&nbsp;&nbsp;<p align="center" style="margin-top: 0; margin-bottom: 0">部門代號：
+        <input type="text" name="Dept" size="10" value="" >&nbsp;線別 :&nbsp;
+        <input type="text" name="cpf37" size="10" value="" >&nbsp;群組 :&nbsp;
+        <input type="text" name="tpe01" size="10" value="" >
+    </td>
+  </tr>
+  <tr>
+    <td>　</td>
+  </tr>
+  <tr>
+    <td height="29" width=100%>
+      <p align="center">
+      <input type="submit" value="OK" name="B1">&nbsp;
+      <input type="reset" value="Reset" name="B2">&nbsp;
+      <INPUT TYPE="button" VALUE="回到行政資料查詢" onClick="location.href='//geip/DPublic/OC/GA/2GAWEB/HR%20WEB/HR_Frame/人事薪資查詢系統/GBT1/default.asp'">
+      </p>
+    </td>
+  </tr>
+</table>
+</form>
+                                                                                                                                                                                                                                                                                          
+                                                                                                                                                                                                                                                                                        
+                                                                                                                                                                                                                                                                                        
+                                                                                                                                                                                                                                                                                        
+
+                                                                                                                   
+                                                                                                                  
+</body>                                                                                                                                                                                                                                     
+                                                                                                                                                                                                                                     
+</html>                                                                                                                                                                                                                                     
+                                                                                                                             

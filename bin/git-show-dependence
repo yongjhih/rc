@@ -146,6 +146,9 @@ def get_related_commits(args, files):
 
     bufs_2 = []
     for buf in bufs:
+        #if do_cmd("git log -1 --pretty='%H %ct' {0}".format(buf)) == '': continue
+        print buf
+        print do_cmd("git log -1 --pretty='%H %ct' {0}".format(buf))
         (sha1, comp_time) = do_cmd("git log -1 --pretty='%H %ct' {0}".format(buf)).splitlines()[0].split(' ')
         bufs_2.append((sha1, comp_time))
     bufs_2.sort(key = lambda tup: tup[1], reverse = True)

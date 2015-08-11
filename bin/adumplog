@@ -1,14 +1,19 @@
 #!/usr/bin/env bash
 
-adb pull /proc/config.gz
-adb logcat -d > "logcat.log" &
-adb shell dmesg > "dmesg.log"
-adb shell getprop > "getprop.log"
+adb -e pull /proc/config.gz
+adb -e logcat -v time -d > "logcat.log" &
+adb -e shell dmesg > "dmesg.log"
+adb -e shell getprop > "getprop.log"
 
-adb shell cat /proc/cpuinfo > "cpuinfo.log"
-adb shell cat /proc/meminfo > "meminfo.log"
-adb shell cat /proc/partitions > "partitions.log"
-adb shell df > "df.log"
-adb shell free > "free.log"
+adb -e shell cat /proc/cpuinfo > "cpuinfo.log"
+adb -e shell cat /proc/meminfo > "meminfo.log"
+adb -e shell cat /proc/partitions > "partitions.log"
+adb -e shell df > "df.log"
+adb -e shell free > "free.log"
+mkdir anr
+pushd anr
+adb -e pull /data/anr/
+popd
 
-#adb shell dumpstate > dumpstate.log
+adb -e shell dumpstate > dumpstate.log
+adb -e shell dumpsys > dumpsys.log

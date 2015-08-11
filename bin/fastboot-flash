@@ -2,10 +2,29 @@
 # Author: Andrew Chen <yongjhih@gmail.com>
 # CC, Creative Commons
 # 19 Feb 2011 15:02:05 +0800
-#for i in userdata.img boot.img; do fastboot flash "${i%.*}" "$i"; done
+# for i in userdata.img boot.img; do fastboot flash "${i%.*}" "$i"; done
+# fastboot-flash *.img
+# fastboot-flash <img ...>
 
-RET="0"
-NEED_SIG="1"
+if [ "`adb get-state`" = "device" ]; then
+	adb-root
+	sleep 1
+	adb shell setprop persist.sys.downloadmode 1
+	adb reboot bootloader
+fi
+
+while getopts 'sw' OPTION; do
+	case "$OPTION" in
+		s)
+			GEN_SIG="1"
+		;;
+		w)
+			ERASE="1"
+		;;
+	esac
+done
+shift $(($OPTIND - 1))
+
 if [ ! "$1" ]; then
 	cat <<EOF
 $0 <image.img ...>
@@ -14,13 +33,29 @@ EOF
 	exit 1
 fi
 
+EVEN_FLASH_FAILED="0"
+EVEN_FLASH_SUCCESSFUL="0"
 while [ "$1" ]; do
 	file="$1"
-	if [[ "${1%.img}" = "$1" && "${1%.img.*}" = "$1" ]]; then
-		echo "$1 is not valid image file name, skip."
+	if [ ! -f "$file" ]; then
+		echo "$file not found" >&2
 		shift
 		continue
 	fi
+	case "$file" in
+		*.img)
+			:
+		;;
+		*.img.*)
+			:
+		;;
+		*)
+			echo "$1 is not valid image file name, skip." >&2
+			shift
+			continue
+		;;
+	esac
+
 	#dirfile="${file%/*}"
 	dirfile="`dirname "$file"`"
 	#basefile="${file##*/}"
@@ -32,22 +67,36 @@ while [ "$1" ]; do
 	fi
 	signature="${filefullname}.sig"
 
-	if [ "$NEED_SIG" != "0" ]; then
-		if [ ! -f "$signature" ]; then
+	if [ ! -f "$signature" ]; then
+		if [ "$GEN_SIG" ]; then
+			digest "$file" "$signature"
+		else
 			echo digest "$file" "$signature"
 		fi
-		if [ -f "$signature" ]; then
-			fastboot signature "$signature"
-		fi
 	fi
-	fastboot flash "$partition" "$file"
-	ret="$?"
-	if [[ "$ret" != "0" && "$RET" = "0" ]]; then
-		RET="$ret"
+	if [ "$EVEN_FLASH_SUCCESSFUL" == "0" ]; then
+		#if ! adb devices | grep 'device'; then
+		#	adb reboot bootloader
+		#fi
+		#if ! fastboot devices | grep 'device'; then
+		#	adb wait-for-devce && adb reboot bootloader
+		#adb reboot bootloader
+		#fi
+		:
+	fi
+	if [ -f "$signature" ]; then
+		fastboot signature "$signature"
+	fi
+	if fastboot flash "$partition" "$file"; then
+		((EVEN_FLASH_SUCCESSFUL++))
+	else
+		((EVEN_FLASH_FAILED++))
 	fi
 
 	shift
 done
 
-#fastboot -w
-[ "$RET" = "0" ] && fastboot reboot
+[ "$ERASE" ] && fastboot -w
+echo EVEN_FLASH_FAILED $EVEN_FLASH_FAILED
+echo EVEN_FLASH_SUCCESSFUL $EVEN_FLASH_SUCCESSFUL
+[[ "$EVEN_FLASH_FAILED" == "0" && "$EVEN_FLASH_SUCCESSFUL" -gt "0" ]] && fastboot reboot

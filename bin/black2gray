@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+while [ "$1" ]; do
+    #convert "$1" -fuzz 50%  -fill grey -opaque black "$1"
+    convert "$1" -fuzz 20%  -fill '#26a69a' -opaque '#2a6ebb' "$1"
+    shift
+done

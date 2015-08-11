@@ -1,0 +1,155 @@
+#!/usr/bin/env python
+#-*- coding: utf-8 -*-
+
+import re
+import sys
+import fnmatch
+import os
+import pygal
+import datetime
+from datetime import time, tzinfo, timedelta
+
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
+def reduceList(l, size):
+	return [sum(j) / len(j) for j in (l[i:i+size] for i in xrange(len(l)) if i % size == 0)]
+
+def main():
+    user = sys.argv[1]
+    username = sys.argv[2]
+    with open("/tmp/empstate-%s.1.html" % user) as f:
+        empstate_lines = f.readlines()
+    f.close()
+
+    date = ''
+    from_time = ''
+    to_time = ''
+    empstates = []
+    dates = []
+    from_times = []
+    to_times = []
+    durations = []
+    isoweekdays = []
+    from_datetime_mins = []
+    to_datetime_mins = []
+    n_line = 0
+    for line in empstate_lines:
+        n_line = n_line + 1
+
+        if (not line.rstrip('\n')): continue
+        if (n_line == 1):
+            if (not date):
+                # <a href="apyt510.asp?emp_no=996031&cqs02=2012/2/6" >2012/2/6 (一)</a>
+                date = re.sub(r'.*cqs02\=(.*)".*', r'\1', line).rstrip('\n')
+            else: continue
+        if (n_line == 2): continue
+        if (n_line == 3):
+            if (not from_time):
+                if (not line.startswith(':')):
+                    from_time = line.rstrip('\n')
+            else: continue
+        if (n_line == 4):
+            if (not to_time):
+                if (not line.startswith(':')):
+                    to_time = line.rstrip('\n')
+            else: continue
+        if (n_line == 5):
+            if (not from_time):
+                if (not line.startswith(':')):
+                    from_time = line.rstrip('\n')
+            else: continue
+        if (n_line == 6):
+            if (not to_time):
+                if (not line.startswith(':')):
+                    to_time = line.rstrip('\n')
+            else: continue
+        if (n_line == 7): continue
+        if (n_line == 8): continue
+        if (n_line == 9): continue
+        if (n_line == 10): continue
+        if (n_line == 11): continue
+        if (n_line == 12):
+            if (from_time and to_time):
+                date_datetime = datetime.datetime.strptime(date, '%Y/%m/%d')
+                dateend_datetime = datetime.datetime.strptime(date + " " + "23:59" ,'%Y/%m/%d %H:%M')
+                from_datetime = datetime.datetime.strptime(date + " " + from_time, '%Y/%m/%d %H:%M')
+                to_datetime = datetime.datetime.strptime(date + " " + to_time, '%Y/%m/%d %H:%M')
+                if (datetime.date.isoweekday(date_datetime) != 6 and datetime.date.isoweekday(date_datetime) != 7):
+                    dates.append(date)
+                    from_times.append(from_time)
+                    to_times.append(to_time)
+                    from_datetime_mins.append((dateend_datetime - from_datetime).seconds / 60)
+                    to_datetime_mins.append((dateend_datetime - to_datetime).seconds / 60)
+
+                    duration = to_datetime - from_datetime
+                    durations.append(duration.seconds / 60)
+                    isoweekdays.append(datetime.date.isoweekday(date_datetime))
+
+                    empstate = {'date': date, 'from_time': from_time, 'to_time': to_time}
+                    empstates.append(empstate)
+
+            n_line = 0
+            date = ''
+            from_time = ''
+            to_time = ''
+            continue
+
+    #for empstate in empstates:
+    #    print empstate.items()
+
+    #print dates
+    #print from_times
+    #print to_times
+    #print durations
+
+    #print
+
+    # 1-5 平均時數
+
+    avg_min = sum(durations) / float(len(durations))
+    avg_hour = avg_min / 60
+    #print avg_hour
+
+    # 1-5 平均上班時間 from_datetime_mins
+    avg_from_time = timedelta(0, 0, 0, 0, (int)((60 * 24) - sum(from_datetime_mins) / float(len(from_datetime_mins))))
+    #print avg_from_time
+    # 1-5 平均下班時間 to_datetime_mins
+    avg_to_time = timedelta(0, 0, 0, 0, (int)((60 * 24) - sum(to_datetime_mins) / float(len(to_datetime_mins))))
+    #print avg_to_time
+
+    print "%s, %s, %s" % (avg_to_time, user, username)
+
+    # 無請假工作日工作時數報表
+    # 無請假工作日工作時數
+    # 無請假工作日工作上班時間線圖
+    # 無請假工作日工作下班時間線圖
+
+    # 工作日
+    # 非工作日
+    # 所有工時 = 工作日 + 非工作日
+    # 平均有效工時 = 所有工時 / 工作日
+
+    emp_chart = pygal.Bar()
+    emp_chart.title = 'Empstate avg(%s, %s)' % (str(avg_min), str(avg_hour))
+    #emp_chart.x_labels = map(str, dates)
+    emp_chart.x_labels = map(str, reduceList(isoweekdays, 10))
+    emp_chart.add('%s (%s)' % (user, unicode(username)), reduceList(durations, 10))
+    emp_chart.render_to_file("%s-%s-%s_emp_line_chart.svg" % (user, username, str(avg_hour)))
+
+    # 1-5 工作上班時間線圖
+    # 1-5 工作下班時間線圖
+    emp_line_chart = pygal.Line()
+    emp_line_chart.title = 'Empstate avg(%s, %s)' % (str(avg_from_time), str(avg_to_time))
+    #emp_chart.x_labels = map(str, dates)
+    emp_line_chart.x_labels = map(str, reduceList(isoweekdays, 10))
+    emp_line_chart.y_labels = map(str, range(60*24, 0))
+    emp_line_chart.add(unicode('上班'), reduceList(from_datetime_mins, 10))
+    emp_line_chart.add(unicode('下班'), reduceList(to_datetime_mins, 10))
+
+
+    emp_line_chart.render_to_file("%s-%s-%s_emp_line_from_to_chart.svg" % (user, username, str(avg_hour)))
+
+if __name__ == '__main__':
+    main()
+

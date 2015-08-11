@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+if [ ! "$1" ]; then
+	project_name="8x25_ics"
+fi
+find -type f | while read line; do
+	n=`basename "$line"`
+	case $n in
+		"."|"..")
+			continue;;
+	esac
+	echo "# {{{ $line"
+	locate "$n" | grep "$project_name" | grep "/$n\$" | grep -v -i "intermediates" | while read l; do
+		from="$l"
+		to="$line"
+		echo "#cp $from $to"
+	done
+	echo "# }}} $line"
+done

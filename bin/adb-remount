@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+adb-root && adb wait-for-device && adb remount
