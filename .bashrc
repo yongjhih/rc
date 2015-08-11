@@ -123,6 +123,7 @@ if [ -f "$HOME/bash_completion.d/git" ]; then
 	. "$HOME/bash_completion.d/git"
 fi
 
+export PATH=$PATH:$HOME/bin
 _colors() {
   local NO_COLOUR="\[\033[0m\]"
   local BLUE="\[\033[0;34m\]"
@@ -458,3 +459,7 @@ if [[ -d $USER_BASH_COMPLETION_DIR && -r $BASH_COMPLETION_DIR && \
     done
 fi
 unset i
+
+#export JAVA8_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
+#export JAVA7_HOME="/usr/lib/jvm/java-7-openjdk-amd64"
+#export JAVA_HOME="$JAVA8_HOME"
