@@ -226,7 +226,11 @@ setdown_proxy() {
 #export ANDROID_SRC="/home/andrew/workspace/android_src_froyo"
 #export ANDROID_SDK_TOOL="/home/andrew/sdk/android-sdk-linux_x86/tools"
 
+<<<<<<< HEAD
 export ANDROID_HOME="$HOME/adt-bundle-linux/sdk"
+=======
+export ANDROID_HOME="$HOME/tools/android/android-sdk"
+>>>>>>> update
 export ANDROID_SDK="$ANDROID_HOME"
 export ANDROID_NDK="$HOME/android-ndk"
 export PROGUARD_HOME="${ANDROID_HOME}/tools/proguard"
@@ -463,3 +467,5 @@ unset i
 #export JAVA8_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
 #export JAVA7_HOME="/usr/lib/jvm/java-7-openjdk-amd64"
 #export JAVA_HOME="$JAVA8_HOME"
+
+export PATH=$HOME/.local/bin:$PATH

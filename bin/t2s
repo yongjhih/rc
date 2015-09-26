@@ -23,6 +23,8 @@ case `basename $0` in
     auto_conv_enc=gb2312
     auto_conv_from_enc=utf8-tw
     auto_conv_to_enc=utf8-cn
+    iconv -f utf8 -t big5 | iconv -f big5 -t gb2312 | iconv -f gb2312 -t utf8
+    exit $?
 esac
 
 #while read line; do

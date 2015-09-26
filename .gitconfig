@@ -55,5 +55,5 @@
 	enabled = 0
 [gc]
 	auto = 0
-[http]
-	sslVerify = false
+#[http]
+#	sslVerify = false
