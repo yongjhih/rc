@@ -331,7 +331,7 @@ Plugin 'junegunn/vim-easy-align'
 Plugin 'jeetsukumaran/vim-buffergator'
 Plugin 'tfnico/vim-gradle'
 Plugin 'sealemar/vtl'
-Plugin 'Yggdroot/indentLine'
+"Plugin 'Yggdroot/indentLine'
 
 " non github repos
 "Bundle 'git://git.wincent.com/command-t.git'
