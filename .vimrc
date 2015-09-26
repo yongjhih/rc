@@ -73,8 +73,8 @@ let g:snip_end_tag = "»"
 " }}} Doxygen
 
 " indent line {{{
-set list
-set listchars=tab:\|\ ,eol:$,trail:_
+"set list
+"set listchars=tab:\|\ ,eol:$,trail:_
 " indent line }}}
 
 " fy {{{
@@ -307,7 +307,9 @@ Plugin 'SirVer/ultisnips'
 Plugin 'sjl/gundo.vim'
 "Plugin 'snipmate-snippets'
 "Plugin 'Lokaltog/vim-powerline'
-Plugin 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'} "/home/andrew/.local/lib/python3.4/site-packages/powerline/bindings/vim/
+"Plugin 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'} "/home/andrew/.local/lib/python3.4/site-packages/powerline/bindings/vim/
+Plugin 'bling/vim-airline'
+Plugin 'airblade/vim-gitgutter'
 "Plugin 'python.vim'
 "Plugin 'pyflakes.vim'
 "Plugin 'kchmck/vim-coffee-script'
@@ -449,3 +451,10 @@ let g:syntastic_java_checkers=['checkstyle']
 " }}}
 "nnoremap gt :bn<CR>
 "nnoremap gT :bp<CR>
+
+" airline powerline
+let g:airline#extensions#tabline#enabled = 1
+"let g:airline#extensions#tabline#left_sep = ' '
+"let g:airline#extensions#tabline#left_alt_sep = '|'
+
+let g:airline_powerline_fonts = 1
