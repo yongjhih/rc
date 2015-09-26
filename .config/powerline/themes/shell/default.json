@@ -49,6 +49,13 @@
 				"function": "powerline.segments.shell.last_pipe_status",
 				"priority": 10
 			},
+                        {
+                                "function": "powerline.segments.shell.cwd",
+                                "priority": 10,
+				"args": {
+					"use_path_separator": true
+				}
+                        },
 			{
 				"function": "powerline.segments.common.vcs.branch",
 				"priority": 40
