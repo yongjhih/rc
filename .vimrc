@@ -306,7 +306,8 @@ Plugin 'honza/vim-snippets'
 Plugin 'SirVer/ultisnips'
 Plugin 'sjl/gundo.vim'
 "Plugin 'snipmate-snippets'
-Plugin 'Lokaltog/vim-powerline'
+"Plugin 'Lokaltog/vim-powerline'
+Plugin 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'} "/home/andrew/.local/lib/python3.4/site-packages/powerline/bindings/vim/
 "Plugin 'python.vim'
 "Plugin 'pyflakes.vim'
 "Plugin 'kchmck/vim-coffee-script'
@@ -346,6 +347,7 @@ filetype plugin indent on     " required!
 " see :h vundle for more details or wiki for FAQ
 " NOTE: comments after Bundle command are not allowed..
 " }}}
+"
 let g:vundle_default_git_proto = 'https'
 " {{{ colorscheme
 "colorscheme devbox-dark-256
