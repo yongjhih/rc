@@ -24,6 +24,7 @@ set incsearch
 " 自動偵測編碼
 set fileencodings=utf-8,big5,gbk,cp936,iso-2022-jp,sjis,euc-jp,euc-kr,utf-bom,iso8859-1
 "set encoding=utf-8
+"scriptencoding utf-8
 "set termencoding=utf-8
 " 預設儲存編碼
 set fileencoding=utf-8
@@ -330,6 +331,7 @@ Plugin 'junegunn/vim-easy-align'
 Plugin 'jeetsukumaran/vim-buffergator'
 Plugin 'tfnico/vim-gradle'
 Plugin 'sealemar/vtl'
+Plugin 'Yggdroot/indentLine'
 
 " non github repos
 "Bundle 'git://git.wincent.com/command-t.git'
@@ -449,8 +451,11 @@ let g:buffergator_viewport_split_policy = 'R'
 " syntastic {{{
 let g:syntastic_java_checkers=['checkstyle']
 " }}}
-"nnoremap gt :bn<CR>
-"nnoremap gT :bp<CR>
+
+nnoremap gt :bn<CR>
+nnoremap gT :bp<CR>
+"nnoremap [b :bp<CR>
+"nnoremap ]b :bn<CR>
 
 " airline powerline
 let g:airline#extensions#tabline#enabled = 1
@@ -458,3 +463,14 @@ let g:airline#extensions#tabline#enabled = 1
 "let g:airline#extensions#tabline#left_alt_sep = '|'
 
 let g:airline_powerline_fonts = 1
+
+" indentLine {{{
+" | ¦ ┆ │
+" default
+"let g:indentLine_char = '¦'
+"let g:indentLine_char = '︙'
+" 3 v-dash
+"let g:indentLine_char = '┆'
+"let g:indentLine_char = '|'
+"let g:indentLine_char = '│'
+" }}}
