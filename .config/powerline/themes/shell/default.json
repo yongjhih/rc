@@ -26,6 +26,16 @@
 						}
 					},
 					{
+						"function": "powerline.segments.shell.jobnum",
+						"priority": 20
+					},
+					{
+						"function": "powerline.segments.shell.continuation",
+                                                "draw_hard_divider": false
+					}
+				],
+				"right": [
+					{
 						"function": "powerline.segments.common.time.date"
 					},
 					{
@@ -39,13 +49,7 @@
 					{
 						"function": "powerline.segments.common.vcs.branch",
 						"priority": 40
-					},
-					{
-						"function": "powerline.segments.shell.jobnum",
-						"priority": 20
 					}
-				],
-				"right": [
 				]
 			},
 			{
