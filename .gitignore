@@ -5,3 +5,4 @@ vim/view/
 .vim/.VimballRecord
 .irssi/
 .vim/
+*.orig

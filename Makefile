@@ -12,6 +12,8 @@ init:
 	ln -fs `pwd`/.gitconfig.d ~/.gitconfig.d
 	ln -fs `pwd`/.gitconfig ~/.gitconfig
 #	ln -fs `pwd`/sbin ~/sbin
+	ln -fs `pwd`/.config/fish/config.fish ~/.config/fish/config.fish
+	ln -fs `pwd`/.config/powerline ~/.config/powerline
 
 sync:
 	git pull
