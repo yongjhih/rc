@@ -7,6 +7,8 @@
 ## nulloy
 ## mixxx
 
+![](art/screenshot-mixxx.png)
+
 ## bash
 
 ![](art/screenshot-bash.png)
