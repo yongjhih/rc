@@ -2,8 +2,7 @@
 
 ## Deedbeef
 
-![](art/screenshot-deadbeef.png)
-![](art/screenshot-deadbeef-2.png)
+![](art/screenshot-deadbeef-3.png)
 
 ## nulloy
 ## mixxx
