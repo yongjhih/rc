@@ -135,15 +135,16 @@ playlist.column.03 "Artist / Album" "%a - %b" -1 192 0
 playlist.column.04 "♫" "" 1 50 0
 playlist.column.05 "Duration" "%l" -1 88 0
 playlist.current 0
-playlist.cursor.0 21
-playlist.cursor.1 15
+playlist.cursor.0 6
+playlist.cursor.1 0
 playlist.cursor.2 0
 playlist.group_by %a - [%y] %b
-playlist.scroll.0 362
+playlist.scroll.0 0
 playlist.scroll.1 0
 playlist.scroll.2 0
 playlist.scroll.cursorfollowplayback 1
 playlist.tab.00000 Default
+playlist.tab.00001 鋼琴-女人花.mp3
 prefwin.geometry.h 461
 prefwin.geometry.w 675
 prefwin.geometry.x 622
