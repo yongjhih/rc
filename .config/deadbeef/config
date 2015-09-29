@@ -105,17 +105,15 @@ playlist.column.01 "Artist / Album" "%a - %b" -1 358 0
 playlist.column.02 "Track No" "%n" -1 291 1
 playlist.column.03 "Title" "%t" -1 146 0
 playlist.column.04 "Duration" "%l" -1 124 0
-playlist.current 2
+playlist.current 1
 playlist.cursor.0 11
-playlist.cursor.1 20
+playlist.cursor.1 15
 playlist.cursor.2 0
-playlist.scroll.0 0
+playlist.scroll.0 160
 playlist.scroll.1 0
 playlist.scroll.2 0
 playlist.scroll.cursorfollowplayback 1
 playlist.tab.00000 Default
-playlist.tab.00001 New Playlist
-playlist.tab.00002 New Playlist (1)
 prefwin.geometry.h 461
 prefwin.geometry.w 675
 prefwin.geometry.x 622
