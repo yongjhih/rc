@@ -38,7 +38,7 @@ filechooser.lastdir file:///media/andrew/6836859C36856C3E/yjchen/Music/%E9%83%AD
 gtkui.color.bar_background 22579 20759 20759
 gtkui.color.bar_foreground 61680 33766 17990
 gtkui.eq.visible 0
-gtkui.layout.0.6.2 vbox expand="0 1" fill="0 1" homogeneous=0 {hbox expand="0 1 0" fill="1 1 1" homogeneous=0 {playtb {} seekbar {} volumebar {} } vsplitter pos=875 locked=0 {vsplitter pos=0 locked=0 {placeholder {} vsplitter pos=718 locked=0 {hsplitter pos=313 locked=0 {vsplitter pos=313 locked=0 {coverart {} vsplitter pos=164 locked=0 {selproperties {} filebrowser {} } } vsplitter pos=102 locked=0 {waveformz {} hsplitter pos=1307 locked=0 {tabbed_playlist hideheaders=0 {} vsplitter pos=469 locked=0 {infobar {} placeholder {} } } } } placeholder {} } } spectrogram {} } } 
+gtkui.layout.0.6.2 vbox expand="0 1" fill="0 1" homogeneous=0 {hbox expand="0 1 0" fill="1 1 1" homogeneous=0 {playtb {} seekbar {} volumebar {} } vsplitter pos=934 locked=0 {vsplitter pos=0 locked=0 {placeholder {} vsplitter pos=922 locked=0 {hsplitter pos=313 locked=0 {vsplitter pos=313 locked=0 {coverart {} vsplitter pos=241 locked=0 {selproperties {} filebrowser {} } } vsplitter pos=102 locked=0 {waveformz {} hsplitter pos=1307 locked=0 {tabbed_playlist hideheaders=0 {} vsplitter pos=808 locked=0 {infobar {} placeholder {} } } } } placeholder {} } } spectrogram {} } } 
 gtkui.mmb_delete_playlist 1
 gtkui.name_playlist_from_folder 1
 gtkui.override_bar_colors 0
@@ -134,8 +134,8 @@ playlist.column.02 "Title" "%t" -1 237 0
 playlist.column.03 "Artist / Album" "%a - %b" -1 192 0
 playlist.column.04 "♫" "" 1 50 0
 playlist.column.05 "Duration" "%l" -1 88 0
-playlist.current 1
-playlist.cursor.0 6
+playlist.current 0
+playlist.cursor.0 3
 playlist.cursor.1 0
 playlist.cursor.2 0
 playlist.group_by %a - [%y] %b
@@ -153,8 +153,8 @@ replaygain_mode 0
 replaygain_scale 1
 resume.paused 0
 resume.playlist 0
-resume.position 1.3467569
-resume.track 21
+resume.position 30.673690
+resume.track 11
 spectrogram.color.gradient_00 65535 0 0
 spectrogram.color.gradient_01 65535 32896 0
 spectrogram.color.gradient_02 65535 65535 0
@@ -205,7 +205,7 @@ waveform.shade_waveform 1
 waveform.soundcloud_style 1
 waveformz.bgcolor #eee
 waveformz.bgcolor_tooltip #222
-waveformz.buffer_db_scale 40.000000
+waveformz.buffer_db_scale 40
 waveformz.buffer_use_db 1
 waveformz.color_gradients 1
 waveformz.cursor_color #f00
@@ -214,8 +214,8 @@ waveformz.fgcolor_shade_played #fb8
 waveformz.fgcolor_tooltip #fff
 waveformz.fgcolor_wave_normal #555
 waveformz.fgcolor_wave_played #f40
-waveformz.margin 2.000000
-waveformz.refresh_rate 10.000000
+waveformz.margin 2
+waveformz.refresh_rate 10
 waveformz.use_caching 1
 waveformz.wave_butterfly 0
 waveformz.waveform_rescale 1
