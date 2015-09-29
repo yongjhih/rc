@@ -160,7 +160,7 @@ spectrogram.color.gradient_02 65535 65535 0
 spectrogram.color.gradient_03 32896 65535 30840
 spectrogram.color.gradient_04 0 38036 41120
 spectrogram.color.gradient_05 0 8224 25700
-spectrogram.color.gradient_06 0 0 0
+spectrogram.color.gradient_06 65535 65535 65535
 spectrogram.db_range 70
 spectrogram.log_scale 1
 spectrogram.num_colors 7
