@@ -10,11 +10,11 @@ converter.overwrite_action 0
 converter.preserve_folder_structure 0
 converter.write_to_source_folder 0
 deadbeef_version 0.6.2
-filechooser.lastdir file:///media/andrew/6836859C36856C3E/yjchen/Music/Olivia%20Ong%20-%20%E5%A4%8F%E5%A4%9C%E6%99%9A%E9%A2%A8
+filechooser.lastdir file:///media/andrew/6836859C36856C3E/yjchen/Music/%E9%83%AD%E9%9D%99.-.%5B%E4%BD%A0.%E6%9C%8B%E5%8F%8B%5D/%E9%83%AD%E9%9D%99.-.%5B%E4%BD%A0.%E6%9C%8B%E5%8F%8B%5Dmp3v192
 gtkui.color.bar_background 22579 20759 20759
 gtkui.color.bar_foreground 61680 33766 17990
 gtkui.eq.visible 1
-gtkui.layout.0.6.2 vbox expand="0 1" fill="1 1" homogeneous=0 {hbox expand="0 1 0" fill="1 1 1" homogeneous=0 {playtb {} seekbar {} volumebar {} } vsplitter pos=698 locked=0 {vsplitter pos=0 locked=0 {placeholder {} vsplitter pos=686 locked=0 {hsplitter pos=325 locked=0 {infobar {} vsplitter pos=80 locked=0 {waveform_seekbar {} vsplitter pos=541 locked=0 {tabbed_playlist hideheaders=0 {} spectrum {} } } } vsplitter pos=1 locked=0 {placeholder {} placeholder {} } } } spectrogram {} } } 
+gtkui.layout.0.6.2 vbox expand="0 1" fill="1 1" homogeneous=0 {hbox expand="0 1 0" fill="1 1 1" homogeneous=0 {playtb {} seekbar {} volumebar {} } vsplitter pos=732 locked=0 {vsplitter pos=0 locked=0 {placeholder {} vsplitter pos=697 locked=0 {hsplitter pos=307 locked=0 {vsplitter pos=302 locked=0 {coverart {} selproperties {} } vsplitter pos=80 locked=0 {waveform_seekbar {} hsplitter pos=771 locked=0 {tabbed_playlist hideheaders=0 {} infobar {} } } } vsplitter pos=9 locked=0 {placeholder {} placeholder {} } } } spectrogram {} } } 
 gtkui.mmb_delete_playlist 1
 gtkui.name_playlist_from_folder 1
 gtkui.override_bar_colors 0
@@ -105,14 +105,17 @@ playlist.column.01 "Artist / Album" "%a - %b" -1 358 0
 playlist.column.02 "Track No" "%n" -1 291 1
 playlist.column.03 "Title" "%t" -1 146 0
 playlist.column.04 "Duration" "%l" -1 124 0
-playlist.current 1
-playlist.cursor.0 3
-playlist.cursor.1 11
+playlist.current 2
+playlist.cursor.0 11
+playlist.cursor.1 20
+playlist.cursor.2 0
 playlist.scroll.0 0
 playlist.scroll.1 0
+playlist.scroll.2 0
 playlist.scroll.cursorfollowplayback 1
 playlist.tab.00000 Default
 playlist.tab.00001 New Playlist
+playlist.tab.00002 New Playlist (1)
 prefwin.geometry.h 461
 prefwin.geometry.w 675
 prefwin.geometry.x 622
