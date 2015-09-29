@@ -152,6 +152,7 @@ _colors
 
 EDITOR="vi"
 VISUAL="$EDITOR"
+alias vi=nvim
 
 function mkcd () {
   mkdir -p "$@" && eval cd "\"\$$#\""
@@ -281,9 +282,9 @@ git-forall()
 #export PATH=$PATH:$JAVA_HOME/bin
 #export CLASSPATH=$JAVA_HOME/lib
 #export JRE_HOME=$JAVA_HOME/jre
-export JAVA8_HOME="/usr/lib/jvm/java-8-oracle"
-export JAVA7_HOME="/usr/lib/jvm/java-7-oracle"
-export JAVA_HOME="$JAVA8_HOME"
+#export JAVA8_HOME="/usr/lib/jvm/java-8-oracle"
+#export JAVA7_HOME="/usr/lib/jvm/java-7-oracle"
+#export JAVA_HOME="$JAVA8_HOME"
 
 bd()
 {
@@ -460,8 +461,8 @@ if [[ -d $USER_BASH_COMPLETION_DIR && -r $BASH_COMPLETION_DIR && \
 fi
 unset i
 
-#export JAVA8_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
-#export JAVA7_HOME="/usr/lib/jvm/java-7-openjdk-amd64"
-#export JAVA_HOME="$JAVA8_HOME"
+export JAVA8_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
+export JAVA7_HOME="/usr/lib/jvm/java-7-openjdk-amd64"
+export JAVA_HOME="$JAVA8_HOME"
 
 export PATH=$HOME/.local/bin:$PATH

@@ -74,8 +74,8 @@ let g:snip_end_tag = "»"
 " }}} Doxygen
 
 " indent line {{{
-"set list
-"set listchars=tab:\|\ ,eol:$,trail:_
+set list
+set listchars=tab:\|\ ,eol:$,trail:_
 " indent line }}}
 
 " fy {{{
@@ -304,7 +304,7 @@ Plugin 'Align'
 "Plugin 'othree/vim-autocomplpop'
 "Plugin 'Valloric/YouCompleteMe'
 Plugin 'honza/vim-snippets'
-Plugin 'SirVer/ultisnips'
+"Plugin 'SirVer/ultisnips'
 Plugin 'sjl/gundo.vim'
 "Plugin 'snipmate-snippets'
 "Plugin 'Lokaltog/vim-powerline'
@@ -433,7 +433,7 @@ autocmd InsertLeave * set nopaste
 " }}}
 
 " UltiSnips configs {{{
-let g:UltiSnipsExpandTrigger="<c-j>"
+"let g:UltiSnipsExpandTrigger="<c-j>"
 " }}}
 
 " Gundo configs {{{
@@ -474,3 +474,7 @@ let g:airline_powerline_fonts = 1
 "let g:indentLine_char = '|'
 "let g:indentLine_char = '│'
 " }}}
+
+set ttimeout
+set ttimeoutlen=0
+set matchtime=0

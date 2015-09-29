@@ -1,12 +1,23 @@
-#!/usr/bin/env bash
+#!/usr/bin/env nodejs
 
-#php -r "echo urldecode('$@'.\"$1\n\");" | iconv -f big5 -t utf8
-if [ "$1" ]; then
-	line="$1"
-	php -r "echo urlencode(\"$line\");"
-else
-	while read line; do
-		php -r "echo urlencode(\"$line\");"
-	done
-fi
+// php -r "echo urldecode('$@'.\"$1\n\");" | iconv -f big5 -t utf8
+// if [ "$1" ]; then
+// 	line="$1"
+// 	php -r "echo urlencode(\"$line\");"
+// else
+// 	while read line; do
+// 		php -r "echo urlencode(\"$line\");"
+// 	done
+// fi
+//
 
+var readline = require('readline');
+var rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+  terminal: false
+});
+
+rl.on('line', function(line){
+    console.log(encodeURIComponent(line));
+})

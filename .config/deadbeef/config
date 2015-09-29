@@ -1,0 +1,162 @@
+cli_add_playlist_name Default
+cli_add_to_specific_playlist 1
+converter.dsp_preset -1
+converter.encoder_preset 0
+converter.lastdir file:///home/andrew/Music/convert
+converter.output_file 2
+converter.output_folder /home/andrew/Music/convert
+converter.output_format 0
+converter.overwrite_action 0
+converter.preserve_folder_structure 0
+converter.write_to_source_folder 0
+deadbeef_version 0.6.2
+filechooser.lastdir file:///media/andrew/6836859C36856C3E/yjchen/Music/Olivia%20Ong%20-%20%E5%A4%8F%E5%A4%9C%E6%99%9A%E9%A2%A8
+gtkui.color.bar_background 22579 20759 20759
+gtkui.color.bar_foreground 61680 33766 17990
+gtkui.eq.visible 1
+gtkui.layout.0.6.2 vbox expand="0 1" fill="1 1" homogeneous=0 {hbox expand="0 1 0" fill="1 1 1" homogeneous=0 {playtb {} seekbar {} volumebar {} } vsplitter pos=654 locked=0 {vsplitter pos=7 locked=0 {placeholder {} vsplitter pos=528 locked=0 {hsplitter pos=325 locked=0 {infobar {} tabbed_playlist hideheaders=0 {} } vsplitter pos=13 locked=0 {placeholder {} spectrum {} } } } waveform_seekbar {} } } 
+gtkui.mmb_delete_playlist 1
+gtkui.name_playlist_from_folder 1
+gtkui.override_bar_colors 0
+gtkui.override_listview_colors 0
+gtkui.override_tabstrip_colors 0
+gtkui.statusbar.visible 1
+gtkui.tabscroll 0
+gtkui.titlebar_playing %a - %t - DeaDBeeF-%V
+gtkui.titlebar_stopped DeaDBeeF-%V
+gui_plugin GTK2
+hotkey.key01 "Ctrl f" 0 0 find
+hotkey.key02 "Ctrl o" 0 0 open_files
+hotkey.key03 "Ctrl q" 0 0 quit
+hotkey.key04 "Ctrl n" 0 0 new_playlist
+hotkey.key05 "Ctrl a" 0 0 select_all
+hotkey.key06 "Escape" 0 0 deselect_all
+hotkey.key07 "Ctrl m" 0 0 toggle_stop_after_current
+hotkey.key08 "Ctrl j" 0 0 jump_to_current_track
+hotkey.key09 "F1" 0 0 help
+hotkey.key10 "Delete" 1 0 remove_from_playlist
+hotkey.key11 "Ctrl w" 0 0 remove_current_playlist
+hotkey.key14 "Return" 0 0 play
+hotkey.key15 "Ctrl p" 0 0 toggle_pause
+hotkey.key16 "Alt 1" 0 0 playlist1
+hotkey.key17 "Alt 2" 0 0 playlist2
+hotkey.key18 "Alt 3" 0 0 playlist3
+hotkey.key19 "Alt 4" 0 0 playlist4
+hotkey.key20 "Alt 5" 0 0 playlist5
+hotkey.key21 "Alt 6" 0 0 playlist6
+hotkey.key22 "Alt 7" 0 0 playlist7
+hotkey.key23 "Alt 8" 0 0 playlist8
+hotkey.key24 "Alt 9" 0 0 playlist9
+hotkey.key25 "Alt 0" 0 0 playlist10
+hotkey.key26 z 0 0 prev
+hotkey.key27 x 0 0 play
+hotkey.key28 c 0 0 toggle_pause
+hotkey.key29 v 0 0 stop
+hotkey.key30 b 0 0 next
+hotkey.key31 n 0 0 playback_random
+hotkey.key32 "Ctrl k" 0 0 toggle_stop_after_album
+hotkeys_created 1
+ignore_archives 1
+junk.enable_cp1251_detection 1
+mainwin.geometry.h 1104
+mainwin.geometry.maximized 1
+mainwin.geometry.w 1855
+mainwin.geometry.x 65
+mainwin.geometry.y 40
+musical_spectrum.alignment 0
+musical_spectrum.bar_delay 0
+musical_spectrum.bar_falloff -1
+musical_spectrum.bar_w 0
+musical_spectrum.color.background 8738 8738 8738
+musical_spectrum.color.gradient_00 65535 0 0
+musical_spectrum.color.gradient_01 65535 32896 0
+musical_spectrum.color.gradient_02 65535 65535 0
+musical_spectrum.color.gradient_03 32896 65535 30840
+musical_spectrum.color.gradient_04 0 38036 41120
+musical_spectrum.color.gradient_05 0 8224 25700
+musical_spectrum.color.hgrid 26214 26214 26214
+musical_spectrum.color.octave_grid 26214 26214 26214
+musical_spectrum.color.vgrid 0 0 0
+musical_spectrum.db_range 70
+musical_spectrum.display_octaves_on_hover 0
+musical_spectrum.draw_style 0
+musical_spectrum.enable_bar_mode 0
+musical_spectrum.enable_hgrid 1
+musical_spectrum.enable_octave_grid 0
+musical_spectrum.enable_vgrid 1
+musical_spectrum.fft_size 8192
+musical_spectrum.fill_spectrum 1
+musical_spectrum.gaps 1
+musical_spectrum.gradient_orientation 0
+musical_spectrum.num_bars 132
+musical_spectrum.num_colors 6
+musical_spectrum.peak_delay 500
+musical_spectrum.peak_falloff 90
+musical_spectrum.refresh_interval 25
+musical_spectrum.window 0
+network.http_user_agent deadbeef
+network.proxy.port 8080
+network.proxy.type HTTP
+playback.loop 0
+playback.order 0
+playback.volume -0.714285
+playlist.column.00 "♫" "" 1 50 0
+playlist.column.01 "Artist / Album" "%a - %b" -1 358 0
+playlist.column.02 "Track No" "%n" -1 291 1
+playlist.column.03 "Title" "%t" -1 146 0
+playlist.column.04 "Duration" "%l" -1 124 0
+playlist.current 1
+playlist.cursor.0 1
+playlist.cursor.1 1
+playlist.scroll.0 0
+playlist.scroll.1 0
+playlist.scroll.cursorfollowplayback 1
+playlist.tab.00000 Default
+playlist.tab.00001 New Playlist
+prefwin.geometry.h 461
+prefwin.geometry.w 675
+prefwin.geometry.x 622
+prefwin.geometry.y 309
+replaygain_mode 0
+replaygain_scale 1
+resume.paused 0
+resume.playlist 1
+resume.position 15.487771
+resume.track 1
+streamer.8_to_16 1
+trkproperties.geometry.h 400
+trkproperties.geometry.w 400
+trkproperties.geometry.x 192
+trkproperties.geometry.y 124
+waveform.bg_alpha 65535
+waveform.bg_color_b 50000
+waveform.bg_color_g 50000
+waveform.bg_color_r 50000
+waveform.border_width 1
+waveform.cache_enabled 1
+waveform.cursor_width 3
+waveform.display_rms 1
+waveform.display_ruler 0
+waveform.fg_alpha 65535
+waveform.fg_color_b 20000
+waveform.fg_color_g 20000
+waveform.fg_color_r 20000
+waveform.fg_rms_alpha 65535
+waveform.fg_rms_color_b 5000
+waveform.fg_rms_color_g 5000
+waveform.fg_rms_color_r 5000
+waveform.fill_waveform 1
+waveform.font_size 18
+waveform.log_enabled 0
+waveform.max_file_length 180
+waveform.mix_to_mono 0
+waveform.num_samples 2048
+waveform.pb_alpha 20000
+waveform.pb_color_b 0
+waveform.pb_color_g 65535
+waveform.pb_color_r 0
+waveform.refresh_interval 33
+waveform.render_method 2
+waveform.scroll_enabled 1
+waveform.shade_waveform 0
+waveform.soundcloud_style 0
