@@ -134,7 +134,7 @@ playlist.column.02 "Title" "%t" -1 237 0
 playlist.column.03 "Artist / Album" "%a - %b" -1 192 0
 playlist.column.04 "♫" "" 1 50 0
 playlist.column.05 "Duration" "%l" -1 88 0
-playlist.current 0
+playlist.current 1
 playlist.cursor.0 6
 playlist.cursor.1 0
 playlist.cursor.2 0
