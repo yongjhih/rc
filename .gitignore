@@ -6,3 +6,5 @@ vim/view/
 .irssi/
 .vim/
 *.orig
+
+.config/deadbeef/playlists/

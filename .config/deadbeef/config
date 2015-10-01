@@ -134,14 +134,14 @@ playlist.column.02 "Title" "%t" -1 237 0
 playlist.column.03 "Artist / Album" "%a - %b" -1 192 0
 playlist.column.04 "♫" "" 1 50 0
 playlist.column.05 "Duration" "%l" -1 88 0
-playlist.current 2
-playlist.cursor.0 24
+playlist.current 0
+playlist.cursor.0 7
 playlist.cursor.1 0
-playlist.cursor.2 0
+playlist.cursor.2 54
 playlist.group_by %a - [%y] %b
 playlist.scroll.0 0
 playlist.scroll.1 0
-playlist.scroll.2 0
+playlist.scroll.2 1080
 playlist.scroll.cursorfollowplayback 1
 playlist.tab.00000 Default
 playlist.tab.00001 鋼琴-女人花.mp3
@@ -153,9 +153,9 @@ prefwin.geometry.y 309
 replaygain_mode 0
 replaygain_scale 1
 resume.paused 0
-resume.playlist 2
-resume.position -1.000000
-resume.track -1
+resume.playlist 0
+resume.position 19.876344
+resume.track 7
 spectrogram.color.gradient_00 65535 0 0
 spectrogram.color.gradient_01 65535 32896 0
 spectrogram.color.gradient_02 65535 65535 0
