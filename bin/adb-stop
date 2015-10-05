@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+package=`adb-pm-package "$1"`
+if [ "$package" ]; then
+    cmd="adb shell am force-stop ${package}"
+    echo "$cmd"
+    $cmd
+else
+    echo "$1 not found"
+    exit 1
+fi
