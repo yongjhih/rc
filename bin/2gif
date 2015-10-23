@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+ffmpeg -i "$1" "${1%.*}".gif

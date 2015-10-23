@@ -478,3 +478,9 @@ let g:airline_powerline_fonts = 1
 set ttimeout
 set ttimeoutlen=0
 set matchtime=0
+
+" vim-jsx {{{
+Plugin 'mxw/vim-jsx'
+let g:jsx_ext_required = 0
+" }}}
+let g:syntastic_javascript_checkers = ['eslint']

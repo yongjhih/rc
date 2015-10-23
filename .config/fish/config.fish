@@ -84,7 +84,7 @@ function fish_prompt
     # Top
     echo -n "⋊>" $user_style$USER$normal@$host_style$__fish_prompt_hostname$normal:$bold$blue(prompt_pwd)$normal
     echo -n [$green$_date $cyan$_time$normal]
-    __fish_git_prompt
+    #__fish_git_prompt
 
     echo
 

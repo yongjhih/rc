@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+read -p 'Yo: ' yo
+[ "$yo" = "f/AWihxC903fpog/1p1kIoB2jw1+q3Pi" ] && echo "yo"
