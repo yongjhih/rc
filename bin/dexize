@@ -1,52 +1,26 @@
-#!/usr/bin/env ruby
+#!/usr/bin/env bash
 
-class CountAndroidMethods
-  def count(path)
-    full_folder_path = File.expand_path(path)
-    total_count = 0
+tmp_dex="/tmp/dexize.dex"
 
-    # Traverse the folder
-    Dir.entries(full_folder_path).each {|file|
+dexize_for_jar() {
+    "${ANDROID_HOME}/build-tools/20.0.0/dx" --dex --output="$tmp_dex" "$1" > /dev/null 2>&1
 
-      # Attempt to read only jars
-      if file.end_with?('jar')
-        # Count methods in dex
-        count = count_methods_in_jar(full_folder_path, file)
+    count=`cat "$tmp_dex" | head -c 92 | tail -c 4 | hexdump -e '1/4 "%d"'`
+    echo "$count"
+}
 
-        # Accumulate count
-        total_count = total_count + count
+while [ "$1" ]; do
+    if [ -d "$1" ]; then
+        for jar in "${1}"/*; do
+            count=`dexize_for_jar "$jar"`
+            echo -e "${count}\t${jar}"
+        done
+    elif [ -f "$1" ]; then
+        count=`dexize_for_jar "$1"`
+        echo -e "${count}\t${jar}"
+    fi
 
-        # Print out count
-        puts "#{count}: \"#{file}\""
-      end
-    }
+    shift
+done
 
-    # Print out total count
-    puts "Total of #{total_count} methods"
-  end
-
-  def count_methods_in_jar(full_folder_path, jar_file_name)
-    temp_dex_path = full_folder_path + '/temp.dex'
-    jar_path = full_folder_path + '/' + jar_file_name
-
-    # Create a temp dex file
-    `${ANDROID_SDK}/build-tools/20.0.0/dx --dex --output="#{temp_dex_path}" "#{jar_path}"`
-
-    # Count methods in dex
-    count = `cat "#{temp_dex_path}" | head -c 92 | tail -c 4 | hexdump -e '1/4 "%d"'`
-
-    # Delete temp dex file
-    File.delete(temp_dex_path)
-
-    # Return int
-    count.to_i
-  end
-end
-
-# Input check
-if ARGV.empty? || ARGV.size > 1
-  puts 'usage: ./count_android_methods.rb [jar folder path]'
-else
-  counter = CountAndroidMethods.new
-  counter.count(ARGV.first)
-end
+rm "$tmp_dex"
