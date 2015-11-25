@@ -2,6 +2,23 @@
 
 # ref. https://gist.github.com/JakeWharton/6002797
 # TODO mktmp
+
+usage() {
+    cat << EOF
+USAGE
+
+    dexize ./build/outputs/apk/app-debug.apk
+    dexize ./build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/jars/classes.jar
+
+SYNTAX
+
+    dexize {jar...}
+    dexize {apk...}
+    dexize {folder}
+
+EOF
+}
+
 tmp_dex="/tmp/dexize.dex"
 
 jar2dex() {
@@ -11,6 +28,7 @@ jar2dex() {
 dexize4jar() {
     jar2dex "$1" "$tmp_dex"
     dexize4dex "$tmp_dex"
+    rm "$tmp_dex" > /dev/null 2>&1
 }
 
 dexizedump4dex() {
@@ -42,6 +60,11 @@ dexize4apk() {
     dexize4dex classes.dex
 }
 
+if [ ! "$1" ]; then
+    usage
+    exit 1
+fi
+
 while [ "$1" ]; do
     if [ -d "$1" ]; then
         for jar in "${1}"/*; do
@@ -62,5 +85,3 @@ while [ "$1" ]; do
 
     shift
 done
-
-rm "$tmp_dex" > /dev/null 2>&1
