@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
 # ref. https://gist.github.com/JakeWharton/6002797
-# TODO mktmp
-
 usage() {
     cat << EOF
 USAGE
@@ -18,13 +16,20 @@ SYNTAX
 
 EXAMPLE
 
-    find build/intermediates/exploded-aar -name '*.jar' | while read line ; do dexize "${line%/*.jar}" ;done | tee /tmp/dex-count.txt
+    find build/intermediates/exploded-aar -name '*.jar' | while read line ; do dexize "\${line%/*.jar}" ;done | tee /tmp/dex-count.txt
     sort -n /tmp/dex-count.txt > /tmp/dex-count-sorted.txt
 
 EOF
 }
 
-tmp_dex="/tmp/dexize.dex"
+if [ ! "$1" ]; then
+    usage
+    exit 1
+fi
+
+tmp=$(mktemp -d)
+
+tmp_dex="${tmp}/dexize.dex"
 
 jar2dex() {
     "${ANDROID_HOME}/build-tools/20.0.0/dx" --dex --output="$2" "$1" > /dev/null 2>&1
@@ -47,28 +52,37 @@ dexize4dex() {
 }
 
 dexize4dex-baksmali() {
-    rm -fr /tmp/baksmali.d
-    mkdir /tmp/baksmali.d
-    baksmali "$1" -o /tmp/baksmali.d > /dev/null 2>&1
-    echo $(find /tmp/baksmali.d -type f -exec grep "\.method" '{}' \; | wc -l | tr -d ' ')
-    rm -fr /tmp/baksmali.d
+    rm -fr "${tmp}/baksmali.d"
+    mkdir "${tmp}/baksmali.d"
+    baksmali "$1" -o "${tmp}/baksmali.d" > /dev/null 2>&1
+    echo $(find "${tmp}/baksmali.d" -type f -exec grep "\.method" '{}' \; | wc -l | tr -d ' ')
+
+    rm -fr "${tmp}/baksmali.d"
+}
+
+dexizedump4apk-baksmali() {
+    tmp_baksmali="${tmp}/baksmali.d"
+    baksmali "$1" -o "$tmp_baksmali" > /dev/null 2>&1
+    for pkg in `find "$tmp_baksmali"/* -type d`; do
+        smali "$pkg" -o "${tmp}/classes.dex" > /dev/null 2>&1
+        count=$(dexize4dex "${tmp}/classes.dex")
+        name=$(echo ${pkg:(${#tmp_baksmali} + 1)} | tr '/' '.')
+        echo -e "$count\t$name"
+    done
+
+    rm -fr "$tmp_baksmali"
 }
 
 dexizedump4apk() {
-    unzip -q "$1" classes.dex
-    dexizedump4dex classes.dex
+    unzip -q "$1" classes.dex -d "$tmp"
+    dexizedump4dex "${tmp}/classes.dex"
 }
 
 dexize4apk() {
-    #unzip -p "$1" classes.dex
-    unzip -q "$1" classes.dex
-    dexize4dex classes.dex
+    unzip -q "$1" classes.dex -d "$tmp"
+    #dexize4dex "${tmp}/classes.dex"
+    dexize4dex-baksmali "${tmp}/classes.dex"
 }
-
-if [ ! "$1" ]; then
-    usage
-    exit 1
-fi
 
 while [ "$1" ]; do
     if [ -d "$1" ]; then
@@ -84,6 +98,7 @@ while [ "$1" ]; do
                 ;;
             *.apk)
                 dexize4apk "$1"
+                #dexizedump4apk-baksmali "$1"
                 ;;
         esac
     fi
