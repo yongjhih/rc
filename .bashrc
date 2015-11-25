@@ -467,3 +467,6 @@ export JAVA_HOME="$JAVA8_HOME"
 
 export PATH=$HOME/.local/bin:$PATH
 #export NODE_PATH=/usr/local/lib/node_modules
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"

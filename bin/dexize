@@ -1,26 +1,60 @@
 #!/usr/bin/env bash
 
+# ref. https://gist.github.com/JakeWharton/6002797
+# TODO mktmp
 tmp_dex="/tmp/dexize.dex"
 
-dexize_for_jar() {
+dexize4jar() {
     "${ANDROID_HOME}/build-tools/20.0.0/dx" --dex --output="$tmp_dex" "$1" > /dev/null 2>&1
 
     count=`cat "$tmp_dex" | head -c 92 | tail -c 4 | hexdump -e '1/4 "%d"'`
     echo "$count"
 }
 
+dexizedump4dex() {
+    dexdump="${ANDROID_HOME}/build-tools/20.0.0/dexdump"
+    "$dexdump" -f "$1" | grep \(in | awk '{print $4}'|awk -F/ '{print $1"."$2"."$3;}' | sort | uniq -c | sort
+}
+
+dexize4dex() {
+    rm -fr /tmp/baksmali.d
+    mkdir /tmp/baksmali.d
+    baksmali "$1" -o /tmp/baksmali.d > /dev/null 2>&1
+    echo $(find /tmp/baksmali.d -type f -exec grep "\.method" '{}' \; | wc -l | tr -d ' ')
+    rm -fr /tmp/baksmali.d
+}
+
+dexizedump4apk() {
+    unzip -q "$1" classes.dex
+    dexizedump4dex classes.dex
+}
+
+dexize4apk() {
+    dexdump="${ANDROID_HOME}/build-tools/20.0.0/dexdump"
+    #unzip -p "$1" classes.dex
+    unzip -q "$1" classes.dex
+    dexize4dex classes.dex
+}
+
 while [ "$1" ]; do
     if [ -d "$1" ]; then
         for jar in "${1}"/*; do
-            count=`dexize_for_jar "$jar"`
+            count=`dexize4jar "$jar"`
             echo -e "${count}\t${jar}"
         done
     elif [ -f "$1" ]; then
-        count=`dexize_for_jar "$1"`
-        echo -e "${count}\t${jar}"
+        case "$1" in
+            *.jar)
+                count=`dexize4jar "$1"`
+                echo -e "${count}\t${jar}"
+                ;;
+            *.apk)
+                dexize4apk "$1"
+                ;;
+        esac
     fi
 
     shift
 done
 
-rm "$tmp_dex"
+rm "$tmp_dex" > /dev/null 2>&1
