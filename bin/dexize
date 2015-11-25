@@ -75,7 +75,7 @@ while [ "$1" ]; do
         case "$1" in
             *.jar)
                 count=`dexize4jar "$1"`
-                echo -e "${count}\t${jar}"
+                echo -e "${count}\t${1}"
                 ;;
             *.apk)
                 dexize4apk "$1"
