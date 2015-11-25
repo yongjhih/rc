@@ -16,6 +16,11 @@ SYNTAX
     dexize {apk..}
     dexize {folder..}
 
+EXAMPLE
+
+    find build/intermediates/exploded-aar -name '*.jar' | while read line ; do dexize "${line%/*.jar}" ;done | tee /tmp/dex-count.txt
+    sort -n /tmp/dex-count.txt > /tmp/dex-count-sorted.txt
+
 EOF
 }
 
