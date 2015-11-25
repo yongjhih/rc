@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 
 #php -r "echo urldecode('$@'.\"$1\n\");" | iconv -f big5 -t utf8
-if [ "$1" ]; then
-	line="$1"
-	php -r "echo urldecode(\"$line\n\");" | iconv -f big5 -t utf8
-else
-	while read line; do
-		php -r "echo urldecode(\"$line\n\");" | iconv -f big5 -t utf8
-	done
-fi
+#if [ "$1" ]; then
+	#line="$1"
+	#php -r "echo urldecode(\"$line\n\");" | iconv -f big5 -t utf8
+#else
+	#while read line; do
+		#php -r "echo urldecode(\"$line\n\");" | iconv -f big5 -t utf8
+	#done
+#fi
 
+sed "s@+@ @g;s@%@\\\\x@g" | xargs -0 printf "%b"
