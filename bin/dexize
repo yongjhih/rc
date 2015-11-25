@@ -4,11 +4,13 @@
 # TODO mktmp
 tmp_dex="/tmp/dexize.dex"
 
-dexize4jar() {
-    "${ANDROID_HOME}/build-tools/20.0.0/dx" --dex --output="$tmp_dex" "$1" > /dev/null 2>&1
+jar2dex() {
+    "${ANDROID_HOME}/build-tools/20.0.0/dx" --dex --output="$2" "$1" > /dev/null 2>&1
+}
 
-    count=`cat "$tmp_dex" | head -c 92 | tail -c 4 | hexdump -e '1/4 "%d"'`
-    echo "$count"
+dexize4jar() {
+    jar2dex "$1" "$tmp_dex"
+    dexize4dex "$tmp_dex"
 }
 
 dexizedump4dex() {
@@ -17,6 +19,11 @@ dexizedump4dex() {
 }
 
 dexize4dex() {
+    count=`cat "$1" | head -c 92 | tail -c 4 | hexdump -e '1/4 "%d"'`
+    echo "$count"
+}
+
+dexize4dex-baksmali() {
     rm -fr /tmp/baksmali.d
     mkdir /tmp/baksmali.d
     baksmali "$1" -o /tmp/baksmali.d > /dev/null 2>&1
@@ -30,7 +37,6 @@ dexizedump4apk() {
 }
 
 dexize4apk() {
-    dexdump="${ANDROID_HOME}/build-tools/20.0.0/dexdump"
     #unzip -p "$1" classes.dex
     unzip -q "$1" classes.dex
     dexize4dex classes.dex
