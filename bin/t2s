@@ -15,6 +15,7 @@ case `basename $0` in
     auto_conv_enc=gb2312
     auto_conv_from_enc=utf8-cn
     auto_conv_to_enc=utf8-tw
+    iconv -f utf8 -t gb2312 | iconv -f gb2312 -t big5 | iconv -f big5 -t utf8
   ;;
   "t2s")
     auto=autogb
@@ -33,4 +34,4 @@ esac
   #sed 's/.*/&/g' | iconv -f "$enc" -t "$iauto" | iconv -f "$iauto" -t "$iauto_enc" | iconv -f "$iauto_enc" -t "$enc"
 #done
 
-cconv -f "$auto_conv_from_enc" -t "$auto_conv_to_enc"
+#cconv -f "$auto_conv_from_enc" -t "$auto_conv_to_enc"
