@@ -1,8 +1,18 @@
 #!/bin/bash
+
 while [ -f "$1" ]; do
-	name="${1%\.*}"
-	mplayer -novideo -ao pcm:fast "$1"
-	oggenc -o "$name.ogg" audiodump.wav
-	rm -f audiodump.wav
-	shift
+    name="${1%\.*}"
+    if [ "${1#*.}" == "wav" ]; then
+        wav="$1"
+    else
+        mplayer -novideo -ao pcm:fast "$1"
+        wav="audiodump.wav"
+    fi
+
+    oggenc -o "$name.ogg" "$wav"
+
+    if [ ! "${1#*.}" == "wav" ]; then
+        rm -f audiodump.wav
+    fi
+    shift
 done

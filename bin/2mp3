@@ -23,10 +23,18 @@
 #mplayer -ao pcm -vo audiodump.wav somefile.flv
 #lame audiodump.wav -q 2 -b 192 somefile.mp3
 while [ -f "$1" ]; do
-	name="${1%\.*}"
-	mplayer -novideo -ao pcm:fast "$1"
-	lame -f audiodump.wav
-	mv audiodump.mp3 "$name.mp3"
-	rm -f audiodump.wav
-	shift
+    name="${1%\.*}"
+    if [ "${1#*.}" == "wav" ]; then
+        wav="$1"
+    else
+        mplayer -novideo -ao pcm:fast "$1"
+        wav="audiodump.wav"
+    fi
+    lame -f "$wav"
+    mv "${wav%\.*}.mp3" "$name.mp3"
+
+    if [ ! "${1#*.}" == "wav" ]; then
+        rm -f audiodump.wav
+    fi
+    shift
 done
