@@ -12,9 +12,9 @@ USAGE
 
 SYNTAX
 
-    dexize {jar...}
-    dexize {apk...}
-    dexize {folder}
+    dexize {jar..}
+    dexize {apk..}
+    dexize {folder..}
 
 EOF
 }
