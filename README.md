@@ -1,5 +1,49 @@
 # yongjhih's rc/dotfiles
 
+## Android
+
+adb:
+
+```bash
+$ adb-stop facebook
+```
+```bash
+$ adb-kill facebook
+```
+```bash
+$ adb-pm-clear facebook
+```
+```bash
+$ adb-pm-uninstall facebook
+```
+```bash
+$ adb-pm-package facebook
+```
+```bash
+$ adb-pm-path facebook
+```
+```bash
+$ adb-pull-apk facebook
+```
+```bash
+$ adb-remount
+```
+
+`adb shell input keyevent`:
+
+```bash
+$ akey menu
+```
+
+Dex-count:
+
+```bash
+$ dexize {apk..}
+```
+```bash
+$ dexize {jar..}
+```
+
 ## Deadbeef
 
 ![](art/screenshot-deadbeef-3.png)
