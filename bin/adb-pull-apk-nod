@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+adb-pm-package() {
+    packages=( `adb shell pm list packages "$1"` )
+    package="`echo "${packages[0]#*package:}" | tr --delete '\r'`"
+
+    echo "$package"
+}
+
+adb-pm-path() {
+    package=$(adb shell pm path $(adb-pm-package "$1"))
+    echo "${package[0]#*package:}" | tr --delete '\r'
+}
+
+apk=`adb-pm-path "$1"`
+echo "${apk##*/}"
+adb pull "$apk"
+

@@ -57,3 +57,6 @@
 	auto = 0
 #[http]
 #	sslVerify = false
+[alias]
+    shorten = "!sh -c 'curl -i http://git.io -F url=$1' -"
+    shorten2 = "!sh -c 'curl -i http://git.io -F url=$1 -F code=$2' -"
