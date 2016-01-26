@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-eth="${1:-eth2}" # MODIFY ME
+eth="${1:-eth2}"
 
 echo "$eth"
 
-tc qdisc del dev "$1" root
-tc qdisc del dev "$1" ingress
+tc qdisc del dev "$eth" root > /dev/null 2>&1
+tc qdisc del dev "$eth" ingress > /dev/null 2>&1

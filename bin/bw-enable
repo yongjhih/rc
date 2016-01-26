@@ -1,53 +1,57 @@
 #!/usr/bin/env bash
 
-eth=${1:-eth2}
-download=${2:-4000}
-upload=${3:-4000}
+eth="${1:-eth2}"
+download="${2:-4000}"
+upload="${3:-4000}"
+
+echo "$eth"
+echo "$download"
+echo "$upload"
 
 # bw-disable {{{
-/sbin/tc qdisc del dev $eth root    2> /dev/null > /dev/null
-/sbin/tc qdisc del dev $eth ingress 2> /dev/null > /dev/null
+tc qdisc del dev $eth root > /dev/null 2>&1
+tc qdisc del dev $eth ingress > /dev/null 2>&1
 # }}}
 
-/sbin/tc qdisc add dev $eth root handle 1: cbq avpkt 1000 bandwidth 10mbit
+tc qdisc add dev $eth root handle 1: cbq avpkt 1000 bandwidth 10mbit
 
-/sbin/tc class add dev $eth parent 1: classid 1:1 cbq rate ${upload}kbit \
+tc class add dev $eth parent 1: classid 1:1 cbq rate ${upload}kbit \
 allot 1500 prio 5 bounded isolated 
 
-/sbin/tc class add dev $eth parent 1:1 classid 1:10 cbq rate ${upload}kbit \
+tc class add dev $eth parent 1:1 classid 1:10 cbq rate ${upload}kbit \
    allot 1600 prio 1 avpkt 1000
 
-/sbin/tc class add dev $eth parent 1:1 classid 1:20 cbq rate $((9*$upload/10))kbit \
+tc class add dev $eth parent 1:1 classid 1:20 cbq rate $((9*$upload/10))kbit \
    allot 1600 prio 2 avpkt 1000
 
-/sbin/tc class add dev $eth parent 1:1 classid 1:30 cbq rate $((8*$upload/10))kbit \
+tc class add dev $eth parent 1:1 classid 1:30 cbq rate $((8*$upload/10))kbit \
    allot 1600 prio 2 avpkt 1000
 
-/sbin/tc qdisc add dev $eth parent 1:10 handle 10: sfq perturb 10
-/sbin/tc qdisc add dev $eth parent 1:20 handle 20: sfq perturb 10
-/sbin/tc qdisc add dev $eth parent 1:30 handle 30: sfq perturb 10
+tc qdisc add dev $eth parent 1:10 handle 10: sfq perturb 10
+tc qdisc add dev $eth parent 1:20 handle 20: sfq perturb 10
+tc qdisc add dev $eth parent 1:30 handle 30: sfq perturb 10
 
-/sbin/tc filter add dev $eth parent 1:0 protocol ip prio 10 u32 \
+tc filter add dev $eth parent 1:0 protocol ip prio 10 u32 \
       match ip tos 0x10 0xff  flowid 1:10
 
-/sbin/tc filter add dev $eth parent 1:0 protocol ip prio 11 u32 \
+tc filter add dev $eth parent 1:0 protocol ip prio 11 u32 \
         match ip protocol 1 0xff flowid 1:10
 
-/sbin/tc filter add dev $eth parent 1:0 protocol ip prio 10 u32 \
+tc filter add dev $eth parent 1:0 protocol ip prio 10 u32 \
    match ip protocol 17 0xff \
    match ip sport 4666 0xffff \
    flowid 1:30 
 
-/sbin/tc filter add dev $eth parent 1: protocol ip prio 12 u32 \
+tc filter add dev $eth parent 1: protocol ip prio 12 u32 \
    match ip protocol 6 0xff \
    match u8 0x05 0x0f at 0 \
    match u16 0x0000 0xffc0 at 2 \
    flowid 1:10
 
-/sbin/tc filter add dev $eth parent 1: protocol ip prio 18 u32 \
+tc filter add dev $eth parent 1: protocol ip prio 18 u32 \
    match ip dst 0.0.0.0/0 flowid 1:20
 
-/sbin/tc qdisc add dev $eth handle ffff: ingress
+tc qdisc add dev $eth handle ffff: ingress
 
-/sbin/tc filter add dev $eth parent ffff: protocol ip prio 50 u32 match ip src \
+tc filter add dev $eth parent ffff: protocol ip prio 50 u32 match ip src \
    0.0.0.0/0 police rate ${download}kbit burst 10k drop flowid :1
