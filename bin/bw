@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
+# Apache 2.0 Andrew Chen
 
 eth="${1:-eth2}"
 
 echo "$eth"
 
-tc qdisc ls dev $eth
-tc class ls dev $eth
+tc qdisc show dev $eth
+tc class show dev $eth
