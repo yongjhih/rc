@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+eth=${1:-eth2}
+
+/sbin/tc qdisc ls dev $eth root    2> /dev/null > /dev/null
+/sbin/tc qdisc ls dev $eth ingress 2> /dev/null > /dev/null

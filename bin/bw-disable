@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+eth="${1:-eth2}" # MODIFY ME
+
+echo "$eth"
+
+tc qdisc del dev "$1" root
+tc qdisc del dev "$1" ingress
