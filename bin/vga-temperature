@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# ref. http://askubuntu.com/questions/224156/cant-get-lm-sensors-to-load-ati-radeon-temp-and-fan-or-output-all-settings
+aticonfig --pplib-cmd "get temperature 0"
+#aticonfig --od-gettemperature
+#aticonfig --adapter=all --odgt

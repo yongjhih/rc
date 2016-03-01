@@ -1,3 +1,12 @@
 #!/usr/bin/env bash
+# ref. http://superuser.com/questions/556029/how-do-i-convert-a-video-to-gif-using-ffmpeg-with-reasonable-quality
 
-ffmpeg -i "$1" "${1%.*}".gif
+#ffmpeg -i "$1" "${1%.*}".gif
+
+#ffmpeg -i 2016-03-01\ 10-50-17.mp4 -vf fps=10,scale=600:-1:flags=lanczos,palettegen /tmp/palette.png
+#ffmpeg -i 2016-03-01\ 10-50-17.mp4 -i palette.png -filter_complex "fps=10,scale=600:-1:flags=lanczos[x];[x][1:v]paletteuse"
+
+width=${2:-600}
+
+ffmpeg -i "$1" -vf fps=10,scale=${width}:-1:flags=lanczos,palettegen /tmp/palette.png
+ffmpeg -i "$1" -i /tmp/palette.png -filter_complex "fps=10,scale=${width}:-1:flags=lanczos[x];[x][1:v]paletteuse" "${1%.*}".gif
