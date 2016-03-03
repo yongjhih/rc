@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
+# Author: Andrew Chen <yongjhih@gmail.com>
+# CC, Creative Commons
+
+wget -q -O - "http://www.coolpc.com.tw/evaluate.php" --post-data=tax=0 |
+iconv -f big5 -t utf8 |
+# 3.5" SATA3 HDD硬碟
+# 3.5" SATA3 HDD 監控碟/企業碟/雲端碟/NAS碟
+# 3.5" SATA3 萬轉硬碟'
+#sed -n '/LABEL=.3.5" SATA3/,/LABEL=.3.5" SAS/p' |
+sed -n '/LABEL=.2.5.*SATA3 SSD/,/LABEL=.m-SATA/p' |
+sed 's/<[^>]*>//g' | sed '/^\s*$/d' |
+while read line; do
+    #echo "$line"
+    # Toshiba 500GB (DT01ACA050)/32M/7200轉/二年保, $1590 ★
+    # WD 3TB (30PURX)【監控碟(紫標)】
+    p=`echo $line | sed 's/.*$\([0-9\.]\+\)\s.*/\1/'`
+    t=`echo $line | sed 's/.* \([0-9\.]\+\)TB\?\/.*/\1/'`
+    buffer=`echo $line | sed 's#.*[^[0-9]]*\([0-9]\+MB\?\)/\([^/]\+\).*#\1#'`
+    rpm=`echo $line |    sed 's#.*[^[0-9]]*\([0-9]\+MB\?\)/\([^/]\+\).*#\2#'`
+    year=`echo $line |   sed 's#.*\(.年\).*#\1#'`
+    type=`echo $line |   sed 's#.*)【\([^】]\+\)】.*#\1#'`
+    vendor=`echo $line | sed 's#^\(\w\+\) .*#\1#'`
+
+    [ "$buffer" = "$line" ] && buffer=""
+
+    [ "$rpm" = "$line" ] && rpm=""
+
+    [ "$year" = "$line" ] && year=""
+
+    [ "$type" = "$line" ] && type=""
+
+    [ "$vendor" = "$line" ] && vendor=""
+
+    case "$t" in
+            [0-9.]*) c=`echo $t | awk '{print $1*1024}'`
+            ;;
+            *) c=`echo $line | sed 's/.* \([0-9\.]\+\)GB\?\/.*/\1/'`
+    esac
+
+    r=`echo $p $c | awk '{print $1/$2}'`
+    echo -e "$r\t\$$p\t${c}G\t${buffer}\t${rpm}\t${type}\t${vendor}\t${year}\t$line"
+done | sort -n
+
