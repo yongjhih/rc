@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+if [ ! $3 ]; then
+  echo "Usage: </dev/md0> </dev/sdb1> <[/dev/sdc1|missing]>"
+fi
+mdadm --create $1 --level=1 --raid-devices=2 "$2" "$3"

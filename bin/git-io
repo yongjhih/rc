@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# ref. https://github.com/blog/985-git-io-github-url-shortener
+
+[ "$2" ] || exit 1
+
+curl -i https://git.io -F "url=${1}" -F "code=${2}"

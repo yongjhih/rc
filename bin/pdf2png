@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+while [ "$1" ]; do
+    if [ ! -f "$1" ]; then
+        shift
+        continue
+    fi
+
+    convert -density 150 "$1" -quality 90 "${1%.*}.png"
+    shift
+done

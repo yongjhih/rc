@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+while [ "$1" ]; do
+    if [ ! -f "$1" ]; then
+        shift
+        continue
+    fi
+
+    tesseract "$1" stdout -l chi_tra > "${1%.*}.md"
+    shift
+done

@@ -39,6 +39,6 @@ while read line; do
     esac
 
     r=`echo $p $c | awk '{print $1/$2}'`
-    echo -e "$r\t\$$p\t${c}G\t${buffer}\t${vendor}\t${year}\t$line"
+    echo -e "$r\t$p\t${c}\t${buffer}\t${vendor}\t${year}\t$line"
 done | sort -n
 

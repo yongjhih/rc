@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+while [ "$1" ]; do
+    torrent="$1"
+    mnt_dir="${torrent%%.*}"
+
+    if [ ! -f "$torrent" ]; then
+        shift
+        continue
+    fi
+    #if [ -d "$mnt_dir" ]; then
+    #    shift
+    #    continue
+    #fi
+
+    mkdir "${mnt_dir}"
+    echo btfs -k "${torrent}" "${mnt_dir}"
+    btfs -k "${torrent}" "${mnt_dir}"
+
+    shift
+done

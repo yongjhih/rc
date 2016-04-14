@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+[ -f "$1" ] || exit 1
+
+filename="${1%.*}"
+suffix="${1##*.}"
+
+ffmpeg -i "$1" -an -vcodec copy "${filename}-no-audio.${suffix}"
+
