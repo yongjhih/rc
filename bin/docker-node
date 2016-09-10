@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
+# Andrew Chen <yongjhih[at]gmail.com>
 cmd="$@"
 docker run --rm -it -w $PWD -v $PWD:$PWD node bash -c "npm install && $cmd"

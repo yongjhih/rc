@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Andrew Chen <yongjhih[at]gmail.com>
 
 prod="${1#http://24h.pchome.com.tw/prod/*}"
 

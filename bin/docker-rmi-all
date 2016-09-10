@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
+# Andrew Chen <yongjhih[at]gmail.com>
 
 docker images | grep -v CONT | awk '{print $3}' | xargs docker rmi

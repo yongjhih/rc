@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
+# Andrew Chen <yongjhih[at]gmail.com>
 
 docker ps -a | grep -v CONT | awk '{print $1}' | xargs docker rm

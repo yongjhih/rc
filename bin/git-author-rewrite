@@ -1,4 +1,5 @@
 #!/bin/sh
+# Andrew Chen <yongjhih[at]gmail.com>
 
 export OLD_EMAIL="$1"
 export CORRECT_NAME="$2"

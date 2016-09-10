@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Andrew Chen <yongjhih[at]gmail.com>
+>&2 echo "$@"
+exit 1

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Andrew Chen <yongjhih[at]gmail.com>
 
 [ "$2" ] || echo "resize-img 200x200 a.png"
 size="$1"
