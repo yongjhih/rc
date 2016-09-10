@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+  #-v /dev/kvm \
+
+docker run --rm -it \
+  -v $HOME:$HOME \
+  -v $HOME:/home/ubuntu \
+  -v /dev/bus/usb \
+  --device /dev/kvm \
+  --device /dev/bus/usb \
+  -v /tmp/.X11-unix \
+  -e DISPLAY=$DISPLAY \
+  -v $XAUTHORITY:/home/ubuntu/.Xauthority \
+  -w $(pwd) \
+  --net host \
+  --privileged \
+  -e UID=$(id -u) \
+  -e GID=$(id -g) \
+  yongjhih/android-studio "$@"

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+prod="${1#http://24h.pchome.com.tw/prod/*}"
+
+curl -s -A 'Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.3) Gecko/20100401 Firefox/3.6.3' \
+        "http://ecapi.pchome.com.tw/ecshop/prodapi/v2/prod/"$prod"-000&fields=Price,Discount&_callback=jsonp_prod?_callback=jsonp_prod" |
+        sed -e 's/^[^(]*(//' -e 's/).*//'

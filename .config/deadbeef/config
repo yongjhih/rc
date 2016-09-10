@@ -39,14 +39,14 @@ filechooser.lastdir file:///media/andrew/6836859C36856C3E/yjchen/VoiceRecording
 gtkui.color.bar_background 22579 20759 20759
 gtkui.color.bar_foreground 61680 33766 17990
 gtkui.eq.visible 0
-gtkui.layout.0.6.2 vbox expand="0 1" fill="0 1" homogeneous=0 {hbox expand="0 1 0" fill="1 1 1" homogeneous=0 {playtb {} seekbar {} volumebar {} } vsplitter pos=916 locked=0 {vsplitter pos=0 locked=0 {placeholder {} vsplitter pos=904 locked=0 {hsplitter pos=313 locked=0 {vsplitter pos=313 locked=0 {coverart {} vsplitter pos=241 locked=0 {selproperties {} filebrowser {} } } vsplitter pos=102 locked=0 {waveformz {} hsplitter pos=1307 locked=0 {tabbed_playlist hideheaders=0 {} vsplitter pos=633 locked=0 {infobar {} placeholder {} } } } } placeholder {} } } spectrogram {} } } 
+gtkui.layout.0.6.2 vbox expand="0 1" fill="0 1" homogeneous=0 {hbox expand="0 1 0" fill="1 1 1" homogeneous=0 {playtb {} seekbar {} volumebar {} } vsplitter pos=793 locked=0 {vsplitter pos=2 locked=0 {placeholder {} vsplitter pos=779 locked=0 {hsplitter pos=313 locked=0 {vsplitter pos=313 locked=0 {coverart {} vsplitter pos=241 locked=0 {selproperties {} filebrowser {} } } vsplitter pos=102 locked=0 {waveformz {} hsplitter pos=634 locked=0 {tabbed_playlist hideheaders=0 {} vsplitter pos=665 locked=0 {infobar {} placeholder {} } } } } placeholder {} } } spectrogram {} } } 
 gtkui.mmb_delete_playlist 1
 gtkui.name_playlist_from_folder 1
 gtkui.override_bar_colors 0
 gtkui.override_listview_colors 0
 gtkui.override_tabstrip_colors 0
 gtkui.statusbar.visible 1
-gtkui.tabscroll 0
+gtkui.tabscroll 199
 gtkui.titlebar_playing %a - %t - DeaDBeeF-%V
 gtkui.titlebar_stopped DeaDBeeF-%V
 gui_plugin GTK2
@@ -83,11 +83,11 @@ hotkey.key32 "Ctrl k" 0 0 toggle_stop_after_album
 hotkeys_created 1
 ignore_archives 1
 junk.enable_cp1251_detection 1
-mainwin.geometry.h 972
-mainwin.geometry.maximized 1
-mainwin.geometry.w 1855
-mainwin.geometry.x 98
-mainwin.geometry.y 39
+mainwin.geometry.h 1000
+mainwin.geometry.maximized 0
+mainwin.geometry.w 1531
+mainwin.geometry.x 158
+mainwin.geometry.y 25
 mp3.id3v1_encoding iso8859-1
 mp3.id3v2_version 3
 mp3.write_id3v1 1
@@ -128,7 +128,7 @@ network.proxy.port 8080
 network.proxy.type HTTP
 playback.loop 0
 playback.order 1
-playback.volume -0.714285
+playback.volume 0.0000000
 playlist.column.00 "Album Art" "" 8 100 0
 playlist.column.01 "Track No" "%n" -1 30 1
 playlist.column.02 "Title" "%t" -1 237 0
@@ -136,33 +136,52 @@ playlist.column.03 "Artist / Album" "%a - %b" -1 192 0
 playlist.column.04 "♫" "" 1 50 0
 playlist.column.05 "Duration" "%l" -1 88 0
 playlist.current 2
-playlist.cursor.0 18
+playlist.cursor.0 2510
 playlist.cursor.1 0
-playlist.cursor.2 1392
-playlist.cursor.3 24
+playlist.cursor.2 627
+playlist.cursor.3 17
 playlist.cursor.4 2
+playlist.cursor.5 25
+playlist.cursor.6 0
+playlist.cursor.7 1
+playlist.cursor.8 8
+playlist.cursor.9 0
 playlist.group_by %a - [%y] %b
-playlist.scroll.0 298
+playlist.scroll.0 118639
 playlist.scroll.1 0
-playlist.scroll.2 36550
-playlist.scroll.3 203
+playlist.scroll.2 16413
+playlist.scroll.3 349
 playlist.scroll.4 0
+playlist.scroll.5 0
+playlist.scroll.6 0
+playlist.scroll.7 759
+playlist.scroll.8 0
+playlist.scroll.9 0
 playlist.scroll.cursorfollowplayback 1
 playlist.tab.00000 Default
 playlist.tab.00001 鋼琴-女人花.mp3
 playlist.tab.00002 Music
 playlist.tab.00003 New Playlist
 playlist.tab.00004 New Playlist (1)
+playlist.tab.00005 New Playlist (2)
+playlist.tab.00006 New Playlist (3)
+playlist.tab.00007 New Playlist (4)
+playlist.tab.00008 New Playlist (5)
+playlist.tab.00009 New Playlist (6)
 prefwin.geometry.h 461
 prefwin.geometry.w 675
 prefwin.geometry.x 622
 prefwin.geometry.y 309
 replaygain_mode 0
 replaygain_scale 1
-resume.paused 0
-resume.playlist 0
-resume.position 80.500106
-resume.track 18
+resume.paused 1
+resume.playlist 2
+resume.position 91.598602
+resume.track 627
+searchwin.geometry.h 150
+searchwin.geometry.w 450
+searchwin.geometry.x 767
+searchwin.geometry.y 326
 spectrogram.color.gradient_00 65535 0 0
 spectrogram.color.gradient_01 65535 32896 0
 spectrogram.color.gradient_02 65535 65535 0

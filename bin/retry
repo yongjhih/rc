@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+n="$1"
+shift
+for i in {1.."$1"}; do "$@" && break || sleep 3; done

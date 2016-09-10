@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+[ "$2" ] || echo "resize-img 200x200 a.png"
+size="$1"
+shift
+
+while [ "$1" ]; do
+    convert "$1" -background 'rgba(0,0,0,0)' -gravity center -resize "$size" -extent "$size" "$1"
+    shift
+done

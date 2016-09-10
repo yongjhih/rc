@@ -227,7 +227,7 @@ setdown_proxy() {
 #export ANDROID_SRC="/home/andrew/workspace/android_src_froyo"
 #export ANDROID_SDK_TOOL="/home/andrew/sdk/android-sdk-linux_x86/tools"
 
-export ANDROID_HOME="$HOME/tools/android/android-sdk"
+export ANDROID_HOME="/opt/android-sdk-linux"
 export ANDROID_SDK="$ANDROID_HOME"
 export ANDROID_NDK="$HOME/android-ndk"
 export PROGUARD_HOME="${ANDROID_HOME}/tools/proguard"
