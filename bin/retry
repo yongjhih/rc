@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 # Andrew Chen <yongjhih[at]gmail.com>
+[ "$2" ] || cat <<EOF
+Syntax: $0 <n> <command>
+Usage: retry 10 sudo /etc/init.d/docker start
+EOF
+
 n="$1"
 shift
 for i in `eval echo "{1..$n}"`; do "$@" && break || sleep 1; done
