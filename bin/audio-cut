@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 # Andrew Chen <yongjhih[at]gmail.com>
+[ $4 ] || exit 1
 i="$1"
 pos="$2"
 duration="$3"
 o="$4"
 #avconv -i "$i" -ss "$pos" -t "$duration" "$4"
-ffmpeg -i "$i" -acodec copy -ss "$pos" -t "$duration" "$4"
+ffmpeg -i "$i" -acodec copy -ss "$pos" -t "$duration" "$o"
