@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+f=`date "+%F"`.wav
+
+sox -d ~/${f}
