@@ -216,6 +216,7 @@ setdown_proxy() {
 #export https_proxy="https://10.8.9.9:8080/"
 #export ftp_proxy="ftp://10.8.9.9:8080/"
 #setup_proxy "10.8.9.9:8080"
+#setup_proxy "192.168.1.2:8080"
 
 #if [ ! `echo "$PATH" | grep "$HOME/workspace/GbcFeatureProvider/tools"` ]; then
 #	PATH="$PATH:$HOME/workspace/GbcFeatureProvider/tools"
@@ -230,6 +231,7 @@ setdown_proxy() {
 export ANDROID_HOME="/opt/android-sdk-linux"
 export ANDROID_SDK="$ANDROID_HOME"
 export ANDROID_NDK="$HOME/android-ndk"
+export NDK="$ANDROID_NDK"
 export PROGUARD_HOME="${ANDROID_HOME}/tools/proguard"
 
 PATH="$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools"

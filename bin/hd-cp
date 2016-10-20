@@ -9,7 +9,9 @@ iconv -f big5 -t utf8 |
 # 3.5" SATA3 HDD硬碟
 # 3.5" SATA3 HDD 監控碟/企業碟/雲端碟/NAS碟
 # 3.5" SATA3 萬轉硬碟'
-sed -n '/LABEL=.3.5" SATA3/,/LABEL=.3.5" SAS/p' |
+sed -n '/LABEL=.3.5" SATA3/,/LABEL=.2.5吋 SATA HDD/p' |
+grep -v OPTGROUP |
+grep OPTION |
 sed 's/<[^>]*>//g' | sed '/^\s*$/d' |
 while read line; do
     #echo "$line"
