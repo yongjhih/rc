@@ -152,7 +152,7 @@ _colors
 
 EDITOR="vi"
 VISUAL="$EDITOR"
-alias vi=nvim
+#alias vi=nvim
 
 function mkcd () {
   mkdir -p "$@" && eval cd "\"\$$#\""
@@ -457,8 +457,8 @@ if [[ -d $USER_BASH_COMPLETION_DIR && -r $BASH_COMPLETION_DIR && \
     -x $USER_BASH_COMPLETION_DIR ]]; then
     for i in $(LC_ALL=C command ls "$USER_BASH_COMPLETION_DIR"); do
         i=$USER_BASH_COMPLETION_DIR/$i
-        [[ ${i##*/} != @(*~|*.bak|*.swp|\#*\#|*.dpkg*|*.rpm@(orig|new|save)|Makefile*) \
-            && -f $i && -r $i ]] && . "$i"
+        # [[ ${i##*/} != @(*~|*.bak|*.swp|\#*\#|*.dpkg*|*.rpm@(orig|new|save)|Makefile*) \
+        #    && -f $i && -r $i ]] && . "$i"
     done
 fi
 unset i
@@ -472,3 +472,5 @@ export PATH=$HOME/.local/bin:$PATH
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
+
+[ -f ~/.git-prompt.sh ] && . ~/.git-prompt.sh

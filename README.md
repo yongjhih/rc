@@ -1,5 +1,10 @@
 # yongjhih's rc/dotfiles
 
+```sh
+make
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+```
+
 ## Android
 
 adb:
