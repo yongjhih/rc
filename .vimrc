@@ -332,6 +332,8 @@ Plugin 'jeetsukumaran/vim-buffergator'
 Plugin 'tfnico/vim-gradle'
 Plugin 'sealemar/vtl'
 "Plugin 'Yggdroot/indentLine'
+Plugin 'ekalinin/Dockerfile.vim'
+Plugin 'keith/swift.vim'
 
 " non github repos
 "Bundle 'git://git.wincent.com/command-t.git'
@@ -484,3 +486,4 @@ Plugin 'mxw/vim-jsx'
 let g:jsx_ext_required = 0
 " }}}
 let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_swift_checkers = ['swiftpm', 'swiftlint']
