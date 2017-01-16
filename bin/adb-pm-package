@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 packages=( `adb shell pm list packages "$1"` )
-package="`echo "${packages[0]#*package:}" | tr --delete '\r'`"
+#package="`echo "${packages[0]#*package:}" | tr --delete '\r'`"
+package="`echo "${packages[0]#*package:}" | tr -d '\r'`"
 
 echo "$package"

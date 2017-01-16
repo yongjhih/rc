@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
 package=$(adb shell pm path $(adb-pm-package "$1"))
-echo "${package[0]#*package:}" | tr --delete '\r'
+echo "${package[0]#*package:}" | tr -d '\t'
