@@ -228,9 +228,10 @@ setdown_proxy() {
 #export ANDROID_SRC="/home/andrew/workspace/android_src_froyo"
 #export ANDROID_SDK_TOOL="/home/andrew/sdk/android-sdk-linux_x86/tools"
 
-export ANDROID_HOME="/opt/android-sdk-linux"
+export ANDROID_HOME="$HOME/Library/Android/sdk"
 export ANDROID_SDK="$ANDROID_HOME"
-export ANDROID_NDK="$HOME/android-ndk"
+export ANDROID_NDK="$HOME/Library/Android/ndk"
+export ANDROID_NDK_HOME="$ANDROID_NDK"
 export NDK="$ANDROID_NDK"
 export PROGUARD_HOME="${ANDROID_HOME}/tools/proguard"
 
@@ -413,7 +414,9 @@ export LIBRARY_PATH="$LIBRARY_PATH:$HOME/lib"
 #export PATH="$PATH:$HOME/pip/bin"
 
 export GEM_PATH=$HOME/gems
-export PATH=$HOME/local/bin:$PATH
+export PATH="/usr/local/bin:$HOME/local/bin:$PATH"
+export PATH="$HOME/local/bin:$PATH"
+export PATH="/usr/local/bin:$HOME/local/bin:$PATH:/usr/local/bin"
 
 export USE_CCACHE=1
 #export CCACHE_DIR="$HOME/.ccache"
@@ -477,3 +480,20 @@ export PATH="/usr/local/heroku/bin:$PATH"
 [ -f ~/.git-prompt.sh ] && . ~/.git-prompt.sh
 export CLICOLOR=1
 export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
+#. "/usr/local/lib/python2.7/site-packages/powerline/bindings/bash/powerline.sh"
+. ~/powerline.sh
+
+# added by travis gem
+[ -f /Users/yongjhih/.travis/travis.sh ] && source /Users/yongjhih/.travis/travis.sh
+
+FLO_DEV_TESTER_PASSWORD=Abcd1234
+FLO_DEV_ADMIN_PASSWORD='BWTTvzHnWivZT7BPfF{;mwqfm]mTdsqfE'
+
+if [ -d ~/.bash_completion.d ]; then
+    for file in ~/.bash_completion.d/*; do
+        . $file
+    done
+fi
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+export FZF_DEFAULT_OPTS='--height 40% --reverse --border'

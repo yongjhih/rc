@@ -368,7 +368,7 @@ set fileformats+=dos
 let g:acp_behaviorSnipmateLength = 1
 "imap <C-J> <Plug>snipMateNextOrTrigger
 "smap <C-J> <Plug>snipMateNextOrTrigger
-set clipboard=unnamedplus
+"set clipboard=unnamedplus
 vnoremap <silent> <Enter> :EasyAlign<cr>
 
 function! Incr()

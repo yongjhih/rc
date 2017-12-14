@@ -36,6 +36,9 @@
 				],
 				"right": [
 					{
+						"function": "powerline.segments.shell.last_status"
+					},
+					{
 						"function": "powerline.segments.common.time.date"
 					},
 					{

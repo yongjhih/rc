@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-adb pull `adb-pm-path "$1"`
-#package=$(adb shell pm list package "$1" | tr -d '\r' | sed 's/^package://' | head -1)
-#
-#adb shell pm path "$package" |
-#  sed 's/^package://' |
-#  tr -d '\r' |
-#  xargs -n 1 -I {} adb pull {} ${package}.apk
+#adb pull `adb-pm-path "$1"`
+package=$(adb shell pm list package "$1" | tr -d '\r' | sed 's/^package://' | head -1)
+
+adb shell pm path "$package" |
+  sed 's/^package://' |
+  tr -d '\r' |
+  xargs -n 1 -I {} adb pull {} ${package}.apk

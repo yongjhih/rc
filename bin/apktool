@@ -23,8 +23,6 @@
 prog="$0"
 while [ -h "${prog}" ]; do
     newProg=`/bin/ls -ld "${prog}"`
-    echo ${newProg}
-
 
     newProg=`expr "${newProg}" : ".* -> \(.*\)$"`
     if expr "x${newProg}" : 'x/' >/dev/null; then
@@ -41,7 +39,6 @@ progdir=`pwd`
 prog="${progdir}"/`basename "${prog}"`
 cd "${oldwd}"
 
-
 jarfile=apktool.jar
 libdir="$progdir"
 if [ ! -r "$libdir/$jarfile" ]
@@ -56,7 +53,7 @@ javaOpts=""
 # line and adjust the value accordingly. Use "java -X" for a list of options
 # you can pass here.
 # 
-javaOpts="-Xmx256M"
+javaOpts="-Xmx512M -Dfile.encoding=utf-8"
 
 # Alternatively, this will extract any parameter "-Jxxx" from the command line
 # and pass them to Java (instead of to dx). This makes it possible for you to
@@ -74,4 +71,7 @@ else
 	jarpath="$libdir/$jarfile"
 fi
 
-exec java $javaOpts -jar "$jarpath" "$@"
+# add current location to path for aapt
+PATH=$PATH:`pwd`;
+export PATH;
+exec java $javaOpts -Djava.awt.headless=true -jar "$jarpath" "$@"

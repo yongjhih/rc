@@ -26,4 +26,5 @@ else
     fi
 fi
 
-ffmpeg -f image2 -loop 1 -framerate 1 -i "$background" -i "$1" -acodec copy -shortest -s "$size" "${1%.*}".mp4
+ffmpeg -i "$1" "${1%.*}".jpg
+ffmpeg -f image2 -loop 1 -framerate 1 -i "${1%.*}".jpg -i "$1" -acodec copy -shortest -s "$size" "${1%.*}".mp4

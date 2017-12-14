@@ -37,7 +37,7 @@
 	tool = vimdiff
 [core]
 	editor = vim
-	excludesfile = ~/.gitignore
+	excludesfile = /Users/yongjhih/.gitignore_global
 	;gitproxy = /home/andrew/bin/git-proxy
 [help]
 	autocorrect = 1
@@ -60,3 +60,11 @@
 [alias]
     shorten = "!sh -c 'curl -i http://git.io -F url=$1' -"
     shorten2 = "!sh -c 'curl -i http://git.io -F url=$1 -F code=$2' -"
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[commit]
+	template = /Users/yongjhih/.stCommitMsg
