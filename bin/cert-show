@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+openssl x509 -inform pem -in $1 -text

@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+[ "$3" ] || exit 1
+
+convert              \
+     "$1"            \
+     -background none \
+     -gravity center  \
+     -extent "$2"  \
+     "$3"

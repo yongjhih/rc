@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+while read line; do
+  echo -n $line | base64
+done
