@@ -1,4 +1,4 @@
-#!/usr/bin/env nodejs
+#!/usr/bin/env node
 
 // php -r "echo urldecode('$@'.\"$1\n\");" | iconv -f big5 -t utf8
 // if [ "$1" ]; then

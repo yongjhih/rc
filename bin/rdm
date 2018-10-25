@@ -7,6 +7,8 @@ n=$[$(echo $1 | sed 's/\D//g') - 1]
 else
 n=8
 fi
+
+LC_ALL=C 
 #if [ $n -le 1 ]; then
 #  n=2
 #head -c $n < /dev/urandom | uuencode -m - | tail -n 2 |head -n 1 | sed 's/\W//g' | cut -c 1
@@ -16,4 +18,4 @@ fi
 #fi
 
 echo $(tr -dc A-Za-z0-9  < /dev/urandom | head -c $n)
-
+#LC_ALL=C tr -dc '_A-Za-z0-9' < /dev/urandom | head -c64

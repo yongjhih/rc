@@ -7,7 +7,7 @@
 	;passphrase =
 [merge]
 	tool = vimdiff
-        ;renameLimit = 9999999
+        renameLimit = 9999999
 [alias]
 	diffall = !gitdiffall
 	clear = !git reset --hard && git clean -df

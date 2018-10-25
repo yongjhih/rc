@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+while IFS='.' read -ra s; do
+    for i in "${s[@]}"; do
+        base64 -D <<< "$i"
+    done
+done

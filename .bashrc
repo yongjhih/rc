@@ -481,13 +481,10 @@ export PATH="/usr/local/heroku/bin:$PATH"
 export CLICOLOR=1
 export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
 #. "/usr/local/lib/python2.7/site-packages/powerline/bindings/bash/powerline.sh"
-. ~/powerline.sh
+#. ~/powerline.sh
 
 # added by travis gem
 [ -f /Users/yongjhih/.travis/travis.sh ] && source /Users/yongjhih/.travis/travis.sh
-
-FLO_DEV_TESTER_PASSWORD=Abcd1234
-FLO_DEV_ADMIN_PASSWORD='BWTTvzHnWivZT7BPfF{;mwqfm]mTdsqfE'
 
 if [ -d ~/.bash_completion.d ]; then
     for file in ~/.bash_completion.d/*; do
@@ -495,5 +492,17 @@ if [ -d ~/.bash_completion.d ]; then
     done
 fi
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
-export FZF_DEFAULT_OPTS='--height 40% --reverse --border'
+#[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+#export FZF_DEFAULT_OPTS='--height 40% --reverse --border'
+
+export PATH="$(pwd)/flutter/bin:${PATH}"
+
+#A valid GOPATH is required to use the `go get` command.
+#If $GOPATH is not specified, $HOME/go will be used by default:
+#  https://golang.org/doc/code.html#GOPATH
+#
+#  You may wish to add the GOROOT-based install location to your PATH:
+#    export PATH=$PATH:/usr/local/opt/go/libexec/bin
+[ -d "${HOME}/go" ] && export GOPATH=${GOPATH:-${HOME}/go}
+[ -d "${GOPATH}/bin" ] && export PATH="${GOPATH}/bin:${PATH}"
+export PATH="$PATH:${HOME}/Library/Python/3.6/bin"
