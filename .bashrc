@@ -469,7 +469,7 @@ unset i
 #export JAVA8_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
 #export JAVA7_HOME="/usr/lib/jvm/java-7-openjdk-amd64"
 #export JAVA_HOME="$JAVA8_HOME"
-export JAVA_HOME=$(/usr/libexec/java_home)
+#export JAVA_HOME=$(/usr/libexec/java_home)
 
 export PATH=$HOME/.local/bin:$PATH
 #export NODE_PATH=/usr/local/lib/node_modules
