@@ -481,6 +481,7 @@ export PATH="/usr/local/heroku/bin:$PATH"
 export CLICOLOR=1
 export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
 #. "/usr/local/lib/python2.7/site-packages/powerline/bindings/bash/powerline.sh"
+. ~/.local/lib/python3.6/site-packages/powerline/bindings/bash/powerline.sh
 #. ~/powerline.sh
 
 # added by travis gem
