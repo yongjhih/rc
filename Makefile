@@ -13,7 +13,7 @@ init:
 	ln -fs `pwd`/.gitconfig ~/.gitconfig
 #	ln -fs `pwd`/sbin ~/sbin
 	#ln -fs `pwd`/.config/fish/config.fish ~/.config/fish/config.fish
-	#ln -fs `pwd`/.config/powerline ~/.config/powerline
+	ln -fs `pwd`/.config/powerline ~/.config/powerline
 	#ln -fs `pwd`/powerline.sh ~/powerline.sh
 	ln -fs `pwd`/.tmux.conf ~/.tmux.conf
 
