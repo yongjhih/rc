@@ -507,3 +507,9 @@ export PATH="$(pwd)/flutter/bin:${PATH}"
 [ -d "${HOME}/go" ] && export GOPATH=${GOPATH:-${HOME}/go}
 [ -d "${GOPATH}/bin" ] && export PATH="${GOPATH}/bin:${PATH}"
 export PATH="$PATH:${HOME}/Library/Python/3.6/bin"
+
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+
+#  Additionally, you can access their man pages with normal names if you add
+#  the "gnuman" directory to your MANPATH from your bashrc as well:
+export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
