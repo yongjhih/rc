@@ -250,18 +250,17 @@ alias emuand='emulator -system system.img -data userdata.img -ramdisk ramdisk.im
 
 function _screen-ps()
 {
-#case $TERM in
-		#xterm*|rxvt*)
-				#PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}[`basename ${PWD}`]\007"'
-				#;;
-		#screen*)
-                #PROMPT_COMMAND='echo -ne "\033k\033\134\033k${HOSTNAME}[`basename ${PWD}`]\033\134"'
-				#;;
-		#*)
-		export PROMPT_COMMAND='echo -ne "\033k`basename "${PWD}"`\033\\"'
-		#PROMPT_COMMAND='echo -e '\033k'mytitle'\033\\'
-				#;;
-#esac
+  case $TERM in
+    #xterm*|rxvt*)
+    #  export PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}[`basename ${PWD}`]\007"'
+    #  ;;
+    #screen*)
+    #  export PROMPT_COMMAND='echo -ne "\033k\033\134\033k${HOSTNAME}[`basename ${PWD}`]\033\134"'
+    #  ;;
+    *)
+      export PROMPT_COMMAND='echo -ne "\033k`basename "${PWD}"`\033\\"'
+      ;;
+  esac
 }
 _screen-ps
 
@@ -481,7 +480,7 @@ export PATH="/usr/local/heroku/bin:$PATH"
 export CLICOLOR=1
 export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
 #. "/usr/local/lib/python2.7/site-packages/powerline/bindings/bash/powerline.sh"
-. ~/.local/lib/python3.6/site-packages/powerline/bindings/bash/powerline.sh
+#. ~/.local/lib/python3.6/site-packages/powerline/bindings/bash/powerline.sh
 #. ~/powerline.sh
 
 # added by travis gem
@@ -491,6 +490,20 @@ if [ -d ~/.bash_completion.d ]; then
     for file in ~/.bash_completion.d/*; do
         . $file
     done
+fi
+
+[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
+
+# ref. https://docs.docker.com/docker-for-mac/#install-shell-completion
+# etc=/Applications/Docker.app/Contents/Resources/etc
+# ln -s $etc/docker.bash-completion $(brew --prefix)/etc/bash_completion.d/docker
+# ln -s $etc/docker-machine.bash-completion $(brew --prefix)/etc/bash_completion.d/docker-machine
+# ln -s $etc/docker-compose.bash-completion $(brew --prefix)/etc/bash_completion.d/docker-compose
+docker_etc="/Applications/Docker.app/Contents/Resources/etc"
+if [ -d $docker_etc ]; then
+    . $docker_etc/docker.bash-completion
+    . $docker_etc/docker-machine.bash-completion
+    . $docker_etc/docker-compose.bash-completion
 fi
 
 #[ -f ~/.fzf.bash ] && source ~/.fzf.bash
@@ -508,8 +521,58 @@ export PATH="$(pwd)/flutter/bin:${PATH}"
 [ -d "${GOPATH}/bin" ] && export PATH="${GOPATH}/bin:${PATH}"
 export PATH="$PATH:${HOME}/Library/Python/3.6/bin"
 
-export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+export PATH="$PATH:/usr/local/opt/coreutils/libexec/gnubin"
 
 #  Additionally, you can access their man pages with normal names if you add
 #  the "gnuman" directory to your MANPATH from your bashrc as well:
-export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+export MANPATH="$MANPATH:/usr/local/opt/coreutils/libexec/gnuman"
+
+
+
+# If you need to have openssl first in your PATH run:
+# echo 'export PATH="/usr/local/opt/openssl/bin:$PATH"' >> ~/.bash_profile
+# 
+# For compilers to find openssl you may need to set:
+# export LDFLAGS="-L/usr/local/opt/openssl/lib"
+# export CPPFLAGS="-I/usr/local/opt/openssl/include"
+# 
+# ==> Summary
+# 🍺  /usr/local/Cellar/openssl/1.0.2q: 1,794 files, 12.3MB
+# ==> Installing tmux
+# ==> Downloading https://homebrew.bintray.com/bottles/tmux-2.8.sierra.bottle.tar.gz
+# ######################################################################## 100.0%
+# ==> Pouring tmux-2.8.sierra.bottle.tar.gz
+# ==> Caveats
+# Example configuration has been installed to:
+# /usr/local/opt/tmux/share/tmux
+# 
+# Bash completion has been installed to:
+# /usr/local/etc/bash_completion.d
+# ==> Summary
+# 🍺  /usr/local/Cellar/tmux/2.8: 10 files, 709.5KB
+# ==> Caveats
+# ==> openssl
+# A CA file has been bootstrapped using certificates from the SystemRoots
+# keychain. To add additional certificates (e.g. the certificates added in
+# the System keychain), place .pem files in
+# /usr/local/etc/openssl/certs
+# 
+# and run
+# /usr/local/opt/openssl/bin/c_rehash
+# 
+# openssl is keg-only, which means it was not symlinked into /usr/local,
+# because Apple has deprecated use of OpenSSL in favor of its own TLS and crypto libraries.
+# 
+# If you need to have openssl first in your PATH run:
+# echo 'export PATH="/usr/local/opt/openssl/bin:$PATH"' >> ~/.bash_profile
+# 
+# For compilers to find openssl you may need to set:
+# export LDFLAGS="-L/usr/local/opt/openssl/lib"
+# export CPPFLAGS="-I/usr/local/opt/openssl/include"
+# 
+# ==> tmux
+# Example configuration has been installed to:
+# /usr/local/opt/tmux/share/tmux
+# 
+# Bash completion has been installed to:
+# /usr/local/etc/bash_completion.d
