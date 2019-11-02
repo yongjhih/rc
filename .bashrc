@@ -230,9 +230,9 @@ setdown_proxy() {
 
 export ANDROID_HOME="$HOME/Library/Android/sdk"
 export ANDROID_SDK="$ANDROID_HOME"
-export ANDROID_NDK="$HOME/Library/Android/ndk"
-export ANDROID_NDK_HOME="$ANDROID_NDK"
-export NDK="$ANDROID_NDK"
+#export ANDROID_NDK="$HOME/Library/Android/ndk"
+#export ANDROID_NDK_HOME="$ANDROID_NDK"
+#export NDK="$ANDROID_NDK"
 export PROGUARD_HOME="${ANDROID_HOME}/tools/proguard"
 
 PATH="$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools"
@@ -476,6 +476,14 @@ export PATH=$HOME/.local/bin:$PATH
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 
+### Python path
+#export PATH="${PATH}:/usr/local/opt/python/libexec/bin"
+
+### Flutter
+
+export FLUTTER_ROOT="$HOME/works/flutter"
+export PATH="$PATH:${FLUTTER_ROOT}/bin"
+
 [ -f ~/.git-prompt.sh ] && . ~/.git-prompt.sh
 export CLICOLOR=1
 export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
@@ -576,3 +584,7 @@ export MANPATH="$MANPATH:/usr/local/opt/coreutils/libexec/gnuman"
 # 
 # Bash completion has been installed to:
 # /usr/local/etc/bash_completion.d
+
+
+
+IDF_PATH=$HOME/works/esp-idf

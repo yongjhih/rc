@@ -24,17 +24,15 @@
 #lame audiodump.wav -q 2 -b 192 somefile.mp3
 while [ -f "$1" ]; do
     name="${1%\.*}"
+    wav="${name}.wav"
     if [ "${1#*.}" == "wav" ]; then
         wav="$1"
     else
-        mplayer -novideo -ao pcm:fast "$1"
-        wav="audiodump.wav"
+        #mplayer -novideo -ao pcm:fast "$1"
+        ffmpeg -i "$1" "${name}.wav"
     fi
     lame -f "$wav"
-    mv "${wav%\.*}.mp3" "$name.mp3"
 
-    if [ ! "${1#*.}" == "wav" ]; then
-        rm -f audiodump.wav
-    fi
+    rm -f "$wav"
     shift
 done
